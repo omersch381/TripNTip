@@ -19,8 +19,6 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.FirebaseFirestore;
 import com.example.TripNTip.R;
 
 public class SignUPActivity extends AppCompatActivity implements Constants {
@@ -61,7 +59,7 @@ public class SignUPActivity extends AppCompatActivity implements Constants {
         boolean isValid = checker.areTheCredentialsValid();
         if (isValid) {
             newUser = handleNewUser(email, username, password, country);
-            launchTravelFeed();
+            launchSignIn();
         } else
             handleInvalidSignUpRequest(checker);
     }
@@ -125,11 +123,10 @@ public class SignUPActivity extends AppCompatActivity implements Constants {
         return statusMessage;
     }
 
-    ///NIV NAORY THE KING
-    private void launchTravelFeed() {
+    private void launchSignIn() {
         String key = mDataBase.push().getKey();
         mDataBase.child(key).setValue(newUser);
-        Intent intent = new Intent(SignUPActivity.this, TravelFeedActivity.class);
+        Intent intent = new Intent(SignUPActivity.this, SignInActivity.class);
         SignUPActivity.this.startActivity(intent);
     }
 }
