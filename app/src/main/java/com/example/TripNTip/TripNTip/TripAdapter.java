@@ -2,6 +2,7 @@ package com.example.TripNTip.TripNTip;
 
 import android.content.Context;
 import android.net.Uri;
+import android.os.Build;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
@@ -10,6 +11,7 @@ import android.widget.GridView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 
 import com.example.TripNTip.R;
 import com.example.TripNTip.TripNTip.SquaredImageView;
@@ -82,6 +84,7 @@ public class TripAdapter extends BaseAdapter implements Constants {
         counter = 0;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         TripView tripView = (TripView) convertView;
@@ -110,8 +113,7 @@ public class TripAdapter extends BaseAdapter implements Constants {
     }
 
     public void setFilteredTrips(ArrayList<Trip> filteredTrips) {
-        if (filteredTrips != null)
-            this.filteredTrips = filteredTrips;
+        this.filteredTrips = filteredTrips;
     }
 
 //    private void getPictureFromFirebase(StorageReference currentGsReference, final SquaredImageView finalView) {
@@ -149,6 +151,7 @@ public class TripAdapter extends BaseAdapter implements Constants {
         return position;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
     private TripView getASquaredTile(View convertView) {
         final TripView tripView;
         if (convertView == null)

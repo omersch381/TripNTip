@@ -78,7 +78,7 @@ public class TravelFeedActivity extends AppCompatActivity implements SearchFragm
         Bundle bundle = new Bundle();
         bundle.putString(GridFragment.QUERY_RECEIVED, data);
         bundle.putSerializable(TRIPS_KEYWORD, trips);
-        commitFragment(new GridFragment(), R.id.grid_fragment_container, trips, REPLACE_ACTION, bundle);
+        commitFragment(new GridFragment(apiKey), R.id.grid_fragment_container, trips, REPLACE_ACTION, bundle);
     }
 
     private void commitFragment(Fragment fragment, int fragment_container_id, HashMap<String, Trip> trips, String action, Bundle bundle) {
