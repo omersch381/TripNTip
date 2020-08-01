@@ -1,6 +1,6 @@
-package com.example.TripNTip;
+package com.example.TripNTip.TripNTip;
 
-import com.example.Utils.Constants;
+import com.example.TripNTip.Utils.Constants;
 
 import java.util.HashMap;
 import java.util.Iterator;

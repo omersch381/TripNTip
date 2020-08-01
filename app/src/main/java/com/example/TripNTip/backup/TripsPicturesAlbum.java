@@ -1,4 +1,4 @@
-//package com.example.backup;
+//package com.example.TripNTip.backup;
 //
 //import android.content.Context;
 //import android.graphics.Bitmap;

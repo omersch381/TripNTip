@@ -1,4 +1,4 @@
-package com.example.TripNTip;
+package com.example.TripNTip.TripNTip;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,12 +9,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.example.TripNTip.R;
 
-import com.example.FeatureScreens.Add_Activity;
-import com.example.FeatureScreens.GridFragment;
-import com.example.FeatureScreens.ProfileActivity;
-import com.example.FeatureScreens.SearchFragment;
-import com.example.Utils.Constants;
+import com.example.TripNTip.FeatureScreens.Add_Activity;
+import com.example.TripNTip.FeatureScreens.GridFragment;
+import com.example.TripNTip.FeatureScreens.ProfileActivity;
+import com.example.TripNTip.FeatureScreens.SearchFragment;
+import com.example.TripNTip.Utils.Constants;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.HashMap;

@@ -1,4 +1,4 @@
-package com.example.FeatureScreens;
+package com.example.TripNTip.FeatureScreens;
 
 import android.content.Context;
 import android.os.Bundle;

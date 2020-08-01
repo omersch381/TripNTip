@@ -1,4 +1,4 @@
-package com.example.WeatherAPI;
+package com.example.TripNTip.WeatherAPI;
 
 import android.content.Context;
 import android.os.AsyncTask;
@@ -6,8 +6,8 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.example.TripNTip.R;
-import com.example.TripNTip.Trip;
-import com.example.Utils.Constants;
+import com.example.TripNTip.TripNTip.Trip;
+import com.example.TripNTip.Utils.Constants;
 
 import java.io.BufferedReader;
 import java.io.Closeable;

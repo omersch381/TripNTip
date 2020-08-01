@@ -1,7 +1,7 @@
-package com.example.backup;
+package com.example.TripNTip.backup;
 
 
-import com.example.TripNTip.SquaredImageView;
+import com.example.TripNTip.TripNTip.SquaredImageView;
 
 
 public class Picture {

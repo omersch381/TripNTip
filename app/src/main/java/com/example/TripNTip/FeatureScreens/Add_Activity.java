@@ -1,4 +1,4 @@
-package com.example.FeatureScreens;
+package com.example.TripNTip.FeatureScreens;
 
 import androidx.appcompat.app.AppCompatActivity;
 

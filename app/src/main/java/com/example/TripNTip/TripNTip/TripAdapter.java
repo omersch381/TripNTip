@@ -12,11 +12,11 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 
 import com.example.TripNTip.R;
-import com.example.TripNTip.SquaredImageView;
-import com.example.TripNTip.Trip;
-import com.example.TripNTip.TripView;
-import com.example.TripNTip.TripsBoard;
-import com.example.Utils.Constants;
+import com.example.TripNTip.TripNTip.SquaredImageView;
+import com.example.TripNTip.TripNTip.Trip;
+import com.example.TripNTip.TripNTip.TripView;
+import com.example.TripNTip.TripNTip.TripsBoard;
+import com.example.TripNTip.Utils.Constants;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;

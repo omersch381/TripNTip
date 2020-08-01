@@ -1,4 +1,4 @@
-package com.example.Utils;
+package com.example.TripNTip.Utils;
 
 public interface Constants {
     // Sign up error messages

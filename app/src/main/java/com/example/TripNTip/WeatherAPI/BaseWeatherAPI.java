@@ -1,4 +1,4 @@
-package com.example.WeatherAPI;
+package com.example.TripNTip.WeatherAPI;
 
 import java.util.HashMap;
 

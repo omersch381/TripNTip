@@ -1,4 +1,4 @@
-package com.example.TripNTip;
+package com.example.TripNTip.TripNTip;
 
 import android.content.Context;
 import android.util.AttributeSet;

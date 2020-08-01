@@ -1,8 +1,8 @@
-package com.example.WeatherAPI;
+package com.example.TripNTip.WeatherAPI;
 
 import android.content.Context;
 
-import com.example.Utils.Constants;
+import com.example.TripNTip.Utils.Constants;
 
 import org.json.JSONArray;
 import org.json.JSONException;

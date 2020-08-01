@@ -1,4 +1,4 @@
-package com.example.TripNTip;
+package com.example.TripNTip.TripNTip;
 
 public class TNTUser {
 

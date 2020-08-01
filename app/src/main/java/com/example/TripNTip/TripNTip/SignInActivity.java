@@ -11,12 +11,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.TripNTip.CredentialsChecker;
+import com.example.TripNTip.TripNTip.CredentialsChecker;
 import com.example.TripNTip.R;
-import com.example.TripNTip.SignUPActivity;
-import com.example.TripNTip.TravelFeedActivity;
-import com.example.TripNTip.Trip;
-import com.example.Utils.Constants;
+import com.example.TripNTip.TripNTip.SignUPActivity;
+import com.example.TripNTip.TripNTip.TravelFeedActivity;
+import com.example.TripNTip.TripNTip.Trip;
+import com.example.TripNTip.Utils.Constants;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseApp;

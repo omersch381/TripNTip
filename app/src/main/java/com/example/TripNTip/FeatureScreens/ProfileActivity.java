@@ -1,4 +1,4 @@
-package com.example.FeatureScreens;
+package com.example.TripNTip.FeatureScreens;
 
 import android.os.Bundle;
 
@@ -6,7 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.TripNTip.R;
-import com.example.TripNTip.TNTUser;
+import com.example.TripNTip.TripNTip.TNTUser;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;

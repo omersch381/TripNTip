@@ -1,4 +1,4 @@
-package com.example.FeatureScreens;
+package com.example.TripNTip.FeatureScreens;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -12,10 +12,10 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.TripNTip.R;
-import com.example.TripNTip.Trip;
+import com.example.TripNTip.TripNTip.Trip;
 import com.example.TripNTip.TripNTip.TripAdapter;
-import com.example.TripNTip.TripsBoard;
-import com.example.Utils.Constants;
+import com.example.TripNTip.TripNTip.TripsBoard;
+import com.example.TripNTip.Utils.Constants;
 
 import java.util.ArrayList;
 import java.util.HashMap;

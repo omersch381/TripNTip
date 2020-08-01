@@ -1,10 +1,10 @@
-package com.example.TripNTip;
+package com.example.TripNTip.TripNTip;
 
 import android.content.Context;
 
-import com.example.Utils.Constants;
-import com.example.WeatherAPI.WeatherAPIHandler;
-import com.example.WeatherAPI.WeatherAPIResponse;
+import com.example.TripNTip.Utils.Constants;
+import com.example.TripNTip.WeatherAPI.WeatherAPIHandler;
+import com.example.TripNTip.WeatherAPI.WeatherAPIResponse;
 
 import java.util.Calendar;
 

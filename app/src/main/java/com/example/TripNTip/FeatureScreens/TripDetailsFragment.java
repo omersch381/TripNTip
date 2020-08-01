@@ -1,4 +1,4 @@
-package com.example.FeatureScreens;
+package com.example.TripNTip.FeatureScreens;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -13,8 +13,8 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
 
 import com.example.TripNTip.R;
-import com.example.TripNTip.TravelGuide;
-import com.example.TripNTip.Trip;
+import com.example.TripNTip.TripNTip.TravelGuide;
+import com.example.TripNTip.TripNTip.Trip;
 
 public class TripDetailsFragment extends DialogFragment {
 
