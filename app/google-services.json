@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "970002664327",
+    "firebase_url": "https://tripntip-b5655.firebaseio.com",
+    "project_id": "tripntip-b5655",
+    "storage_bucket": "tripntip-b5655.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:970002664327:android:b5f72112b886a3021ba122",
+        "android_client_info": {
+          "package_name": "com.example.TripNTip"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "970002664327-1mhrgt7lojle6d29l52kaui9nb0bsqcb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCydY_6fOTe19M0eR-6lYY0g5LlQ9K2fCU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "970002664327-1mhrgt7lojle6d29l52kaui9nb0bsqcb.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

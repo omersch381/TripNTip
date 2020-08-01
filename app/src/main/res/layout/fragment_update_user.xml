@@ -1,0 +1,30 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="400dp"
+    android:layout_height="320dp"
+    tools:context="com.example.fetureScreens.UpdateUserFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+    <EditText
+        android:id="@+id/chnage_username"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="@string/change_userName"
+        android:textSize="20dp"
+        android:textStyle="italic"/>
+
+    <EditText
+        android:id="@+id/change_country"
+        android:layout_marginTop="100dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="@string/change_country"
+        android:textSize="20dp"
+        android:textStyle="italic"/>
+    <Button
+        android:layout_width="250dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="200dp"
+        android:text="change"/>
+
+</FrameLayout>

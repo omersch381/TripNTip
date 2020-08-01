@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/stratblue"
+    tools:context=".TripNTip.SignInActivity">
+
+
+    <ImageView
+        android:id="@+id/profile_image"
+        android:layout_width="500dp"
+        android:layout_height="130dp"
+        android:layout_marginTop="90dp"
+        android:src="@drawable/image1" />
+
+    <TextView
+        android:id="@+id/change_profile_picture"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/profile_image"
+        android:layout_centerHorizontal="true"
+        android:clickable="true"
+        android:focusable="true"
+        android:text="@string/change_profile_picture"
+        android:textAlignment="center"
+        android:textColor="@color/signIn"
+        android:textSize="15sp" />
+
+    <TextView
+        android:id="@+id/profile_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/change_profile_picture"
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="48dp"
+        android:layout_marginRight="30dp"
+        android:textAlignment="center"
+        android:textColor="@color/endblue"
+        android:textSize="25sp" />
+
+    <TextView
+        android:id="@+id/profile_country"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/profile_name"
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="48dp"
+        android:layout_marginRight="30dp"
+        android:textAlignment="center"
+        android:textColor="@color/endblue"
+        android:textSize="25sp" />
+
+
+    <Button
+        android:id="@+id/edit"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_below="@id/profile_country"
+        android:layout_marginTop="70dp"
+        android:background="@color/endblue"
+        android:fontFamily="#ans-serif"
+        android:gravity="center"
+        android:onClick="changePersonalDetails"
+        android:text="@string/editPersonal"
+        android:textColor="@color/textColor"
+        android:textSize="30sp"
+        android:textStyle="normal|bold" />
+
+</RelativeLayout>

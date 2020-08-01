@@ -1,0 +1,34 @@
+<resources>
+    <!--    Labels-->
+    <string name="app_name">TripNTip</string>
+    <string name="EmailExample">ex:niv@example.com </string>
+    <string name="PasswordExample">Password </string>
+    <string name="Login">Login </string>
+    <string name="SignUpFromLoginLabel">Not having an account? Sign up! </string>
+    <string name="SignUp">Sign up </string>
+    <string name="SingUpActivityTitle">SignUPActivity</string>
+
+    <!--    Messages-->
+    <string name="signUpSucceededMsg">"User Creation Succeeded."</string>
+    <string name="signUpFailedMsg">"User Creation Failed."</string>
+    <string name="emptyEmailSignUpAttemptMsg">"Please Enter An Email Address"</string>
+    <string name="invalidEmailSignUpAttemptMsg">"Please Enter A Valid Email Address"</string>
+    <string name="emptyPasswordSignUpAttemptMsg">"Please Enter A Password"</string>
+    <string name="invalidPasswordLengthSignUpAttemptMsg">"The Password's Length Has To Be Between 8 to 14 Characters"</string>
+    <string name="invalidPasswordCaseSignUpAttemptMsg">"The Password Has To Contain At Least One Lowercase Character And One Uppercase Character And A Digit"</string>
+    <string name="passwordContainsUsernameSignUpAttemptMsg">"The Password Cannot Contain The Username"</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="change_userName">Enter new User name</string>
+    <string name="change_country">Enter new Country</string>
+    <string name="change_profile_picture">change profile picture</string>
+    <string name="editPersonal">edit personal details</string>
+    <string name="invalidAPIKeyErrorMessage">The request contains invalid API key. Please contact the developers for a fix.</string>
+    <string name="tooManyRequestsErrorMessage">Too many requests have been sent. Please try again later.</string>
+    <string name="generalErrorMessage">A bad response was received from the server. Please contact the developers for a fix.</string>
+    <string name="picturesLoadError">Could not load the trips pictures. Please contact the developers.</string>
+    <string name="streamClosingErrorMessage">Error occurred while closing stream.</string>
+
+    <!--    Trip properties-->
+    <string name="tripTitle">Trip information</string>
+
+</resources>

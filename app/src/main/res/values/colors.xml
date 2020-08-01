@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#6200EE</color>
+    <color name="colorPrimaryDark">#3700B3</color>
+    <color name="colorAccent">#03DAC5</color>
+    <color name="backgroundedittext">#F0FFFF</color>
+    <color name="textColor">#000000</color>
+    <color name="Login">#556B2F</color>
+    <color name="signIn">#FFFAFA</color>
+    <color name="AddPhoto">#295444</color>
+    <color name="navigation_color">#A9A9A9</color>
+    <color name="grayligth">#fafafa</color>
+    <color name="endblue">#80d0c7</color>
+    <color name="stratblue">#13547a</color>
+
+
+
+
+</resources>
