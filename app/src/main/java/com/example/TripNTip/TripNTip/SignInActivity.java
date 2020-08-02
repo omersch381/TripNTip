@@ -17,6 +17,7 @@ import com.example.TripNTip.TripNTip.SignUPActivity;
 import com.example.TripNTip.TripNTip.TravelFeedActivity;
 import com.example.TripNTip.TripNTip.Trip;
 import com.example.TripNTip.Utils.Constants;
+import com.firebase.client.Firebase;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseApp;
@@ -140,7 +141,9 @@ public class SignInActivity extends AppCompatActivity implements Constants {
                             //TODO: Niv - please use Strings file instead of Strings
                             Toast.makeText(SignInActivity.this, "Authentication Succeeded!", Toast.LENGTH_SHORT).show();
                             Intent intent = new Intent(SignInActivity.this, TravelFeedActivity.class);
+                            intent.putExtra("shouldLoadTrips", false);
                             intent.putExtra("apiKey", apiKey);
+                            intent.putExtra("shouldLoadTrips", false);
                             intent.putExtra("trips", trips);
                             SignInActivity.this.startActivity(intent);
                         } else {

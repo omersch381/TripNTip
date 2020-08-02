@@ -47,6 +47,9 @@ public class GridFragment extends Fragment implements Constants {
         assert b != null;
         if (b.getSerializable("trips") != null)
             trips = (HashMap<String, Trip>) b.getSerializable(TRIPS_KEYWORD);
+
+        filteredTrips = new ArrayList<>();
+        filteredTrips.addAll(trips.values());
     }
 
     @Override

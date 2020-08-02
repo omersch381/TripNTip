@@ -2,21 +2,27 @@ package com.example.TripNTip.TripNTip;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.example.TripNTip.R;
-
-import com.example.TripNTip.FeatureScreens.Add_Activity;
+import com.example.TripNTip.FeatureScreens.AddTripActivity;
 import com.example.TripNTip.FeatureScreens.GridFragment;
 import com.example.TripNTip.FeatureScreens.ProfileActivity;
 import com.example.TripNTip.FeatureScreens.SearchFragment;
+import com.example.TripNTip.R;
 import com.example.TripNTip.Utils.Constants;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.HashMap;
 
@@ -25,19 +31,33 @@ public class TravelFeedActivity extends AppCompatActivity implements SearchFragm
 
     private String apiKey;
     private HashMap<String, Trip> trips;
+    private DatabaseReference rootRef;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.travel_feed_activity);
 
-        Bundle bundle = getIntent().getExtras();
-        assert bundle != null;
-        apiKey = bundle.getString("apiKey");
-        trips = (HashMap<String, Trip>) getIntent().getSerializableExtra(TRIPS_KEYWORD);
+        rootRef = FirebaseDatabase.getInstance().getReference();
+
+        loadData();
+
         handleViews();
     }
 
+    private void loadData() {
+        Bundle bundle = getIntent().getExtras();
+        assert bundle != null;
+        if (bundle.getBoolean("shouldLoadApiKey"))
+            loadAPIKeyAgain();
+        else
+            apiKey = bundle.getString("apiKey");
+        if (bundle.getBoolean("shouldLoadTrips")) {
+            trips = new HashMap<>();
+            loadTripsAgain();
+        } else
+            trips = (HashMap<String, Trip>) getIntent().getSerializableExtra(TRIPS_KEYWORD);
+    }
 
     private void handleViews() {
         Bundle bundle = new Bundle();
@@ -55,7 +75,7 @@ public class TravelFeedActivity extends AppCompatActivity implements SearchFragm
                 public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                     switch (menuItem.getItemId()) {
                         case R.id.navAdd:
-                            Intent intentAdd = new Intent(TravelFeedActivity.this, Add_Activity.class);
+                            Intent intentAdd = new Intent(TravelFeedActivity.this, AddTripActivity.class);
                             TravelFeedActivity.this.startActivity(intentAdd);
                             break;
                         case R.id.navProfile:
@@ -94,8 +114,68 @@ public class TravelFeedActivity extends AppCompatActivity implements SearchFragm
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
+        finish();
     }
+
+    private void loadTripsAgain() {
+        loadData(rootRef.child("trips"), new OnGetDataListener() {
+            @Override
+            public void onSuccess(DataSnapshot dataSnapshot) {
+                for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                    Trip currentTrip = ds.getValue(Trip.class);
+                    trips.put(currentTrip.getName(), currentTrip);
+
+                    //update gridView
+                    onDataPass("");
+                }
+            }
+
+            @Override
+            public void onFailure() {
+                Toast.makeText(getApplicationContext(), getResources().getString(R.string.tripLoadingFailureMsg), Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
+    private void loadAPIKeyAgain() {
+        loadData(rootRef.child("apiKeys"), new OnGetDataListener() {
+            @Override
+            public void onSuccess(DataSnapshot dataSnapshot) {
+                for (DataSnapshot ds : dataSnapshot.getChildren())
+                    apiKey = (String) ds.getValue();
+
+                //update gridView
+                onDataPass("");
+            }
+
+            @Override
+            public void onFailure() {
+                Toast.makeText(getApplicationContext(), getResources().getString(R.string.apiKeyLoadingFailureMsg), Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
+    public interface OnGetDataListener {
+        void onSuccess(DataSnapshot dataSnapshot);
+
+        void onFailure();
+    }
+
+    public void loadData(final DatabaseReference ref, final OnGetDataListener listener) {
+        ref.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                listener.onSuccess(dataSnapshot);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                listener.onFailure();
+            }
+        });
+    }
+
+
 }
 
 
