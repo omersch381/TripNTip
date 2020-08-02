@@ -17,3 +17,4 @@
 .externalNativeBuild
 .cxx
 *gradle*
+*misc*
