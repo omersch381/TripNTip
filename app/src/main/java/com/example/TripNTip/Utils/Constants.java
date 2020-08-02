@@ -53,4 +53,7 @@ public interface Constants {
     String API_KEY_LABEL = "apiKey";
     String TRIPS_LABEL = "trips";
 
+    // Lame Cities
+    String PETAH_TIQWA = "Petah Tiqwa";
+
 }

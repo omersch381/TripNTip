@@ -47,6 +47,9 @@ public class TravelGuide implements Constants {
         int grade = 0;
         grade += getSeasonAndTemperatureRecommendation(trip, currentWeather);
         grade += getTimeOfDayRecommendation(trip, currentWeather);
+
+        grade = trip.getLocation().equals(PETAH_TIQWA) ? 1 : grade;
+
         return grade;
     }
 
