@@ -46,32 +46,26 @@ public class SignUPActivity extends AppCompatActivity implements Constants {
 
 
     private void createAccount() {
+        //TODO: Niv - does the method signs you up every run?
+
         EditText emailText = findViewById(R.id.email);
         EditText passwordText = findViewById(R.id.Password);
-//        EditText countryText = (EditText) findViewById(R.id.country);
         final String email = emailText.getText().toString();
         final String password = passwordText.getText().toString();
-        //TODO: country
         final String country = "Israel";
         final String username = "niv naory";
         CredentialsChecker checker = new CredentialsChecker(email, password, country);
         boolean isValid = checker.areTheCredentialsValid();
         if (isValid) {
-            newUser = handleNewUser(email, username, password, country);
+            handleNewUser(email, username, password, country);
             launchSignIn();
         } else
             handleInvalidSignUpRequest(checker);
     }
 
-    public TNTUser handleNewUser(String email, String userName, String password, String country) {
+    public void handleNewUser(String email, String userName, String password, String country) {
         //TODO: we need to check how to store a TNTUSer record in the Firebase DB
         handleFirebaseNewUserCreation(email, password);
-
-        //if (!wasCreated)
-        //  return null;
-
-        return new TNTUser(email, userName, password, country);
-
     }
 
     private void handleFirebaseNewUserCreation(String email, String password) {
@@ -79,13 +73,9 @@ public class SignUPActivity extends AppCompatActivity implements Constants {
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            wasCreated = true;
-                            Toast.makeText(SignUPActivity.this, R.string.signUpSucceededMsg, Toast.LENGTH_SHORT).show();
-                        } else {
-                            Toast.makeText(SignUPActivity.this, R.string.signUpFailedMsg, Toast.LENGTH_SHORT).show();
-                            wasCreated = false;
-                        }
+                        wasCreated = task.isSuccessful();
+                        String signUpMsg = wasCreated ? getResources().getString(R.string.signUpSucceededMsg) : getResources().getString(R.string.signUpFailedMsg);
+                        Toast.makeText(SignUPActivity.this, signUpMsg, Toast.LENGTH_SHORT).show();
                     }
                 });
     }

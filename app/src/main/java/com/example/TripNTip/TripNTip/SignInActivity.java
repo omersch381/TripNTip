@@ -77,12 +77,13 @@ public class SignInActivity extends AppCompatActivity implements Constants {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot ds : dataSnapshot.getChildren()) {
                     Trip currentTrip = ds.getValue(Trip.class);
+                    assert currentTrip != null;
                     trips.put(currentTrip.getName(), currentTrip);
                 }
             }
 
             @Override
-            public void onCancelled(DatabaseError databaseError) {
+            public void onCancelled(@NonNull DatabaseError databaseError) {
                 System.exit(1);
             }
         };
@@ -100,7 +101,7 @@ public class SignInActivity extends AppCompatActivity implements Constants {
             }
 
             @Override
-            public void onCancelled(DatabaseError databaseError) {
+            public void onCancelled(@NonNull DatabaseError databaseError) {
                 System.exit(1);
             }
         };
@@ -129,6 +130,7 @@ public class SignInActivity extends AppCompatActivity implements Constants {
         SignInActivity.this.startActivity(intent);
     }
 
+    //TODO Niv FixMe below comment:
     // try to change this in way that laucnh will get user insted of email,password
     private void launchTravelFeed(String email, String password) {
         mAuth.signInWithEmailAndPassword(email, password)
@@ -141,13 +143,14 @@ public class SignInActivity extends AppCompatActivity implements Constants {
                             //TODO: Niv - please use Strings file instead of Strings
                             Toast.makeText(SignInActivity.this, "Authentication Succeeded!", Toast.LENGTH_SHORT).show();
                             Intent intent = new Intent(SignInActivity.this, TravelFeedActivity.class);
-                            intent.putExtra("shouldLoadTrips", false);
-                            intent.putExtra("apiKey", apiKey);
-                            intent.putExtra("shouldLoadTrips", false);
-                            intent.putExtra("trips", trips);
+                            intent.putExtra(SHOULD_WE_LOAD_THE_API_KEY, false);
+                            intent.putExtra(API_KEY_LABEL, apiKey);
+                            intent.putExtra(SHOULD_WE_LOAD_THE_TRIPS, false);
+                            intent.putExtra(TRIPS_LABEL, trips);
                             SignInActivity.this.startActivity(intent);
                         } else {
                             // If sign in fails, display a message to the user.
+                            //TODO: Niv - please use Strings file instead of Strings
                             Toast.makeText(SignInActivity.this, "Authentication Failed!",
                                     Toast.LENGTH_SHORT).show();
                         }

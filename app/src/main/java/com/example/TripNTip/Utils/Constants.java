@@ -24,7 +24,7 @@ public interface Constants {
     int TRIP_AVERAGE_DURATION = 3;
 
     // TripsBoard properties
-    int TRIPS_BOARD_NUM_OF_COLUMNS = 1;
+    int TRIPS_BOARD_NUM_OF_COLUMNS = 3;
 
     // Trip Pictures properties
     long ONE_MEGABYTE = 1024 * 1024;
@@ -46,5 +46,11 @@ public interface Constants {
     int SUCCESS = 200;
     int UNAUTHORIZED = 401;
     int TOO_MANY_REQUESTS = 429;
+
+    // API properties
+    String SHOULD_WE_LOAD_THE_TRIPS = "shouldLoadTrips";
+    String SHOULD_WE_LOAD_THE_API_KEY = "shouldLoadApiKey";
+    String API_KEY_LABEL = "apiKey";
+    String TRIPS_LABEL = "trips";
 
 }

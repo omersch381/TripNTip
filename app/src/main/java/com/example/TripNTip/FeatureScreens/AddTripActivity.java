@@ -22,12 +22,13 @@ import com.example.TripNTip.R;
 import com.example.TripNTip.TripNTip.SignInActivity;
 import com.example.TripNTip.TripNTip.TravelFeedActivity;
 import com.example.TripNTip.TripNTip.Trip;
+import com.example.TripNTip.Utils.Constants;
 import com.example.TripNTip.WeatherAPI.IsraeliWeatherAPIHandler;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-public class AddTripActivity extends AppCompatActivity {
+public class AddTripActivity extends AppCompatActivity implements Constants {
 
     private boolean summerTrip;
     private boolean dayTrip;
@@ -112,8 +113,8 @@ public class AddTripActivity extends AppCompatActivity {
             }
         });
         Intent intent = new Intent(AddTripActivity.this, TravelFeedActivity.class);
-        intent.putExtra("shouldLoadTrips", true);
-        intent.putExtra("shouldLoadApiKey", true);
+        intent.putExtra(SHOULD_WE_LOAD_THE_TRIPS, true);
+        intent.putExtra(SHOULD_WE_LOAD_THE_API_KEY, true);
         AddTripActivity.this.startActivity(intent);
     }
 

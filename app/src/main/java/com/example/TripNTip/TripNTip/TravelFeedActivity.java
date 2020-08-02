@@ -2,7 +2,6 @@ package com.example.TripNTip.TripNTip;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.widget.Toast;
 
@@ -48,11 +47,11 @@ public class TravelFeedActivity extends AppCompatActivity implements SearchFragm
     private void loadData() {
         Bundle bundle = getIntent().getExtras();
         assert bundle != null;
-        if (bundle.getBoolean("shouldLoadApiKey"))
+        if (bundle.getBoolean(SHOULD_WE_LOAD_THE_API_KEY))
             loadAPIKeyAgain();
         else
-            apiKey = bundle.getString("apiKey");
-        if (bundle.getBoolean("shouldLoadTrips")) {
+            apiKey = bundle.getString(API_KEY_LABEL);
+        if (bundle.getBoolean(SHOULD_WE_LOAD_THE_TRIPS)) {
             trips = new HashMap<>();
             loadTripsAgain();
         } else
@@ -62,8 +61,8 @@ public class TravelFeedActivity extends AppCompatActivity implements SearchFragm
     private void handleViews() {
         Bundle bundle = new Bundle();
         bundle.putSerializable(TRIPS_KEYWORD, trips);
-        commitFragment(new SearchFragment(), R.id.search_fragment_container, trips, ADD_ACTION, bundle);
-        commitFragment(new GridFragment(apiKey), R.id.grid_fragment_container, trips, ADD_ACTION, bundle);
+        commitFragment(new SearchFragment(), R.id.search_fragment_container, ADD_ACTION, bundle);
+        commitFragment(new GridFragment(apiKey), R.id.grid_fragment_container, ADD_ACTION, bundle);
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
         bottomNavigationView.setOnNavigationItemSelectedListener(navigationItemSelectedListener);
@@ -83,7 +82,7 @@ public class TravelFeedActivity extends AppCompatActivity implements SearchFragm
                             TravelFeedActivity.this.startActivity(intentProfile);
                             break;
 
-                        //TODO Niv
+                        //TODO Niv - nav bar fix
 //                        case R.id.navSearch:
 //                            Intent intentSearch = new Intent(TravelFeedActivity.this, SearchActivity.class);
 //                            TravelFeedActivity.this.startActivity(intentSearch);
@@ -98,10 +97,10 @@ public class TravelFeedActivity extends AppCompatActivity implements SearchFragm
         Bundle bundle = new Bundle();
         bundle.putString(GridFragment.QUERY_RECEIVED, data);
         bundle.putSerializable(TRIPS_KEYWORD, trips);
-        commitFragment(new GridFragment(apiKey), R.id.grid_fragment_container, trips, REPLACE_ACTION, bundle);
+        commitFragment(new GridFragment(apiKey), R.id.grid_fragment_container, REPLACE_ACTION, bundle);
     }
 
-    private void commitFragment(Fragment fragment, int fragment_container_id, HashMap<String, Trip> trips, String action, Bundle bundle) {
+    private void commitFragment(Fragment fragment, int fragment_container_id, String action, Bundle bundle) {
         fragment.setArguments(bundle);
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         if (action.equals(ADD_ACTION))
@@ -123,6 +122,7 @@ public class TravelFeedActivity extends AppCompatActivity implements SearchFragm
             public void onSuccess(DataSnapshot dataSnapshot) {
                 for (DataSnapshot ds : dataSnapshot.getChildren()) {
                     Trip currentTrip = ds.getValue(Trip.class);
+                    assert currentTrip != null;
                     trips.put(currentTrip.getName(), currentTrip);
 
                     //update gridView
@@ -174,8 +174,6 @@ public class TravelFeedActivity extends AppCompatActivity implements SearchFragm
             }
         });
     }
-
-
 }
 
 

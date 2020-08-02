@@ -2,7 +2,6 @@ package com.example.TripNTip.FeatureScreens;
 
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,7 +27,6 @@ import java.util.Objects;
 public class GridFragment extends Fragment implements Constants {
     public final static String QUERY_RECEIVED = "";
     private TripAdapter tripAdapter;
-    private TripsBoard board;
     private GridView gridView;
     private String apiKey;
     private HashMap<String, Trip> trips;
@@ -45,7 +43,7 @@ public class GridFragment extends Fragment implements Constants {
         trips = new HashMap<>();
         Bundle b = this.getArguments();
         assert b != null;
-        if (b.getSerializable("trips") != null)
+        if (b.getSerializable(TRIPS_LABEL) != null)
             trips = (HashMap<String, Trip>) b.getSerializable(TRIPS_KEYWORD);
 
         filteredTrips = new ArrayList<>();
@@ -63,7 +61,7 @@ public class GridFragment extends Fragment implements Constants {
         super.onViewCreated(view, savedInstanceState);
 
         gridView = requireActivity().findViewById(R.id.TripsGrid);
-        board = new TripsBoard(trips);
+        TripsBoard board = new TripsBoard(trips);
         tripAdapter = new TripAdapter(getContext(), board);
 
         gridView.setAdapter(tripAdapter);
@@ -82,7 +80,7 @@ public class GridFragment extends Fragment implements Constants {
     }
 
     private void showTrip(Trip trip) {
-        TripDetailsFragment alertDialog = TripDetailsFragment.newInstance("Trip information", trip, apiKey, getContext());
+        TripDetailsFragment alertDialog = TripDetailsFragment.newInstance(trip, apiKey, getContext());
         alertDialog.show(getChildFragmentManager(), "");
     }
 

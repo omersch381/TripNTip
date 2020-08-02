@@ -1,6 +1,9 @@
 package com.example.TripNTip.TripNTip;
 
 import android.content.Context;
+import android.os.Build;
+
+import androidx.annotation.RequiresApi;
 
 import com.example.TripNTip.Utils.Constants;
 import com.example.TripNTip.WeatherAPI.WeatherAPIHandler;
@@ -24,6 +27,7 @@ public class TravelGuide implements Constants {
         this.context = context;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public int howMuchShouldITravelNowIn(Trip trip) {
         /* This function check on real-time how much should the user (in a scale of 1-10) travel
          * in the chosen trip.

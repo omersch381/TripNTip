@@ -35,7 +35,7 @@ public class TripDetailsFragment extends DialogFragment {
         travelGuide = new TravelGuide(apiKey, context);
     }
 
-    public static TripDetailsFragment newInstance(String title, Trip trip, String apiKey, Context context) {
+    public static TripDetailsFragment newInstance(Trip trip, String apiKey, Context context) {
         return new TripDetailsFragment(trip, apiKey, context);
     }
 

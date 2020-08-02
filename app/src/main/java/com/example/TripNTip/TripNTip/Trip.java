@@ -19,6 +19,10 @@ public class Trip implements Serializable {
         this.location = location;
     }
 
+    public Trip() {
+
+    }
+
     public boolean getSummerTrip() {
         return summerTrip;
     }

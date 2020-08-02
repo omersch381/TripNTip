@@ -6,10 +6,13 @@ public class TNTUser {
     private String email;
     private String password;
     private String country;
-    public TNTUser(){}
-    public TNTUser(String email,String userName, String password, String country) {
+
+    public TNTUser() {
+    }
+
+    public TNTUser(String email, String userName, String password, String country) {
         this.email = email;
-        this.username=userName;
+        this.username = userName;
         this.password = password;
         this.country = country;
     }
