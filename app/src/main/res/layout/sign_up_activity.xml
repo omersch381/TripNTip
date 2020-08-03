@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SignUPActivity"
+    tools:context=".TripNTip.SignUPActivity"
     android:background="@drawable/signup_photo"
     >
 
@@ -56,6 +56,23 @@
         android:paddingStart="20dp"
         />
 
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:id="@+id/userName"
+        android:background="@drawable/rounded"
+        android:layout_below="@id/Password"
+        android:textSize="20sp"
+        android:textColor="@color/textColor"
+        android:cursorVisible="true"
+        android:drawablePadding="25dp"
+        android:hint="@string/Username"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginTop="10dp"
+        android:paddingStart="20dp"
+        />
+
 
     <Button
         android:layout_width="match_parent"
@@ -69,7 +86,7 @@
         android:textColor="@color/textColor"
         android:fontFamily="#ans-serif"
         android:textStyle="normal|bold"
-        android:layout_below="@id/Password"
+        android:layout_below="@id/userName"
         android:text="@string/SignUp"/>
 
 </RelativeLayout>

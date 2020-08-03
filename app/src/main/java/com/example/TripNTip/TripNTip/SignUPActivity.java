@@ -7,6 +7,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.os.Parcelable;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -22,6 +23,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.example.TripNTip.R;
+import com.google.firebase.firestore.auth.User;
 
 public class SignUPActivity extends AppCompatActivity implements Constants {
 
@@ -29,14 +31,17 @@ public class SignUPActivity extends AppCompatActivity implements Constants {
     private FirebaseAuth mAuth;
     private DatabaseReference mDataBase;
     private TNTUser newUser;
+    private  final String USERS= "users";
+    private final String  USER="user";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.sign_up_activity);
 
-        mDataBase = FirebaseDatabase.getInstance().getReference("user");
-        System.out.println(mDataBase.getRef());
+        mDataBase = FirebaseDatabase.getInstance().getReference(USERS);
+
+
         mAuth = FirebaseAuth.getInstance();
         Button signUp = findViewById(R.id.signUp);
         signUp.setOnClickListener(new View.OnClickListener() {
@@ -51,17 +56,19 @@ public class SignUPActivity extends AppCompatActivity implements Constants {
     private void createAccount() {
         EditText emailText = findViewById(R.id.email);
         EditText passwordText = findViewById(R.id.Password);
+        EditText usernameText=findViewById(R.id.userName);
 //        EditText countryText = (EditText) findViewById(R.id.country);
         final String email = emailText.getText().toString();
         final String password = passwordText.getText().toString();
+        final String username=usernameText.getText().toString();
         //TODO: country
         final String country = "Israel";
-        final String username = "niv naory";
+        System.out.println("password"+password);
         CredentialsChecker checker = new CredentialsChecker(email, password, country);
         boolean isValid = checker.areTheCredentialsValid();
         if (isValid) {
             newUser = handleNewUser(email, username, password, country);
-            launchTravelFeed();
+            launchTravelFeed(username,newUser);
         } else
             handleInvalidSignUpRequest(checker);
     }
@@ -73,7 +80,7 @@ public class SignUPActivity extends AppCompatActivity implements Constants {
         //if (!wasCreated)
         //  return null;
 
-        return new TNTUser(email, userName, password, country);
+        return new TNTUser(email, userName, password);
 
     }
 
@@ -125,11 +132,11 @@ public class SignUPActivity extends AppCompatActivity implements Constants {
         return statusMessage;
     }
 
-    ///NIV NAORY THE KING
-    private void launchTravelFeed() {
-        String key = mDataBase.push().getKey();
-        mDataBase.child(key).setValue(newUser);
-        Intent intent = new Intent(SignUPActivity.this, TravelFeedActivity.class);
+    private void launchTravelFeed(String username,TNTUser user) {
+        //String key = mDataBase.push().getKey();
+        mDataBase.child(username).setValue(newUser);
+        Intent intent = new Intent(SignUPActivity.this, SignInActivity.class);
+        intent.putExtra(USER, (Parcelable) user);
         SignUPActivity.this.startActivity(intent);
     }
 }

@@ -13,11 +13,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="com.example.FeatureScreens.ProfileActivity" />
-        <activity android:name="com.example.FeatureScreens.Add_Activity" />
-        <activity android:name=".TravelFeedActivity" />
+        <activity android:name="com.example.TripNTip.FeatureScreens.ProfileActivity" />
+        <activity android:name=".TripNTip.TravelFeedActivity" />
             <activity
-            android:name=".SignUPActivity"
+            android:name=".TripNTip.SignUPActivity"
             android:hardwareAccelerated="false"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".TripNTip.SignInActivity">

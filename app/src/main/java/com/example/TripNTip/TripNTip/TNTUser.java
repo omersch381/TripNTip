@@ -7,11 +7,10 @@ public class TNTUser {
     private String password;
     private String country;
     public TNTUser(){}
-    public TNTUser(String email,String userName, String password, String country) {
+    public TNTUser(String email,String userName, String password) {
         this.email = email;
         this.username=userName;
         this.password = password;
-        this.country = country;
     }
 
     public String getUsername() {

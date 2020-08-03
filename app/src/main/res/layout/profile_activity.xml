@@ -42,7 +42,7 @@
         android:textSize="25sp" />
 
     <TextView
-        android:id="@+id/profile_country"
+        android:id="@+id/profile_eamail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/profile_name"
@@ -52,22 +52,5 @@
         android:layout_marginRight="30dp"
         android:textAlignment="center"
         android:textColor="@color/endblue"
-        android:textSize="25sp" />
-
-
-    <Button
-        android:id="@+id/edit"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_below="@id/profile_country"
-        android:layout_marginTop="70dp"
-        android:background="@color/endblue"
-        android:fontFamily="#ans-serif"
-        android:gravity="center"
-        android:onClick="changePersonalDetails"
-        android:text="@string/editPersonal"
-        android:textColor="@color/textColor"
-        android:textSize="30sp"
-        android:textStyle="normal|bold" />
-
+        android:textSize="25sp"/>
 </RelativeLayout>

@@ -26,29 +26,38 @@ public class ProfileActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private DatabaseReference reference;
     private FirebaseDatabase mDataBase;
+    Bundle bundle=new Bundle();
+    DataSnapshot ds;
+
+
     final String WAIT = "Please wait...";
+    final String USER="users";
+
+    final String USERNAME="username";
+    final String EMAIL="email";
     //DatabaseReference reference = FirebaseDatabase.getInstance().getReference("user");
-    private List<TNTUser> users = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        setContentView(R.layout.profile_activity);
         mAuth = FirebaseAuth.getInstance();
         mDataBase = FirebaseDatabase.getInstance();
-        reference = mDataBase.getReference("user");
+        reference = mDataBase.getReference(USER);
         final ProgressDialog progressDialog = ProgressDialog.show(this, "", WAIT);
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                String emailOfCurrentUser = mAuth.getCurrentUser().getEmail();
                 setContentView(R.layout.profile_activity);
-                List<String> keys = new ArrayList<>();
-                for (DataSnapshot datas : dataSnapshot.getChildren()) {
-                    keys.add(datas.getKey());
-                    TNTUser user = datas.getValue(TNTUser.class);
-                    users.add(user);
-                }
-                showDetails();
+                        for(DataSnapshot ds:  dataSnapshot.getChildren()) {
+                            String emailOnDataBase = ds.child(EMAIL).getValue().toString();
+                            if (emailOnDataBase.equals(emailOfCurrentUser)) {
+                                String email=ds.child(EMAIL).getValue().toString();
+                                String userName=ds.child(USERNAME).getValue().toString();
+                                showDetails(emailOfCurrentUser,userName);
+                            }
+
+                        }
                 progressDialog.dismiss();
             }
 
@@ -66,18 +75,12 @@ public class ProfileActivity extends AppCompatActivity {
         alertDialog.show(getSupportFragmentManager(), "");
 
     }
-
-    public void showDetails() {
-        String email = mAuth.getCurrentUser().getEmail();
-        System.out.println("user size" + users.size());
-        for (TNTUser user : users) {
-            if (user.getEmail().equals(email)) {
-                System.out.println("im here!" + user.getEmail());
+   //Show the specific details of the current user.
+    public void showDetails(String currentEmail,String currentUserName) {
                 TextView userName = findViewById(R.id.profile_name);
-                TextView country = findViewById(R.id.profile_country);
-                userName.setText(user.getUsername());
-                country.setText(user.getCountry());
+                TextView email = findViewById(R.id.profile_eamail);
+                userName.setText(currentUserName);
+                email.setText(currentEmail);
+
             }
         }
-    }
-}
