@@ -2,8 +2,11 @@ package com.example.TripNTip.WeatherAPI;
 
 import android.content.Context;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.util.Log;
 import android.widget.Toast;
+
+import androidx.annotation.RequiresApi;
 
 import com.example.TripNTip.R;
 import com.example.TripNTip.TripNTip.Trip;
@@ -24,12 +27,14 @@ public class WeatherAPIHandler implements Constants {
     private BaseWeatherAPI apiHandler;
     private Context context;
 
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public WeatherAPIHandler(String apiKey, Context context) {
         this.apiKey = apiKey;
         this.context = context;
         this.apiHandler = getApiHandler(context);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     private BaseWeatherAPI getApiHandler(Context context) {
         return new IsraeliWeatherAPIHandler(context);
     }
@@ -46,7 +51,7 @@ public class WeatherAPIHandler implements Constants {
 
 
     private URL generateRequestURL(final Trip trip) {
-        int tripId = apiHandler.getID(trip.getName());
+        int tripId = apiHandler.getID(trip.getLocation());
         URL url = null;
 
         try {

@@ -8,6 +8,13 @@
     <string name="SignUpFromLoginLabel">Not having an account? Sign up! </string>
     <string name="SignUp">Sign up </string>
     <string name="SingUpActivityTitle">SignUPActivity</string>
+    <string name="TripAddName">Ex: Tel Aviv</string>
+    <string name="TripAddDescription">Tel Aviv is a nice city, etc…</string>
+    <string name="TripAddIsSummerTrip">Is a summer trip?</string>
+    <string name="TripAddIsDayTrip">Is a day trip?</string>
+    <string name="AddTrip">Add Trip</string>
+    <string name="shouldIDoTheTrip">Should I Go And Do The Trip Now?</string>
+    <string name="trip_current_recommendation_edit_text">Click The Button To Get Our Recommendation</string>
 
     <!--    Messages-->
     <string name="signUpSucceededMsg">"User Creation Succeeded."</string>
@@ -28,8 +35,19 @@
     <string name="generalErrorMessage">A bad response was received from the server. Please contact the developers for a fix.</string>
     <string name="picturesLoadError">Could not load the trips pictures. Please contact the developers.</string>
     <string name="streamClosingErrorMessage">Error occurred while closing stream.</string>
+    <string name="tripWritingSuccessMsg">Trip Was Written Successfully!</string>
+    <string name="tripWritingFailureMsg">Trip Was NOT Written Successfully!</string>
+    <string name="tripLoadingFailureMsg">"Trips loading failed! Exiting…"</string>
+    <string name="apiKeyLoadingFailureMsg">"API key loading failed! Exiting…"</string>
 
     <!--    Trip properties-->
     <string name="tripTitle">Trip information</string>
+    <string name="title_activity_add_trip">AddTripActivity</string>
+
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
 
 </resources>

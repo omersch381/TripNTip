@@ -2,7 +2,7 @@
   "israeliCities": [
     {
       "id": 293014,
-      "name": "Ẕur Moshe",
+      "name": "Zur Moshe",
       "state": "",
       "country": "IL",
       "coord": {
@@ -12,7 +12,7 @@
     },
     {
       "id": 293020,
-      "name": "Ẕur Hadassa",
+      "name": "Zur Hadassa",
       "state": "",
       "country": "IL",
       "coord": {
@@ -42,7 +42,7 @@
     },
     {
       "id": 293153,
-      "name": "Yoqne‘am ‘Illit",
+      "name": "Yoqne‘am Illit",
       "state": "",
       "country": "IL",
       "coord": {
@@ -62,7 +62,7 @@
     },
     {
       "id": 293181,
-      "name": "Yirkā",
+      "name": "Yirka",
       "state": "",
       "country": "IL",
       "coord": {
@@ -82,7 +82,7 @@
     },
     {
       "id": 293203,
-      "name": "Yeroẖam",
+      "name": "Yeroham",
       "state": "",
       "country": "IL",
       "coord": {
@@ -102,7 +102,7 @@
     },
     {
       "id": 293222,
-      "name": "Yavné",
+      "name": "Yavne",
       "state": "",
       "country": "IL",
       "coord": {
@@ -122,7 +122,7 @@
     },
     {
       "id": 293260,
-      "name": "Yad H̱anna",
+      "name": "Yad Hanna",
       "state": "",
       "country": "IL",
       "coord": {
@@ -132,7 +132,7 @@
     },
     {
       "id": 293273,
-      "name": "‘Uzeir",
+      "name": "Uzeir",
       "state": "",
       "country": "IL",
       "coord": {
@@ -152,7 +152,7 @@
     },
     {
       "id": 293286,
-      "name": "Umm el Faḥm",
+      "name": "Umm el Fahm",
       "state": "",
       "country": "IL",
       "coord": {
@@ -162,7 +162,7 @@
     },
     {
       "id": 293304,
-      "name": "Tirat Ẕevi",
+      "name": "Tirat Zevi",
       "state": "",
       "country": "IL",
       "coord": {
@@ -232,7 +232,7 @@
     },
     {
       "id": 293371,
-      "name": "Tel H̱anan",
+      "name": "Tel Hanan",
       "state": "",
       "country": "IL",
       "coord": {
@@ -262,7 +262,7 @@
     },
     {
       "id": 293420,
-      "name": "maalot Tarshīhā",
+      "name": "maalot Tarshiha",
       "state": "",
       "country": "IL",
       "coord": {
@@ -292,7 +292,7 @@
     },
     {
       "id": 293449,
-      "name": "Sūlam",
+      "name": "Sulam",
       "state": "",
       "country": "IL",
       "coord": {
@@ -302,7 +302,7 @@
     },
     {
       "id": 293522,
-      "name": "Shelomi",
+      "name": "Shlomi",
       "state": "",
       "country": "IL",
       "coord": {
@@ -312,7 +312,7 @@
     },
     {
       "id": 293619,
-      "name": "Sederot",
+      "name": "Sderot",
       "state": "",
       "country": "IL",
       "coord": {
@@ -332,7 +332,7 @@
     },
     {
       "id": 293655,
-      "name": "Sakhnīn",
+      "name": "Sakhnin",
       "state": "",
       "country": "IL",
       "coord": {
@@ -342,7 +342,7 @@
     },
     {
       "id": 293657,
-      "name": "Sājūr",
+      "name": "Sajur",
       "state": "",
       "country": "IL",
       "coord": {
@@ -352,7 +352,7 @@
     },
     {
       "id": 293682,
-      "name": "Ruẖama",
+      "name": "Ruhama",
       "state": "",
       "country": "IL",
       "coord": {
@@ -382,7 +382,7 @@
     },
     {
       "id": 293703,
-      "name": "Rishon LeẔiyyon",
+      "name": "Rishon LeZiyyon",
       "state": "",
       "country": "IL",
       "coord": {
@@ -402,7 +402,7 @@
     },
     {
       "id": 293725,
-      "name": "Reẖovot",
+      "name": "Rehovot",
       "state": "",
       "country": "IL",
       "coord": {
@@ -502,7 +502,7 @@
     },
     {
       "id": 293831,
-      "name": "Qiryat Moẕqin",
+      "name": "Qiryat MoZqin",
       "state": "",
       "country": "IL",
       "coord": {
@@ -512,7 +512,7 @@
     },
     {
       "id": 293836,
-      "name": "Qiryat H̱ayyim",
+      "name": "Qiryat Hayyim",
       "state": "",
       "country": "IL",
       "coord": {
@@ -552,7 +552,7 @@
     },
     {
       "id": 293857,
-      "name": "Qevuẕat Yavne",
+      "name": "QevuZat Yavne",
       "state": "",
       "country": "IL",
       "coord": {
@@ -572,7 +572,7 @@
     },
     {
       "id": 293918,
-      "name": "Petaẖ Tiqwa",
+      "name": "Petah Tiqwa",
       "state": "",
       "country": "IL",
       "coord": {
@@ -592,7 +592,7 @@
     },
     {
       "id": 293943,
-      "name": "Pardés H̱anna Karkur",
+      "name": "Pardes Hanna Karkur",
       "state": "",
       "country": "IL",
       "coord": {
@@ -682,7 +682,7 @@
     },
     {
       "id": 294042,
-      "name": "Newé Ẕedeq",
+      "name": "Newe Zedeq",
       "state": "",
       "country": "IL",
       "coord": {
@@ -762,7 +762,7 @@
     },
     {
       "id": 294093,
-      "name": "Neẖalim",
+      "name": "Nehalim",
       "state": "",
       "country": "IL",
       "coord": {
@@ -772,7 +772,7 @@
     },
     {
       "id": 294097,
-      "name": "Naẕerat ‘Illit",
+      "name": "NaZerat ‘Illit",
       "state": "",
       "country": "IL",
       "coord": {
@@ -792,7 +792,7 @@
     },
     {
       "id": 294114,
-      "name": "Naḥf",
+      "name": "Nahf",
       "state": "",
       "country": "IL",
       "coord": {
@@ -832,7 +832,7 @@
     },
     {
       "id": 294205,
-      "name": "Mi‘ilyā",
+      "name": "Mi‘ilya",
       "state": "",
       "country": "IL",
       "coord": {
@@ -882,7 +882,7 @@
     },
     {
       "id": 294377,
-      "name": "Maẖseya",
+      "name": "Mahseya",
       "state": "",
       "country": "IL",
       "coord": {
@@ -892,7 +892,7 @@
     },
     {
       "id": 294384,
-      "name": "Maẖanayim",
+      "name": "Mahanayim",
       "state": "",
       "country": "IL",
       "coord": {
@@ -902,7 +902,7 @@
     },
     {
       "id": 294387,
-      "name": "Maghār",
+      "name": "Maghar",
       "state": "",
       "country": "IL",
       "coord": {
@@ -942,7 +942,7 @@
     },
     {
       "id": 294492,
-      "name": "Kefar Yona",
+      "name": "kfar Yona",
       "state": "",
       "country": "IL",
       "coord": {
@@ -952,7 +952,7 @@
     },
     {
       "id": 294498,
-      "name": "Kefar Vitqin",
+      "name": "kfar Vitqin",
       "state": "",
       "country": "IL",
       "coord": {
@@ -962,7 +962,7 @@
     },
     {
       "id": 294502,
-      "name": "Kefar Tavor",
+      "name": "kfar Tavor",
       "state": "",
       "country": "IL",
       "coord": {
@@ -972,7 +972,7 @@
     },
     {
       "id": 294508,
-      "name": "Kefar Shemaryahu",
+      "name": "kfar Shemaryahu",
       "state": "",
       "country": "IL",
       "coord": {
@@ -992,7 +992,7 @@
     },
     {
       "id": 294545,
-      "name": "Kefar H̱abad",
+      "name": "kfar Habad",
       "state": "",
       "country": "IL",
       "coord": {
@@ -1002,7 +1002,7 @@
     },
     {
       "id": 294568,
-      "name": "Kefar Aharon",
+      "name": "kfar Aharon",
       "state": "",
       "country": "IL",
       "coord": {
@@ -1012,7 +1012,7 @@
     },
     {
       "id": 294571,
-      "name": "Kaukab Abū el Hījā",
+      "name": "Kaukab Abu el Hija",
       "state": "",
       "country": "IL",
       "coord": {
@@ -1042,7 +1042,7 @@
     },
     {
       "id": 294604,
-      "name": "Kafr Qāsim",
+      "name": "Kafr Qasim",
       "state": "",
       "country": "IL",
       "coord": {
@@ -1062,7 +1062,7 @@
     },
     {
       "id": 294608,
-      "name": "Kafr Mandā",
+      "name": "Kafr Manda",
       "state": "",
       "country": "IL",
       "coord": {
@@ -1072,7 +1072,7 @@
     },
     {
       "id": 294610,
-      "name": "Kafr Kannā",
+      "name": "Kafr Kanna",
       "state": "",
       "country": "IL",
       "coord": {
@@ -1082,7 +1082,7 @@
     },
     {
       "id": 294611,
-      "name": "Kafr Kammā",
+      "name": "Kafr Kamma",
       "state": "",
       "country": "IL",
       "coord": {
@@ -1092,7 +1092,7 @@
     },
     {
       "id": 294615,
-      "name": "Kābūl",
+      "name": "Kabul",
       "state": "",
       "country": "IL",
       "coord": {
@@ -1112,7 +1112,7 @@
     },
     {
       "id": 294627,
-      "name": "Jīsh",
+      "name": "Jish",
       "state": "",
       "country": "IL",
       "coord": {
@@ -1122,7 +1122,7 @@
     },
     {
       "id": 294634,
-      "name": "Jaljūlya",
+      "name": "Jaljulya",
       "state": "",
       "country": "IL",
       "coord": {
@@ -1142,7 +1142,7 @@
     },
     {
       "id": 294658,
-      "name": "Iksāl",
+      "name": "Iksal",
       "state": "",
       "country": "IL",
       "coord": {
@@ -1152,7 +1152,7 @@
     },
     {
       "id": 294661,
-      "name": "Ibṭīn",
+      "name": "Ibṭin",
       "state": "",
       "country": "IL",
       "coord": {
@@ -1162,7 +1162,7 @@
     },
     {
       "id": 294666,
-      "name": "Ḥurfeish",
+      "name": "hurfeish",
       "state": "",
       "country": "IL",
       "coord": {
@@ -1172,7 +1172,7 @@
     },
     {
       "id": 294751,
-      "name": "H̱olon",
+      "name": "Holon",
       "state": "",
       "country": "IL",
       "coord": {
@@ -1192,7 +1192,7 @@
     },
     {
       "id": 294777,
-      "name": "Herẕliyya B",
+      "name": "HerZliyya B",
       "state": "",
       "country": "IL",
       "coord": {
@@ -1232,7 +1232,7 @@
     },
     {
       "id": 294817,
-      "name": "H̱aẕerim",
+      "name": "HaZerim",
       "state": "",
       "country": "IL",
       "coord": {
@@ -1402,7 +1402,7 @@
     },
     {
       "id": 295157,
-      "name": "Esh Sheikh Dannūn",
+      "name": "Esh Sheikh Dannun",
       "state": "",
       "country": "IL",
       "coord": {
@@ -1482,7 +1482,7 @@
     },
     {
       "id": 295269,
-      "name": "El Fureidīs",
+      "name": "El Fureidis",
       "state": "",
       "country": "IL",
       "coord": {
@@ -1522,7 +1522,7 @@
     },
     {
       "id": 295339,
-      "name": "Deir Ḥannā",
+      "name": "Deir hanna",
       "state": "",
       "country": "IL",
       "coord": {
@@ -1542,7 +1542,7 @@
     },
     {
       "id": 295370,
-      "name": "Dabbūrīya",
+      "name": "Dabburiya",
       "state": "",
       "country": "IL",
       "coord": {
@@ -1572,7 +1572,7 @@
     },
     {
       "id": 295404,
-      "name": "Bīr el Maksūr",
+      "name": "Bir el Maksur",
       "state": "",
       "country": "IL",
       "coord": {
@@ -1592,7 +1592,7 @@
     },
     {
       "id": 295424,
-      "name": "Bet Yiẕẖaq",
+      "name": "Bet YiZhaq",
       "state": "",
       "country": "IL",
       "coord": {
@@ -1702,7 +1702,7 @@
     },
     {
       "id": 295553,
-      "name": "Basmat Ṭab‘ūn",
+      "name": "Basmat Ṭab‘un",
       "state": "",
       "country": "IL",
       "coord": {
@@ -1712,7 +1712,7 @@
     },
     {
       "id": 295571,
-      "name": "Bāqa el Gharbīya",
+      "name": "Baqa el Gharbiya",
       "state": "",
       "country": "IL",
       "coord": {
@@ -1812,7 +1812,7 @@
     },
     {
       "id": 295772,
-      "name": "Abū Ghaush",
+      "name": "Abu Ghaush",
       "state": "",
       "country": "IL",
       "coord": {

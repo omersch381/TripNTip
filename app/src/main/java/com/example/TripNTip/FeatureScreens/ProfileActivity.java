@@ -52,7 +52,6 @@ public class ProfileActivity extends AppCompatActivity {
                         for(DataSnapshot ds:  dataSnapshot.getChildren()) {
                             String emailOnDataBase = ds.child(EMAIL).getValue().toString();
                             if (emailOnDataBase.equals(emailOfCurrentUser)) {
-                                String email=ds.child(EMAIL).getValue().toString();
                                 String userName=ds.child(USERNAME).getValue().toString();
                                 showDetails(emailOfCurrentUser,userName);
                             }

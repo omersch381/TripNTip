@@ -9,15 +9,18 @@ public class Trip implements Serializable {
     private boolean summerTrip;
     private boolean dayTrip;
     private int id;
+    private String location;
 
-    public Trip(String name, String description, boolean summerTrip, boolean dayTrip) {
+    public Trip(String name, String description, boolean summerTrip, boolean dayTrip, String location) {
         this.name = name;
         this.description = description;
         this.summerTrip = summerTrip;
         this.dayTrip = dayTrip;
+        this.location = location;
     }
 
-    public Trip(){
+    public Trip() {
+
     }
 
     public boolean getSummerTrip() {
@@ -42,5 +45,9 @@ public class Trip implements Serializable {
 
     public String getDescription() {
         return description;
+    }
+
+    public String getLocation() {
+        return location;
     }
 }

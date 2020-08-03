@@ -1,6 +1,9 @@
 package com.example.TripNTip.WeatherAPI;
 
 import android.content.Context;
+import android.os.Build;
+
+import androidx.annotation.RequiresApi;
 
 import com.example.TripNTip.Utils.Constants;
 
@@ -15,6 +18,7 @@ import java.util.Objects;
 
 public class IsraeliWeatherAPIHandler extends BaseWeatherAPI implements Constants {
 
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public IsraeliWeatherAPIHandler(Context context) {
         this.cities_translator = new HashMap<>();
 
@@ -25,14 +29,18 @@ public class IsraeliWeatherAPIHandler extends BaseWeatherAPI implements Constant
         }
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     private void loadCities(Context context) throws JSONException {
         JSONObject json = new JSONObject(Objects.requireNonNull(loadJSONFromAsset(context)));
         JSONArray jArray = json.getJSONArray("israeliCities");
+        cities = new String[jArray.length()];
 
         for (int i = 0; i < jArray.length(); i++) {
             JSONObject json_data = jArray.getJSONObject(i);
             cities_translator.put(json_data.getString("name"), json_data.getInt("id"));
+            cities[i] = json_data.getString("name");
         }
+
     }
 
     private String loadJSONFromAsset(Context context) {
@@ -54,5 +62,9 @@ public class IsraeliWeatherAPIHandler extends BaseWeatherAPI implements Constant
     @Override
     public Integer getID(String tripName) {
         return super.getID(tripName);
+    }
+
+    public String[] getCities() {
+        return super.getCities();
     }
 }

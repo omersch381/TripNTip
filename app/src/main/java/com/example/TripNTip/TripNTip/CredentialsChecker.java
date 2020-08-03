@@ -7,19 +7,14 @@ import java.util.regex.Pattern;
 public class CredentialsChecker implements Constants {
     private String email = "";
     private String password = "";
-    private String country = "";
     private int checkerStatus = -1;
-
-    public CredentialsChecker(String email, String password, String country) {
-        this.email = email;
-        this.password = password;
-        this.country = country;
-    }
 
     public CredentialsChecker(String email, String password) {
         this.email = email;
         this.password = password;
     }
+
+
 
     public  boolean areTheCredentialsValid() {
         // The returnMessage will be assigned inside the checker methods.

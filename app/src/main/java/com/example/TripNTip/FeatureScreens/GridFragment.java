@@ -1,5 +1,6 @@
 package com.example.TripNTip.FeatureScreens;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +10,7 @@ import android.widget.GridView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 
 import com.example.TripNTip.R;
@@ -25,16 +27,13 @@ import java.util.Objects;
 public class GridFragment extends Fragment implements Constants {
     public final static String QUERY_RECEIVED = "";
     private TripAdapter tripAdapter;
-    private TripsBoard board;
     private GridView gridView;
     private String apiKey;
     private HashMap<String, Trip> trips;
+    private ArrayList<Trip> filteredTrips;
 
     public GridFragment(String apiKey) {
         this.apiKey = apiKey;
-    }
-
-    public GridFragment() {
     }
 
     @Override
@@ -44,8 +43,11 @@ public class GridFragment extends Fragment implements Constants {
         trips = new HashMap<>();
         Bundle b = this.getArguments();
         assert b != null;
-        if (b.getSerializable("trips") != null)
+        if (b.getSerializable(TRIPS_LABEL) != null)
             trips = (HashMap<String, Trip>) b.getSerializable(TRIPS_KEYWORD);
+
+        filteredTrips = new ArrayList<>();
+        filteredTrips.addAll(trips.values());
     }
 
     @Override
@@ -59,7 +61,7 @@ public class GridFragment extends Fragment implements Constants {
         super.onViewCreated(view, savedInstanceState);
 
         gridView = requireActivity().findViewById(R.id.TripsGrid);
-        board = new TripsBoard(trips);
+        TripsBoard board = new TripsBoard(trips);
         tripAdapter = new TripAdapter(getContext(), board);
 
         gridView.setAdapter(tripAdapter);
@@ -72,33 +74,40 @@ public class GridFragment extends Fragment implements Constants {
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int index, long l) {
-                showTrip(board.getTrip(index));
+                showTrip(filteredTrips.get(index));
             }
         });
     }
 
     private void showTrip(Trip trip) {
-        TripDetailsFragment alertDialog = TripDetailsFragment.newInstance("Trip information", trip, apiKey, getContext());
+        TripDetailsFragment alertDialog = TripDetailsFragment.newInstance(trip, apiKey, getContext());
         alertDialog.show(getChildFragmentManager(), "");
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     public void onStart() {
         super.onStart();
+        setOnClick();
         Bundle args = getArguments();
         if (args != null && args.getString(QUERY_RECEIVED) != null)
             parseData(Objects.requireNonNull(args.getString(QUERY_RECEIVED)));
     }
 
     private void parseData(String string) {
-        ArrayList<Trip> filteredTrips = new ArrayList<>();
+        filteredTrips = new ArrayList<>();
+        boolean wasChanged = false;
         if (string.isEmpty())
             filteredTrips.addAll(trips.values());
         else
             for (Trip trip : trips.values())
-                if (trip.getName().equals(string))
+                if (trip.getName().equals(string)) {
                     filteredTrips.add(trip);
-        tripAdapter.filter(filteredTrips);
-        tripAdapter.notifyDataSetChanged();
+                    wasChanged = true;
+                }
+        if (wasChanged) {
+            tripAdapter.filter(filteredTrips);
+            tripAdapter.notifyDataSetChanged();
+        }
     }
 }

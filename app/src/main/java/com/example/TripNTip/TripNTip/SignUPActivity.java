@@ -2,17 +2,13 @@ package com.example.TripNTip.TripNTip;
 
 import android.content.Intent;
 import android.os.Bundle;
-
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-
-import android.os.Parcelable;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-
+import com.example.TripNTip.R;
 import com.example.TripNTip.Utils.Constants;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -20,10 +16,6 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.example.TripNTip.R;
-import com.google.firebase.firestore.auth.User;
 
 public class SignUPActivity extends AppCompatActivity implements Constants {
 
@@ -44,6 +36,7 @@ public class SignUPActivity extends AppCompatActivity implements Constants {
 
         mAuth = FirebaseAuth.getInstance();
         Button signUp = findViewById(R.id.signUp);
+
         signUp.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View v) {
@@ -54,6 +47,8 @@ public class SignUPActivity extends AppCompatActivity implements Constants {
 
 
     private void createAccount() {
+        //TODO: Niv - does the method signs you up every run?
+
         EditText emailText = findViewById(R.id.email);
         EditText passwordText = findViewById(R.id.Password);
         EditText usernameText=findViewById(R.id.userName);
@@ -61,26 +56,22 @@ public class SignUPActivity extends AppCompatActivity implements Constants {
         final String email = emailText.getText().toString();
         final String password = passwordText.getText().toString();
         final String username=usernameText.getText().toString();
-        //TODO: country
-        final String country = "Israel";
-        System.out.println("password"+password);
-        CredentialsChecker checker = new CredentialsChecker(email, password, country);
+
+        CredentialsChecker checker = new CredentialsChecker(email, password);
         boolean isValid = checker.areTheCredentialsValid();
+        TNTUser user=new TNTUser(email,username,password);
         if (isValid) {
-            newUser = handleNewUser(email, username, password, country);
-            launchTravelFeed(username,newUser);
+
+             handleNewUser(email, password);
+             launchSignIn(user);
         } else
             handleInvalidSignUpRequest(checker);
     }
 
-    public TNTUser handleNewUser(String email, String userName, String password, String country) {
+    public void handleNewUser(String email,String password) {
         //TODO: we need to check how to store a TNTUSer record in the Firebase DB
-        handleFirebaseNewUserCreation(email, password);
+        handleFirebaseNewUserCreation(email,password);
 
-        //if (!wasCreated)
-        //  return null;
-
-        return new TNTUser(email, userName, password);
 
     }
 
@@ -89,13 +80,9 @@ public class SignUPActivity extends AppCompatActivity implements Constants {
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            wasCreated = true;
-                            Toast.makeText(SignUPActivity.this, R.string.signUpSucceededMsg, Toast.LENGTH_SHORT).show();
-                        } else {
-                            Toast.makeText(SignUPActivity.this, R.string.signUpFailedMsg, Toast.LENGTH_SHORT).show();
-                            wasCreated = false;
-                        }
+                        wasCreated = task.isSuccessful();
+                        String signUpMsg = wasCreated ? getResources().getString(R.string.signUpSucceededMsg) : getResources().getString(R.string.signUpFailedMsg);
+                        Toast.makeText(SignUPActivity.this, signUpMsg, Toast.LENGTH_SHORT).show();
                     }
                 });
     }
@@ -132,11 +119,11 @@ public class SignUPActivity extends AppCompatActivity implements Constants {
         return statusMessage;
     }
 
-    private void launchTravelFeed(String username,TNTUser user) {
-        //String key = mDataBase.push().getKey();
-        mDataBase.child(username).setValue(newUser);
+
+    private void launchSignIn(TNTUser user) {
+        String key = mDataBase.push().getKey();
+        mDataBase.child(user.getUsername()).setValue(user);
         Intent intent = new Intent(SignUPActivity.this, SignInActivity.class);
-        intent.putExtra(USER, (Parcelable) user);
         SignUPActivity.this.startActivity(intent);
     }
 }

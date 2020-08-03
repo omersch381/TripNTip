@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.TripNTip">
-    
+
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
@@ -13,10 +13,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="com.example.TripNTip.FeatureScreens.ProfileActivity" />
+
+        <activity android:name=".FeatureScreens.ProfileActivity" />
+        <activity android:name=".FeatureScreens.AddTripActivity" />
         <activity android:name=".TripNTip.TravelFeedActivity" />
-            <activity
-            android:name=".TripNTip.SignUPActivity"
+        <activity android:name=".TripNTip.SignUPActivity"
+
             android:hardwareAccelerated="false"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".TripNTip.SignInActivity">
