@@ -6,7 +6,6 @@ public class TNTUser {
     private String email;
     private String password;
     private String country;
-
     public TNTUser(String email, String userName, String password) {
         this.email = email;
         this.username = userName;
