@@ -9,6 +9,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.TripNTip.TripNTip.CredentialsChecker;
@@ -19,6 +21,8 @@ import com.example.TripNTip.TripNTip.Trip;
 import com.example.TripNTip.Utils.Constants;
 import com.firebase.client.Firebase;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.AuthResult;
@@ -28,6 +32,9 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.ListResult;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.HashMap;
 
@@ -35,6 +42,7 @@ public class SignInActivity extends AppCompatActivity implements Constants {
     private FirebaseAuth mAuth;
     private String apiKey;
     private HashMap<String, Trip> trips;
+    private ImageView[] tripsImages;
 
 
     @Override
@@ -47,12 +55,14 @@ public class SignInActivity extends AppCompatActivity implements Constants {
 
         trips = new HashMap<>();
 
+
+
 //        // For Testing Purposes only!!
 //        Intent intent = new Intent(SignInActivity.this, TravelFeedActivity.class);
 //        SignInActivity.this.startActivity(intent);
 
         //For Testing Purposes only!!
-        launchTravelFeed("nivniv@gmail.com", "NivNiv29");
+//        launchTravelFeed("nivniv@gmail.com", "NivNiv29");
 
         loadInitialData();
 
@@ -68,6 +78,7 @@ public class SignInActivity extends AppCompatActivity implements Constants {
         loadTrips();
         loadAPIKey();
     }
+
 
     private void loadTrips() {
         DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
@@ -143,6 +154,8 @@ public class SignInActivity extends AppCompatActivity implements Constants {
                             //TODO: Niv - please use Strings file instead of Strings
                             Toast.makeText(SignInActivity.this, "Authentication Succeeded!", Toast.LENGTH_SHORT).show();
                             Intent intent = new Intent(SignInActivity.this, TravelFeedActivity.class);
+
+                            //TODO Omer: remove the booleans, they are redundent
                             intent.putExtra(SHOULD_WE_LOAD_THE_API_KEY, false);
                             intent.putExtra(API_KEY_LABEL, apiKey);
                             intent.putExtra(SHOULD_WE_LOAD_THE_TRIPS, false);

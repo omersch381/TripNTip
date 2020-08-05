@@ -1,48 +1,34 @@
 package com.example.TripNTip.TripNTip;
 
 import android.content.Context;
-import android.net.Uri;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Build;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
-import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
+import androidx.core.view.ViewCompat;
 
-import com.example.TripNTip.R;
-import com.example.TripNTip.TripNTip.SquaredImageView;
-import com.example.TripNTip.TripNTip.Trip;
-import com.example.TripNTip.TripNTip.TripView;
-import com.example.TripNTip.TripNTip.TripsBoard;
 import com.example.TripNTip.Utils.Constants;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.ListResult;
-import com.google.firebase.storage.StorageReference;
-import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class TripAdapter extends BaseAdapter implements Constants {
 
     private TripsBoard board;
     private Context myContext;
-    private StorageReference listRef;
     private ArrayList<Trip> filteredTrips;
+    private HashMap<String, Bitmap> tripsAlbum;
 
-    private SquaredImageView[] tripsAlbum;
-    private int counter = 0;
-
-    public TripAdapter(Context myContext, TripsBoard board) {
+    public TripAdapter(Context myContext, TripsBoard board, HashMap<String, Bitmap> tripsAlbum) {
         this.board = board;
         this.myContext = myContext;
-        listRef = FirebaseStorage.getInstance().getReference().getRoot().child("Images");
-//        generateTripsAlbum();
+        this.tripsAlbum = tripsAlbum;
         filteredTrips = new ArrayList<>();
         initializeTrips();
     }
@@ -52,38 +38,6 @@ public class TripAdapter extends BaseAdapter implements Constants {
             filteredTrips.add(board.getTrip(i));
     }
 
-    private void generateTripsAlbum() {
-
-        // Instantiating the Album
-        int numOfTrips = board.getBoardSize();
-        tripsAlbum = new SquaredImageView[numOfTrips];
-
-        for (int i = 0; i < numOfTrips; i++)
-            tripsAlbum[i] = new SquaredImageView(myContext);
-
-        // Downloading the Album's images from Firebase
-        listRef.listAll().addOnSuccessListener(new OnSuccessListener<ListResult>() {
-            @Override
-            public void onSuccess(ListResult listResult) {
-                for (final StorageReference item : listResult.getItems()) {
-                    item.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                        @Override
-                        public void onSuccess(Uri uri) {
-                            Picasso.get().load(uri).into(tripsAlbum[counter]);
-                            tripsAlbum[counter++].setName(item.getName());
-                        }
-                    });
-                }
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Toast.makeText(myContext, myContext.getResources().getString(R.string.picturesLoadError), Toast.LENGTH_LONG).show();
-            }
-        });
-        counter = 0;
-    }
-
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
@@ -91,21 +45,21 @@ public class TripAdapter extends BaseAdapter implements Constants {
         if (tripView == null)
             tripView = new TripView(myContext);
 
+        final Trip trip = filteredTrips.get(position);
+
         tripView = getASquaredTile(tripView);
 
-        final Trip trip = filteredTrips.get(position);
+        setTripViewBackground(tripView, trip);
 
         tripView.setText(trip.getName());
 
         return tripView;
     }
 
-    private int getTripIndex(Trip trip) {
-        for (int i = 0; i < tripsAlbum.length; i++) {
-            if (trip.getName().equals(tripsAlbum[i].getName()))
-                return i;
-        }
-        return -1;
+    private void setTripViewBackground(TripView tripView, Trip trip) {
+        //TODO Niv: make sure we add the pictures in the same way the set them in this method.
+        BitmapDrawable background = new BitmapDrawable(myContext.getResources(), tripsAlbum.get(trip.getId() + ".png"));
+        ViewCompat.setBackground(tripView, background);
     }
 
     public void filter(ArrayList<Trip> filteredTrips) {
@@ -115,26 +69,6 @@ public class TripAdapter extends BaseAdapter implements Constants {
     public void setFilteredTrips(ArrayList<Trip> filteredTrips) {
         this.filteredTrips = filteredTrips;
     }
-
-//    private void getPictureFromFirebase(StorageReference currentGsReference, final SquaredImageView finalView) {
-//        currentGsReference.getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
-//            @Override
-//            public void onSuccess(byte[] bytes) {
-//                Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-//                finalView.setImageBitmap(bitmap);
-//            }
-//        }).addOnFailureListener(new OnFailureListener() {
-//            @Override
-//            public void onFailure(@NonNull Exception exception) {
-//                // TODO
-//            }
-//        });
-//    }
-//
-//
-//    private String getReference(StorageReference item) {
-//        return APP_URL_REFERENCE_PREFIX + item.getPath();
-//    }
 
     @Override
     public int getCount() {
@@ -170,9 +104,5 @@ public class TripAdapter extends BaseAdapter implements Constants {
                 }
         );
         return tripView;
-    }
-
-    public SquaredImageView[] getTripsAlbum() {
-        return tripsAlbum;
     }
 }

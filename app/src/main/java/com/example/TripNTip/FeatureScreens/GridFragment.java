@@ -1,5 +1,6 @@
 package com.example.TripNTip.FeatureScreens;
 
+import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -25,14 +26,17 @@ import java.util.Objects;
 
 
 public class GridFragment extends Fragment implements Constants {
+
     public final static String QUERY_RECEIVED = "";
     private TripAdapter tripAdapter;
     private GridView gridView;
     private String apiKey;
     private HashMap<String, Trip> trips;
     private ArrayList<Trip> filteredTrips;
+    private HashMap<String, Bitmap> tripsAlbum;
 
-    public GridFragment(String apiKey) {
+    public GridFragment(String apiKey, HashMap<String, Bitmap> tripsAlbum) {
+        this.tripsAlbum = tripsAlbum;
         this.apiKey = apiKey;
     }
 
@@ -44,7 +48,7 @@ public class GridFragment extends Fragment implements Constants {
         Bundle b = this.getArguments();
         assert b != null;
         if (b.getSerializable(TRIPS_LABEL) != null)
-            trips = (HashMap<String, Trip>) b.getSerializable(TRIPS_KEYWORD);
+            trips = (HashMap<String, Trip>) b.getSerializable(TRIPS_LABEL);
 
         filteredTrips = new ArrayList<>();
         filteredTrips.addAll(trips.values());
@@ -56,13 +60,18 @@ public class GridFragment extends Fragment implements Constants {
         return inflater.inflate(R.layout.grid_fragment, container, false);
     }
 
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        handleViews();
+    }
 
+
+    public void handleViews() {
         gridView = requireActivity().findViewById(R.id.TripsGrid);
         TripsBoard board = new TripsBoard(trips);
-        tripAdapter = new TripAdapter(getContext(), board);
+        tripAdapter = new TripAdapter(getContext(), board, tripsAlbum);
 
         gridView.setAdapter(tripAdapter);
         gridView.setNumColumns(board.getNumOfColumns());
@@ -88,7 +97,6 @@ public class GridFragment extends Fragment implements Constants {
     @Override
     public void onStart() {
         super.onStart();
-        setOnClick();
         Bundle args = getArguments();
         if (args != null && args.getString(QUERY_RECEIVED) != null)
             parseData(Objects.requireNonNull(args.getString(QUERY_RECEIVED)));
@@ -96,18 +104,15 @@ public class GridFragment extends Fragment implements Constants {
 
     private void parseData(String string) {
         filteredTrips = new ArrayList<>();
-        boolean wasChanged = false;
+
         if (string.isEmpty())
             filteredTrips.addAll(trips.values());
         else
             for (Trip trip : trips.values())
-                if (trip.getName().equals(string)) {
+                if (trip.getName().toLowerCase().contains((string.toLowerCase())))
                     filteredTrips.add(trip);
-                    wasChanged = true;
-                }
-        if (wasChanged) {
-            tripAdapter.filter(filteredTrips);
-            tripAdapter.notifyDataSetChanged();
-        }
+
+        tripAdapter.filter(filteredTrips);
+        tripAdapter.notifyDataSetChanged();
     }
 }

@@ -1,6 +1,9 @@
 package com.example.TripNTip.TripNTip;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -16,12 +19,18 @@ import com.example.TripNTip.FeatureScreens.ProfileActivity;
 import com.example.TripNTip.FeatureScreens.SearchFragment;
 import com.example.TripNTip.R;
 import com.example.TripNTip.Utils.Constants;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.ListResult;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.HashMap;
 
@@ -31,6 +40,8 @@ public class TravelFeedActivity extends AppCompatActivity implements SearchFragm
     private String apiKey;
     private HashMap<String, Trip> trips;
     private DatabaseReference rootRef;
+    private HashMap<String, Bitmap> tripsAlbum;
+    private int numOfPictures = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,29 +51,70 @@ public class TravelFeedActivity extends AppCompatActivity implements SearchFragm
         rootRef = FirebaseDatabase.getInstance().getReference();
 
         loadData();
-
-        handleViews();
     }
 
     private void loadData() {
         Bundle bundle = getIntent().getExtras();
         assert bundle != null;
-        if (bundle.getBoolean(SHOULD_WE_LOAD_THE_API_KEY))
+
+        apiKey = bundle.getString(API_KEY_LABEL, "");
+        if (apiKey.equals(""))
             loadAPIKeyAgain();
-        else
-            apiKey = bundle.getString(API_KEY_LABEL);
-        if (bundle.getBoolean(SHOULD_WE_LOAD_THE_TRIPS)) {
-            trips = new HashMap<>();
+
+        trips = (HashMap<String, Trip>) getIntent().getSerializableExtra(TRIPS_LABEL);
+        if (trips == null)
             loadTripsAgain();
-        } else
-            trips = (HashMap<String, Trip>) getIntent().getSerializableExtra(TRIPS_KEYWORD);
+
+        tripsAlbum = new HashMap<>();
+
+        loadBitmaps();
+    }
+
+    private void loadBitmaps() {
+        FirebaseStorage storage = FirebaseStorage.getInstance();
+        Task<ListResult> listRef = storage.getReference().child("images").listAll();
+        listRef.addOnSuccessListener(new OnSuccessListener<ListResult>() {
+            @Override
+            public void onSuccess(ListResult listResult) {
+                for (final StorageReference item : listResult.getItems()) {
+                    final ProgressDialog progressDialog = ProgressDialog.show(TravelFeedActivity.this, "", getResources().getString(R.string.waitMessage));
+
+                    item.getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+                        @Override
+                        public void onSuccess(byte[] bytes) {
+                            Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                            tripsAlbum.put(item.getName(), bitmap);
+                            progressDialog.dismiss();
+                            numOfPictures++;
+                            if (numOfPictures == trips.size())
+                                handleViews();
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception exception) {
+                            Toast.makeText(getApplicationContext(), getResources().getString(R.string.tripAlbumLoadingFailureMsg), Toast.LENGTH_LONG).show();
+                            finish();
+                        }
+                    });
+                }
+            }
+        })
+
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(getApplicationContext(), getResources().getString(R.string.tripAlbumLoadingFailureMsg), Toast.LENGTH_LONG).show();
+                        finish();
+                    }
+                });
     }
 
     private void handleViews() {
         Bundle bundle = new Bundle();
-        bundle.putSerializable(TRIPS_KEYWORD, trips);
+        bundle.putSerializable(TRIPS_LABEL, trips);
+        bundle.putSerializable(TRIPS_ALBUM_LABEL, tripsAlbum);
         commitFragment(new SearchFragment(), R.id.search_fragment_container, ADD_ACTION, bundle);
-        commitFragment(new GridFragment(apiKey), R.id.grid_fragment_container, ADD_ACTION, bundle);
+        commitFragment(new GridFragment(apiKey, tripsAlbum), R.id.grid_fragment_container, ADD_ACTION, bundle);
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
         bottomNavigationView.setOnNavigationItemSelectedListener(navigationItemSelectedListener);
@@ -96,8 +148,8 @@ public class TravelFeedActivity extends AppCompatActivity implements SearchFragm
     public void onDataPass(String data) {
         Bundle bundle = new Bundle();
         bundle.putString(GridFragment.QUERY_RECEIVED, data);
-        bundle.putSerializable(TRIPS_KEYWORD, trips);
-        commitFragment(new GridFragment(apiKey), R.id.grid_fragment_container, REPLACE_ACTION, bundle);
+        bundle.putSerializable(TRIPS_LABEL, trips);
+        commitFragment(new GridFragment(apiKey, tripsAlbum), R.id.grid_fragment_container, REPLACE_ACTION, bundle);
     }
 
     private void commitFragment(Fragment fragment, int fragment_container_id, String action, Bundle bundle) {
@@ -133,6 +185,7 @@ public class TravelFeedActivity extends AppCompatActivity implements SearchFragm
             @Override
             public void onFailure() {
                 Toast.makeText(getApplicationContext(), getResources().getString(R.string.tripLoadingFailureMsg), Toast.LENGTH_LONG).show();
+                finish();
             }
         });
     }
@@ -151,6 +204,7 @@ public class TravelFeedActivity extends AppCompatActivity implements SearchFragm
             @Override
             public void onFailure() {
                 Toast.makeText(getApplicationContext(), getResources().getString(R.string.apiKeyLoadingFailureMsg), Toast.LENGTH_LONG).show();
+                finish();
             }
         });
     }

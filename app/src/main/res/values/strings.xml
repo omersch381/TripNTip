@@ -38,7 +38,9 @@
     <string name="tripWritingSuccessMsg">Trip Was Written Successfully!</string>
     <string name="tripWritingFailureMsg">Trip Was NOT Written Successfully!</string>
     <string name="tripLoadingFailureMsg">"Trips loading failed! Exiting…"</string>
+    <string name="tripAlbumLoadingFailureMsg">"Trips album loading failed! Exiting…"</string>
     <string name="apiKeyLoadingFailureMsg">"API key loading failed! Exiting…"</string>
+    <string name="waitMessage">"Please wait until we load the data…"</string>
 
     <!--    Trip properties-->
     <string name="tripTitle">Trip information</string>

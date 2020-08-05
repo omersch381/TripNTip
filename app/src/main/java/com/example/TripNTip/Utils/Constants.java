@@ -35,7 +35,6 @@ public interface Constants {
     int OPEN_WEATHER_API_WAIT_THRESHOLD = 100000;
 
     // Fragments data pass keywords
-    String TRIPS_KEYWORD = "trips";
     String ADD_ACTION = "add";
     String REPLACE_ACTION = "replace";
 
@@ -52,6 +51,7 @@ public interface Constants {
     String SHOULD_WE_LOAD_THE_API_KEY = "shouldLoadApiKey";
     String API_KEY_LABEL = "apiKey";
     String TRIPS_LABEL = "trips";
+    String TRIPS_ALBUM_LABEL = "tripsAlbum";
 
     // Lame Cities
     String PETAH_TIQWA = "Petah Tiqwa";
