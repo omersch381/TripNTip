@@ -62,7 +62,7 @@ public class SignInActivity extends AppCompatActivity implements Constants {
 //        SignInActivity.this.startActivity(intent);
 
         //For Testing Purposes only!!
-//        launchTravelFeed("nivniv@gmail.com", "NivNiv29");
+        //launchTravelFeed("nivniv@gmail.com", "NivNiv29");
 
         loadInitialData();
 

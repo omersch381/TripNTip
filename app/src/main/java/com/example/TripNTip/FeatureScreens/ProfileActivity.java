@@ -1,52 +1,57 @@
 package com.example.TripNTip.FeatureScreens;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.Registry;
+import com.bumptech.glide.annotation.GlideModule;
+import com.bumptech.glide.module.AppGlideModule;
 import com.example.TripNTip.R;
-import com.example.TripNTip.TripNTip.TNTUser;
+import com.example.TripNTip.Utils.Constants;
+import com.firebase.ui.storage.images.FirebaseImageLoader;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FileDownloadTask;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.squareup.picasso.Picasso;
 
 import android.app.ProgressDialog;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.List;
 
-public class ProfileActivity extends AppCompatActivity {
-    private static final int  SELECT_IMAGE =  1;
+public class ProfileActivity extends AppCompatActivity implements Constants {
+    private static final int SELECT_IMAGE = 1;
     private FirebaseAuth mAuth;
     private DatabaseReference reference;
     private FirebaseDatabase mDataBase;
+    FirebaseStorage storageInstance;
+    StorageReference storageRef;
+    private String emailOfCurrentUser;
     DataSnapshot ds;
     ImageView imageView;
-
-
-    final String WAIT = "Please wait...";
-    final String USER="users";
-
-    final String USERNAME="username";
-    final String EMAIL="email";
-    //DatabaseReference reference = FirebaseDatabase.getInstance().getReference("user");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,16 +63,16 @@ public class ProfileActivity extends AppCompatActivity {
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                String emailOfCurrentUser = mAuth.getCurrentUser().getEmail();
+                emailOfCurrentUser = mAuth.getCurrentUser().getEmail();
                 setContentView(R.layout.profile_activity);
-                        for(DataSnapshot ds:  dataSnapshot.getChildren()) {
-                            String emailOnDataBase = ds.child(EMAIL).getValue().toString();
-                            if (emailOnDataBase.equals(emailOfCurrentUser)) {
-                                String userName=ds.child(USERNAME).getValue().toString();
-                                showDetails(emailOfCurrentUser,userName);
-                            }
+                for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                    String emailOnDataBase = ds.child(EMAIL).getValue().toString();
+                    if (emailOnDataBase.equals(emailOfCurrentUser)) {
+                        String userName = ds.child(USERNAME).getValue().toString();
+                        showDetails(emailOfCurrentUser, userName);
+                    }
 
-                        }
+                }
                 progressDialog.dismiss();
             }
 
@@ -85,47 +90,74 @@ public class ProfileActivity extends AppCompatActivity {
         alertDialog.show(getSupportFragmentManager(), "");
 
     }
-   //Show the specific details of the current user.
-    public void showDetails(String currentEmail,String currentUserName) {
-                TextView userName = findViewById(R.id.profile_name);
-                TextView email = findViewById(R.id.profile_eamail);
 
-                userName.setText(currentUserName);
-                email.setText(currentEmail);
-           }
+    //Show the specific details of the current user.
+    public void showDetails(String currentEmail, String currentUserName) {
+        TextView userName = findViewById(R.id.profile_name);
+        TextView email = findViewById(R.id.profile_eamail);
+        imageView = findViewById(R.id.profile_image);
+        initiateImage();
 
-           public void changeProfilePicture(View v) throws FileNotFoundException {
-               Intent intent = new Intent();
-               intent.setType("image/*");
-               intent.setAction(Intent.ACTION_GET_CONTENT);
-               startActivityForResult(Intent.createChooser(intent, "Select Picture"),1);
+        userName .setText(currentUserName);
+        email.setText(currentEmail);
+        //now need to get the current image
+    }
 
-           }
+    public void changeProfilePicture(View v) throws FileNotFoundException {
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(Intent.createChooser(intent, "Select Picture"), 1);
+
+    }
 
     @Override
     protected void onActivityResult(int reqCode, int resultCode, Intent data) {
         super.onActivityResult(reqCode, resultCode, data);
         if (resultCode == RESULT_OK) {
-            try {
                 final Uri imageUri = data.getData();
                 imageView = findViewById(R.id.profile_image);
-                final InputStream imageStream = getContentResolver().openInputStream(imageUri);
+            try {
+                final  InputStream  imageStream = getContentResolver().openInputStream(imageUri);
                 final Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
+                //insert the selected image into imageview and represent him on the app
                 imageView.setImageBitmap(selectedImage);
-
-                FirebaseStorage storage = FirebaseStorage.getInstance();
-                StorageReference storageRef = storage.getReferenceFromUrl("gs://tripntip-b5655.appspot.com/images/user");
-                storageRef.putFile(imageUri);
-                
-                //StorageReference mountainImagesRef = storageRef.child("images/" + chat_id + Utils.getCurrentTimeStamp() + ".jpg");
-                //now we need to uplude the image to firebase and connect this bwtween the current user
+                saveImageTofireBase(imageUri);
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
-                Toast.makeText(this, "Something went wrong", Toast.LENGTH_LONG).show();
             }
 
-        }else {
-            Toast.makeText(this, "You haven't picked Image",Toast.LENGTH_LONG).show();
+
+        } else {
+            Toast.makeText(this, "You haven't picked Image", Toast.LENGTH_LONG).show();
+        }
+    }
+
+    public void initiateImage() {
+        storageInstance = FirebaseStorage.getInstance();
+        storageRef = storageInstance.getReference(IMEGES).child(USER).child(emailOfCurrentUser);
+
+        try {
+            final File localFile = File.createTempFile(IMEGES, "bmp");
+            storageRef.getFile(localFile).addOnSuccessListener(new OnSuccessListener< FileDownloadTask.TaskSnapshot >() {
+                @Override
+                public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
+                    final Bitmap selectedImage = BitmapFactory.decodeFile(localFile.getAbsolutePath());
+                    imageView.setImageBitmap(selectedImage);
+                }
+            });
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+        public void saveImageTofireBase(Uri imageUri){
+        if(imageUri!=null) {
+            storageInstance = FirebaseStorage.getInstance();
+            storageRef = storageInstance.getReference("images").child("users").child(emailOfCurrentUser);
+            storageRef.putFile(imageUri);
+        }else{
+            Toast.makeText(this, "You haven't picked Image", Toast.LENGTH_LONG).show();
         }
     }
         }

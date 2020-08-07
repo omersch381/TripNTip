@@ -56,4 +56,12 @@ public interface Constants {
     // Lame Cities
     String PETAH_TIQWA = "Petah Tiqwa";
 
+   //for profile activity
+    final String WAIT = "Please wait...";
+    final String USER = "users";
+
+    final String USERNAME = "username";
+    final String EMAIL = "email";
+    final String IMEGES = "email";
+
 }
