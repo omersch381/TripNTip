@@ -74,8 +74,24 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="92dp"
         android:layout_marginLeft="92dp"
-        android:layout_marginTop="144dp"
-        android:text="" />
+        android:layout_marginTop="50dp"
+        android:hint="@string/AddTripChooseLocation" />
+
+    <Button
+        android:id="@+id/uploadTripPicture"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginRight="20dp"
+        android:background="@color/Login"
+        android:fontFamily="#ans-serif"
+        android:text="@string/UploadTripPicture"
+        android:textColor="@color/textColor"
+        android:textSize="20sp"
+        android:textStyle="normal|bold" />
 
     <Button
         android:id="@+id/add_trip_button"
@@ -86,6 +102,7 @@
         android:layout_marginTop="50dp"
         android:layout_marginEnd="20dp"
         android:layout_marginRight="20dp"
+        android:layout_marginBottom="10dp"
         android:background="@color/Login"
         android:fontFamily="#ans-serif"
         android:text="@string/AddTrip"

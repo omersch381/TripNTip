@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
@@ -19,7 +18,6 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.TripNTip.R;
-import com.example.TripNTip.TripNTip.SignInActivity;
 import com.example.TripNTip.TripNTip.TravelFeedActivity;
 import com.example.TripNTip.TripNTip.Trip;
 import com.example.TripNTip.Utils.Constants;
@@ -34,13 +32,14 @@ public class AddTripActivity extends AppCompatActivity implements Constants {
     private boolean dayTrip;
     private AutoCompleteTextView countryChooser;
     private IsraeliWeatherAPIHandler handler;
+    private boolean imageUploadSucceeded;
+    private String[] listOfCities;
 
     public AddTripActivity() {
         summerTrip = false;
         dayTrip = false;
+        imageUploadSucceeded = false;
     }
-
-    //TODO: take care of the picture upload
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
@@ -50,6 +49,8 @@ public class AddTripActivity extends AppCompatActivity implements Constants {
 
         handler = new IsraeliWeatherAPIHandler(getApplicationContext());
 
+        listOfCities = handler.getCities();
+
         handleCountryChooser();
 
         setOnClicks();
@@ -57,20 +58,29 @@ public class AddTripActivity extends AppCompatActivity implements Constants {
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     private void handleCountryChooser() {
-        ArrayAdapter<String> countryArrayAdapter = new ArrayAdapter<>(this, android.R.layout.select_dialog_item, handler.getCities());
-        countryChooser = (AutoCompleteTextView) findViewById(R.id.autoCompleteTextView);
+        ArrayAdapter<String> countryArrayAdapter = new ArrayAdapter<>(this, android.R.layout.select_dialog_item, listOfCities);
+        countryChooser = findViewById(R.id.autoCompleteTextView);
         countryChooser.setThreshold(1);
         countryChooser.setAdapter(countryArrayAdapter);
         countryChooser.setTextColor(Color.BLACK);
     }
 
     private void setOnClicks() {
+        Button uploadPictureButton = findViewById(R.id.uploadTripPicture);
         Button addTripButton = findViewById(R.id.add_trip_button);
         CheckBox summerTripCB = findViewById(R.id.add_trip_isSummerTrip);
         CheckBox dayTripCB = findViewById(R.id.add_trip_isDayTrip);
 
+        uploadPictureButton.setOnClickListener(new View.OnClickListener() {
+
+            @RequiresApi(api = Build.VERSION_CODES.O)
+            public void onClick(View v) {
+                uploadTripPicture();
+            }
+        });
         addTripButton.setOnClickListener(new View.OnClickListener() {
 
+            @RequiresApi(api = Build.VERSION_CODES.O)
             public void onClick(View v) {
                 addTrip();
             }
@@ -89,14 +99,51 @@ public class AddTripActivity extends AppCompatActivity implements Constants {
         });
     }
 
+    private void uploadTripPicture() {
+        // TODO implement upload picture method
+//        if (succeed)
+//            imageUploadSucceeded = true;
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
     private void addTrip() {
-        writeTripToFirebase(createTripFromUserData());
+        String status;
+        if ((status = allConditionApply()).equals(TRIP_CREATION_SUCCEED))
+            writeTripToFirebase(createTripFromUserData());
+        else
+            Toast.makeText(getApplicationContext(), status, Toast.LENGTH_LONG).show();
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    private String allConditionApply() {
+        EditText tripNameET = findViewById(R.id.add_trip_name);
+        EditText descriptionNameET = findViewById(R.id.add_trip_description);
+
+        if (tripNameET.getText().toString().isEmpty())
+            return getResources().getString(R.string.AddTripNameIsEmptyMsg);
+        else if (descriptionNameET.getText().toString().isEmpty())
+            return getResources().getString(R.string.AddTripDescriptionIsEmptyMsg);
+        else if (!isLocationInTheLocationsList(countryChooser.getText().toString()))
+            return getResources().getString(R.string.AddTripLocationNotInList);
+        else if (!imageUploadSucceeded)
+            return getResources().getString(R.string.AddTripImageUploadFailed);
+        else
+            return TRIP_CREATION_SUCCEED;
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    private boolean isLocationInTheLocationsList(String location) {
+        if (location.isEmpty())
+            return false;
+        for (String locationInList : listOfCities)
+            if (location.equals(locationInList))
+                return true;
+        return false;
     }
 
     private void writeTripToFirebase(Trip trip) {
         DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
         final DatabaseReference tripsRef = rootRef.child("trips");
-
         int id = handler.getID(trip.getLocation());
         trip.setId(id);
 
@@ -113,8 +160,6 @@ public class AddTripActivity extends AppCompatActivity implements Constants {
             }
         });
         Intent intent = new Intent(AddTripActivity.this, TravelFeedActivity.class);
-        intent.putExtra(SHOULD_WE_LOAD_THE_TRIPS, true);
-        intent.putExtra(SHOULD_WE_LOAD_THE_API_KEY, true);
         AddTripActivity.this.startActivity(intent);
     }
 

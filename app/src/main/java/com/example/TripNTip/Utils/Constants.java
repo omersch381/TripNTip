@@ -56,4 +56,7 @@ public interface Constants {
     // Lame Cities
     String PETAH_TIQWA = "Petah Tiqwa";
 
+    // AddTrip constants
+    String TRIP_CREATION_SUCCEED = "success";
+
 }

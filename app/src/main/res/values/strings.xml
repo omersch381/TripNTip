@@ -15,6 +15,7 @@
     <string name="AddTrip">Add Trip</string>
     <string name="shouldIDoTheTrip">Should I Go And Do The Trip Now?</string>
     <string name="trip_current_recommendation_edit_text">Click The Button To Get Our Recommendation</string>
+    <string name="UploadTripPicture">Click Here To Upload A Picture</string>
 
     <!--    Messages-->
     <string name="signUpSucceededMsg">"User Creation Succeeded."</string>
@@ -41,6 +42,11 @@
     <string name="tripAlbumLoadingFailureMsg">"Trips album loading failed! Exiting…"</string>
     <string name="apiKeyLoadingFailureMsg">"API key loading failed! Exiting…"</string>
     <string name="waitMessage">"Please wait until we load the data…"</string>
+    <string name="AddTripNameIsEmptyMsg">"Please type a name for the trip"</string>
+    <string name="AddTripDescriptionIsEmptyMsg">"Please type a description for the trip"</string>
+    <string name="AddTripLocationNotInList">"Please choose a location that is in the list for the trip"</string>
+    <string name="AddTripChooseLocation">"Choose Trip's Location (start typing)"</string>
+    <string name="AddTripImageUploadFailed">"Couldn't Upload An Image. Please Try To Upload Another Image"</string>
 
     <!--    Trip properties-->
     <string name="tripTitle">Trip information</string>
