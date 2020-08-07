@@ -1,5 +1,9 @@
 package com.example.TripNTip.FeatureScreens;
 
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -13,21 +17,28 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
 public class ProfileActivity extends AppCompatActivity {
+    private static final int  SELECT_IMAGE =  1;
     private FirebaseAuth mAuth;
     private DatabaseReference reference;
     private FirebaseDatabase mDataBase;
-    Bundle bundle=new Bundle();
     DataSnapshot ds;
+    ImageView imageView;
 
 
     final String WAIT = "Please wait...";
@@ -78,8 +89,43 @@ public class ProfileActivity extends AppCompatActivity {
     public void showDetails(String currentEmail,String currentUserName) {
                 TextView userName = findViewById(R.id.profile_name);
                 TextView email = findViewById(R.id.profile_eamail);
+
                 userName.setText(currentUserName);
                 email.setText(currentEmail);
+           }
 
+           public void changeProfilePicture(View v) throws FileNotFoundException {
+               Intent intent = new Intent();
+               intent.setType("image/*");
+               intent.setAction(Intent.ACTION_GET_CONTENT);
+               startActivityForResult(Intent.createChooser(intent, "Select Picture"),1);
+
+           }
+
+    @Override
+    protected void onActivityResult(int reqCode, int resultCode, Intent data) {
+        super.onActivityResult(reqCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            try {
+                final Uri imageUri = data.getData();
+                imageView = findViewById(R.id.profile_image);
+                final InputStream imageStream = getContentResolver().openInputStream(imageUri);
+                final Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
+                imageView.setImageBitmap(selectedImage);
+
+                FirebaseStorage storage = FirebaseStorage.getInstance();
+                StorageReference storageRef = storage.getReferenceFromUrl("gs://tripntip-b5655.appspot.com/images/user");
+                storageRef.putFile(imageUri);
+                
+                //StorageReference mountainImagesRef = storageRef.child("images/" + chat_id + Utils.getCurrentTimeStamp() + ".jpg");
+                //now we need to uplude the image to firebase and connect this bwtween the current user
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+                Toast.makeText(this, "Something went wrong", Toast.LENGTH_LONG).show();
             }
+
+        }else {
+            Toast.makeText(this, "You haven't picked Image",Toast.LENGTH_LONG).show();
+        }
+    }
         }
