@@ -12,8 +12,7 @@
         android:id="@+id/profile_image"
         android:layout_width="500dp"
         android:layout_height="130dp"
-        android:layout_marginTop="90dp"
-        android:src="@drawable/image1" />
+        android:layout_marginTop="90dp" />
 
     <TextView
         android:id="@+id/change_profile_picture"
@@ -26,7 +25,9 @@
         android:text="@string/change_profile_picture"
         android:textAlignment="center"
         android:textColor="@color/signIn"
-        android:textSize="15sp" />
+        android:textSize="15sp"
+        android:onClick="changeProfilePicture"
+        android:gravity="center_horizontal" />
 
     <TextView
         android:id="@+id/profile_name"
