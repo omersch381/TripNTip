@@ -64,5 +64,5 @@ public interface Constants {
     final String USER = "users";
     final String USERNAME = "username";
     final String EMAIL = "email";
-    final String IMEGES = "email";
+    final String IMEGES = "images";
 }
