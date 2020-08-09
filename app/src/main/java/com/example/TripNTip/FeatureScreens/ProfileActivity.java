@@ -6,9 +6,11 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.Image;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.TripNTip.R;
@@ -23,19 +25,23 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FileDownloadTask;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+
 import android.app.ProgressDialog;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Objects;
 
 public class ProfileActivity extends AppCompatActivity implements Constants {
     private FirebaseAuth mAuth;
     private String emailOfCurrentUser;
+    // FixMe Niv: a variable which is not used. below it is being overridden
     DataSnapshot ds;
     ImageView imageView;
 
@@ -43,19 +49,22 @@ public class ProfileActivity extends AppCompatActivity implements Constants {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mAuth = FirebaseAuth.getInstance();
-        final FirebaseDatabase mDataBase  = FirebaseDatabase.getInstance();
+        final FirebaseDatabase mDataBase = FirebaseDatabase.getInstance();
         final DatabaseReference reference = mDataBase.getReference(USER);
 
+        //FixMe Niv: please use a string from the strings file
         final ProgressDialog progressDialog = ProgressDialog.show(this, "", WAIT);
         reference.addValueEventListener(new ValueEventListener() {
+
+            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                emailOfCurrentUser = mAuth.getCurrentUser().getEmail();
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                emailOfCurrentUser = Objects.requireNonNull(mAuth.getCurrentUser()).getEmail();
                 setContentView(R.layout.profile_activity);
                 for (DataSnapshot ds : dataSnapshot.getChildren()) {
-                    String emailOnDataBase = ds.child(EMAIL).getValue().toString();
+                    String emailOnDataBase = Objects.requireNonNull(ds.child(EMAIL).getValue()).toString();
                     if (emailOnDataBase.equals(emailOfCurrentUser)) {
-                        String userName = ds.child(USERNAME).getValue().toString();
+                        String userName = Objects.requireNonNull(ds.child(USERNAME).getValue()).toString();
                         showDetails(emailOfCurrentUser, userName);
                     }
 
@@ -74,16 +83,16 @@ public class ProfileActivity extends AppCompatActivity implements Constants {
     }
 
 
-
-
     //Show the specific details of the current user.
     public void showDetails(String currentEmail, String currentUserName) {
         TextView userName = findViewById(R.id.profile_name);
         TextView email = findViewById(R.id.profile_eamail);
+
+        //FixMe Niv: unnecessary line
         imageView = findViewById(R.id.profile_image);
 
         initiateImage();
-        userName .setText(currentUserName);
+        userName.setText(currentUserName);
         email.setText(currentEmail);
 
     }
@@ -106,7 +115,7 @@ public class ProfileActivity extends AppCompatActivity implements Constants {
             final Uri imageUri = data.getData();
             imageView = findViewById(R.id.profile_image);
             try {
-                final  InputStream  imageStream = getContentResolver().openInputStream(imageUri);
+                final InputStream imageStream = getContentResolver().openInputStream(imageUri);
                 final Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
                 //insert the selected image into imageview and represent him on the app
                 imageView.setImageBitmap(selectedImage);
@@ -123,10 +132,11 @@ public class ProfileActivity extends AppCompatActivity implements Constants {
 
     public void initiateImage() {
         final FirebaseStorage storageInstance = FirebaseStorage.getInstance();
-        final  StorageReference storageRef = storageInstance.getReference(IMEGES).child(USER).child(emailOfCurrentUser);
+        //FixMe: type - IMAGES
+        final StorageReference storageRef = storageInstance.getReference(IMEGES).child(USER).child(emailOfCurrentUser);
         try {
             final File localFile = File.createTempFile(IMEGES, "bmp");
-            storageRef.getFile(localFile).addOnSuccessListener(new OnSuccessListener< FileDownloadTask.TaskSnapshot >() {
+            storageRef.getFile(localFile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
                 @Override
                 public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
                     final Bitmap selectedImage = BitmapFactory.decodeFile(localFile.getAbsolutePath());
@@ -138,13 +148,14 @@ public class ProfileActivity extends AppCompatActivity implements Constants {
         }
 
     }
+
     // FixMe Niv: type with the word Fire in the method name
-    public void saveImageToDataBase(Uri imageUri){
-        if(imageUri!=null) {
+    public void saveImageToDataBase(Uri imageUri) {
+        if (imageUri != null) {
             final FirebaseStorage storageInstance = FirebaseStorage.getInstance();
-            final  StorageReference storageRef  = storageInstance.getReference(IMEGES).child(USER).child(emailOfCurrentUser);
+            final StorageReference storageRef = storageInstance.getReference(IMEGES).child(USER).child(emailOfCurrentUser);
             storageRef.putFile(imageUri);
-        }else{
+        } else {
             Toast.makeText(this, R.string.Eror_database, Toast.LENGTH_LONG).show();
         }
     }

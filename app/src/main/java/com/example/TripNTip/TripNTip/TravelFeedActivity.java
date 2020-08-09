@@ -124,6 +124,8 @@ public class TravelFeedActivity extends AppCompatActivity implements SearchFragm
             new BottomNavigationView.OnNavigationItemSelectedListener() {
                 @Override
                 public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                    tripsAlbum.clear();
+                    trips.clear();
                     switch (menuItem.getItemId()) {
                         case R.id.navAdd:
                             Intent intentAdd = new Intent(TravelFeedActivity.this, AddTripActivity.class);

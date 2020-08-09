@@ -12,8 +12,7 @@
         android:id="@+id/profile_image"
         android:layout_width="500dp"
         android:layout_height="130dp"
-        android:layout_marginTop="90dp"
-        android:src="@drawable/image1"/>
+        android:layout_marginTop="90dp"/>
 
     <TextView
         android:id="@+id/change_profile_picture"
