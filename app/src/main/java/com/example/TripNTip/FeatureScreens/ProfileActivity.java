@@ -74,7 +74,7 @@ public class ProfileActivity extends AppCompatActivity implements Constants {
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                // FixMe Niv: Please use a msg from the strings file
+                // FixMe Niv: Please use a Toast or something similar. Users can't read the console
                 System.out.println(R.string.Eror_database);
 
             }
@@ -110,14 +110,13 @@ public class ProfileActivity extends AppCompatActivity implements Constants {
     @Override
     protected void onActivityResult(int reqCode, int resultCode, Intent data) {
         super.onActivityResult(reqCode, resultCode, data);
-        // FixMe Niv: it seems like RESULT_OK == -1. Is that the correct constant?
         if (resultCode == RESULT_OK) {
             final Uri imageUri = data.getData();
             imageView = findViewById(R.id.profile_image);
             try {
                 final InputStream imageStream = getContentResolver().openInputStream(imageUri);
                 final Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
-                //insert the selected image into imageview and represent him on the app
+                //insert the selected image into imageView and represent him on the app
                 imageView.setImageBitmap(selectedImage);
                 saveImageToDataBase(imageUri);
             } catch (FileNotFoundException e) {
@@ -132,7 +131,7 @@ public class ProfileActivity extends AppCompatActivity implements Constants {
 
     public void initiateImage() {
         final FirebaseStorage storageInstance = FirebaseStorage.getInstance();
-        //FixMe: type - IMAGES
+        //FixMe: typo - IMAGES
         final StorageReference storageRef = storageInstance.getReference(IMEGES).child(USER).child(emailOfCurrentUser);
         try {
             final File localFile = File.createTempFile(IMEGES, "bmp");
