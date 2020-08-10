@@ -47,6 +47,7 @@
     <string name="AddTripLocationNotInList">"Please choose a location that is in the list for the trip"</string>
     <string name="AddTripChooseLocation">"Choose Trip's Location (start typing)"</string>
     <string name="AddTripImageUploadFailed">"Couldn't Upload An Image. Please Try To Upload Another Image"</string>
+    <string name="AddTripImageUploadTitle">"Please Select An Image"</string>
 
     <!--    Trip properties-->
     <string name="tripTitle">Trip information</string>

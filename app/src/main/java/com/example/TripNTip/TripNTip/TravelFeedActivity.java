@@ -1,14 +1,19 @@
 package com.example.TripNTip.TripNTip;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
@@ -49,45 +54,62 @@ public class TravelFeedActivity extends AppCompatActivity implements SearchFragm
         setContentView(R.layout.travel_feed_activity);
 
         rootRef = FirebaseDatabase.getInstance().getReference();
-
-        loadData();
     }
 
-    private void loadData() {
+    @Override
+    protected void onStart() {
+        super.onStart();
+        handleDataLoading();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        tripsAlbum.clear();
+        numOfPictures = 0;
+        trips.clear();
+    }
+
+    private void handleDataLoading() {
         Bundle bundle = getIntent().getExtras();
         assert bundle != null;
 
-        apiKey = bundle.getString(API_KEY_LABEL, "");
-        if (apiKey.equals(""))
+        if (apiKey == null && bundle.getBoolean(SHOULD_WE_LOAD_THE_API_KEY, true))
             loadAPIKeyAgain();
+        else
+            apiKey = bundle.getString(API_KEY_LABEL, "");
 
-        trips = (HashMap<String, Trip>) getIntent().getSerializableExtra(TRIPS_LABEL);
-        if (trips == null)
+        if (trips == null && !bundle.getBoolean(SHOULD_WE_LOAD_THE_TRIPS, true))
+            trips = (HashMap<String, Trip>) getIntent().getSerializableExtra(TRIPS_LABEL);
+        else
             loadTripsAgain();
 
-        tripsAlbum = new HashMap<>();
-
-        loadBitmaps();
+        if (tripsAlbum == null || tripsAlbum.isEmpty())
+            loadBitmaps();
     }
 
+
     private void loadBitmaps() {
+        tripsAlbum = new HashMap<>();
         FirebaseStorage storage = FirebaseStorage.getInstance();
-        Task<ListResult> listRef = storage.getReference().child("images").listAll();
+        Task<ListResult> listRef = storage.getReference().child("images").child("trips").listAll();
         listRef.addOnSuccessListener(new OnSuccessListener<ListResult>() {
             @Override
             public void onSuccess(ListResult listResult) {
                 for (final StorageReference item : listResult.getItems()) {
-                    final ProgressDialog progressDialog = ProgressDialog.show(TravelFeedActivity.this, "", getResources().getString(R.string.waitMessage));
+                    final ProgressDialog bitmapProgressDialog = ProgressDialog.show(TravelFeedActivity.this, "", getResources().getString(R.string.waitMessage));
 
                     item.getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
                         @Override
                         public void onSuccess(byte[] bytes) {
                             Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
                             tripsAlbum.put(item.getName(), bitmap);
-                            progressDialog.dismiss();
                             numOfPictures++;
-                            if (numOfPictures == trips.size())
+                            bitmapProgressDialog.dismiss();
+                            if (numOfPictures == trips.size()) {
                                 handleViews();
+                                onDataPass("");
+                            }
                         }
                     }).addOnFailureListener(new OnFailureListener() {
                         @Override
@@ -99,7 +121,6 @@ public class TravelFeedActivity extends AppCompatActivity implements SearchFragm
                 }
             }
         })
-
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
@@ -124,8 +145,6 @@ public class TravelFeedActivity extends AppCompatActivity implements SearchFragm
             new BottomNavigationView.OnNavigationItemSelectedListener() {
                 @Override
                 public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-                    tripsAlbum.clear();
-                    trips.clear();
                     switch (menuItem.getItemId()) {
                         case R.id.navAdd:
                             Intent intentAdd = new Intent(TravelFeedActivity.this, AddTripActivity.class);
@@ -171,6 +190,8 @@ public class TravelFeedActivity extends AppCompatActivity implements SearchFragm
     }
 
     private void loadTripsAgain() {
+        final ProgressDialog tripsProgressDialog = ProgressDialog.show(TravelFeedActivity.this, "", getResources().getString(R.string.waitMessage));
+        trips = new HashMap<>();
         loadData(rootRef.child("trips"), new OnGetDataListener() {
             @Override
             public void onSuccess(DataSnapshot dataSnapshot) {
@@ -178,10 +199,10 @@ public class TravelFeedActivity extends AppCompatActivity implements SearchFragm
                     Trip currentTrip = ds.getValue(Trip.class);
                     assert currentTrip != null;
                     trips.put(currentTrip.getName(), currentTrip);
-
-                    //update gridView
-                    onDataPass("");
                 }
+                tripsProgressDialog.dismiss();
+                //update gridView
+                onDataPass("");
             }
 
             @Override
@@ -193,12 +214,13 @@ public class TravelFeedActivity extends AppCompatActivity implements SearchFragm
     }
 
     private void loadAPIKeyAgain() {
+        final ProgressDialog APIProgressDialog = ProgressDialog.show(TravelFeedActivity.this, "", getResources().getString(R.string.waitMessage));
         loadData(rootRef.child("apiKeys"), new OnGetDataListener() {
             @Override
             public void onSuccess(DataSnapshot dataSnapshot) {
                 for (DataSnapshot ds : dataSnapshot.getChildren())
                     apiKey = (String) ds.getValue();
-
+                APIProgressDialog.dismiss();
                 //update gridView
                 onDataPass("");
             }

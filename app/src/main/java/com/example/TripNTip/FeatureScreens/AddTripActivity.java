@@ -1,15 +1,21 @@
 package com.example.TripNTip.FeatureScreens;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -22,9 +28,20 @@ import com.example.TripNTip.TripNTip.TravelFeedActivity;
 import com.example.TripNTip.TripNTip.Trip;
 import com.example.TripNTip.Utils.Constants;
 import com.example.TripNTip.WeatherAPI.IsraeliWeatherAPIHandler;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FileDownloadTask;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 
 public class AddTripActivity extends AppCompatActivity implements Constants {
 
@@ -99,11 +116,6 @@ public class AddTripActivity extends AppCompatActivity implements Constants {
         });
     }
 
-    private void uploadTripPicture() {
-        // TODO implement upload picture method
-//        if (succeed)
-//            imageUploadSucceeded = true;
-    }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void addTrip() {
@@ -160,6 +172,8 @@ public class AddTripActivity extends AppCompatActivity implements Constants {
             }
         });
         Intent intent = new Intent(AddTripActivity.this, TravelFeedActivity.class);
+        intent.putExtra(SHOULD_WE_LOAD_THE_API_KEY, true);
+        intent.putExtra(SHOULD_WE_LOAD_THE_TRIPS, true);
         AddTripActivity.this.startActivity(intent);
     }
 
@@ -168,5 +182,39 @@ public class AddTripActivity extends AppCompatActivity implements Constants {
         EditText descriptionNameET = findViewById(R.id.add_trip_description);
 
         return new Trip(tripNameET.getText().toString(), descriptionNameET.getText().toString(), summerTrip, dayTrip, countryChooser.getText().toString());
+    }
+
+    private void uploadTripPicture() {
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(Intent.createChooser(intent, getResources().getString(R.string.AddTripImageUploadTitle)), 1);
+    }
+
+    @Override
+    protected void onActivityResult(int reqCode, int resultCode, Intent data) {
+        super.onActivityResult(reqCode, resultCode, data);
+        if (resultCode == RESULT_OK)
+            saveImageToDataBase(data.getData());
+        else
+            Toast.makeText(this, R.string.not_choose_photo, Toast.LENGTH_LONG).show();
+    }
+
+    private void saveImageToDataBase(Uri imageUri) {
+        if (imageUri != null) {
+            final ProgressDialog progressDialog = ProgressDialog.show(AddTripActivity.this, "", getResources().getString(R.string.waitMessage));
+            final StorageReference storageRef = FirebaseStorage.getInstance().getReference();
+            String tripId = String.valueOf(handler.getID(countryChooser.getText().toString()));
+
+            storageRef.child("images").child("trips").child(tripId + ".png").putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @RequiresApi(api = Build.VERSION_CODES.O)
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                    imageUploadSucceeded = true;
+                    progressDialog.dismiss();
+                }
+            });
+        } else
+            Toast.makeText(this, R.string.Eror_database, Toast.LENGTH_LONG).show();
     }
 }
