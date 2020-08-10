@@ -83,13 +83,16 @@ public class GridFragment extends Fragment implements Constants {
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int index, long l) {
-                showTrip(filteredTrips.get(index));
+                Trip selectedTrip = filteredTrips.get(index);
+                //TODO Omer: use a constant instead of .png in all the project locations
+                Bitmap bitmap = tripsAlbum.get(selectedTrip.getId() + ".png");
+                showTrip(selectedTrip, bitmap);
             }
         });
     }
 
-    private void showTrip(Trip trip) {
-        TripDetailsFragment alertDialog = TripDetailsFragment.newInstance(trip, apiKey, getContext());
+    private void showTrip(Trip trip, Bitmap tripBitmap) {
+        TripDetailsFragment alertDialog = TripDetailsFragment.newInstance(trip, apiKey, getContext(), tripBitmap);
         alertDialog.show(getChildFragmentManager(), "");
     }
 

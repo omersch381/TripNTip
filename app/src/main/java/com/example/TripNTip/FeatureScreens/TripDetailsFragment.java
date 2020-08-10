@@ -3,6 +3,7 @@ package com.example.TripNTip.FeatureScreens;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -11,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -29,14 +31,16 @@ public class TripDetailsFragment extends DialogFragment {
     private View content;
     private Trip trip;
     private TravelGuide travelGuide;
+    private Bitmap tripBitmap;
 
-    public TripDetailsFragment(Trip trip, String apiKey, Context context) {
+    public TripDetailsFragment(Trip trip, String apiKey, Context context, Bitmap tripBitmap) {
         this.trip = trip;
+        this.tripBitmap = tripBitmap;
         travelGuide = new TravelGuide(apiKey, context);
     }
 
-    public static TripDetailsFragment newInstance(Trip trip, String apiKey, Context context) {
-        return new TripDetailsFragment(trip, apiKey, context);
+    public static TripDetailsFragment newInstance(Trip trip, String apiKey, Context context, Bitmap tripBitmap) {
+        return new TripDetailsFragment(trip, apiKey, context, tripBitmap);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
@@ -61,11 +65,16 @@ public class TripDetailsFragment extends DialogFragment {
         TextView isDayTrip = v.findViewById(R.id.trip_details_isDayTrip);
         final Button recommendationButton = v.findViewById(R.id.trip_current_recommendation_button);
         final TextView recommendationTextView = v.findViewById(R.id.trip_current_recommendation_text_view);
+        final ImageView tripImage = v.findViewById(R.id.trip_image);
+
+        tripImage.setImageBitmap(tripBitmap);
 
         tripName.setText("Trip's Name: " + trip.getName());
         tripDescription.setText("Trip's Description: " + trip.getDescription());
 
         boolean isSummerTripBool = trip.getSummerTrip();
+
+        //TODO Omer: use a string which is from the stings file
         String summerTrip = isSummerTripBool ? " Is a summer trip" : " Is not a summer trip";
         isSummerTrip.setText(trip.getName() + summerTrip);
 
@@ -80,10 +89,6 @@ public class TripDetailsFragment extends DialogFragment {
                 recommendationTextView.setVisibility(View.VISIBLE);
             }
         });
-
-//        final EditText tripNameET = (EditText) content.findViewById(R.id.trip_details_name);
-//        tripNameET.setText("hello");
-//        Log.d("Travel guide", " recommendation to travel: " + travelGuide.howMuchShouldITravelNowIn(trip) + "/10");
 
         return v;
     }

@@ -5,6 +5,11 @@
     android:orientation="vertical"
     tools:context="com.example.TripNTip.FeatureScreens.TripDetailsFragment">
 
+    <ImageView
+        android:id="@+id/trip_image"
+        android:layout_width="@dimen/ShowTripImageViewWidth"
+        android:layout_height="@dimen/ShowTripImageViewHeight" />
+
     <TextView
         android:id="@+id/trip_details_name"
         android:layout_width="wrap_content"
