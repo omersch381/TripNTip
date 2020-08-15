@@ -69,7 +69,6 @@ public class SignUPActivity extends AppCompatActivity implements Constants {
     }
 
     public void handleNewUser(String email,String password) {
-        //TODO: we need to check how to store a TNTUSer record in the Firebase DB
         handleFirebaseNewUserCreation(email,password);
 
 
