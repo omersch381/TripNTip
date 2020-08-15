@@ -42,8 +42,6 @@ import java.util.Objects;
 public class ProfileActivity extends AppCompatActivity implements Constants {
     private FirebaseAuth mAuth;
     private String emailOfCurrentUser;
-    // FixMe Niv: a variable which is not used. below it is being overridden
-    DataSnapshot ds;
     ImageView imageView;
 
     @Override
@@ -53,7 +51,7 @@ public class ProfileActivity extends AppCompatActivity implements Constants {
         final FirebaseDatabase mDataBase = FirebaseDatabase.getInstance();
         final DatabaseReference reference = mDataBase.getReference(USER);
 
-        //FixMe Niv: please use a string from the strings file
+
         final ProgressDialog progressDialog = ProgressDialog.show(this, "", WAIT);
         reference.addValueEventListener(new ValueEventListener() {
 
@@ -64,7 +62,8 @@ public class ProfileActivity extends AppCompatActivity implements Constants {
                 setContentView(R.layout.profile_activity);
                 for (DataSnapshot ds : dataSnapshot.getChildren()) {
                     String emailOnDataBase = Objects.requireNonNull(ds.child(EMAIL).getValue()).toString();
-                    if (emailOnDataBase.equals(emailOfCurrentUser)) {
+                    System.out.println(emailOfCurrentUser);
+                    if (emailOnDataBase.toLowerCase().equals(emailOfCurrentUser)) {
                         String userName = Objects.requireNonNull(ds.child(USERNAME).getValue()).toString();
                         showDetails(emailOfCurrentUser, userName);
                     }
@@ -76,7 +75,7 @@ public class ProfileActivity extends AppCompatActivity implements Constants {
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
                 // FixMe Niv: Please use a Toast or something similar. Users can't read the console
-                System.out.println(R.string.Eror_database);
+
 
             }
         });
@@ -89,17 +88,15 @@ public class ProfileActivity extends AppCompatActivity implements Constants {
         TextView userName = findViewById(R.id.profile_name);
         TextView email = findViewById(R.id.profile_eamail);
 
-        //FixMe Niv: unnecessary line
-        imageView = findViewById(R.id.profile_image);
+
 
         initiateImage();
-        userName.setText(currentUserName);
-        email.setText(currentEmail);
+        userName.setText("UserName:\n"+currentUserName);
+        email.setText("Email\n"+currentEmail);
 
     }
 
-    // FixMe Niv: unnecessary exception throw
-    public void changeProfilePicture(View v) throws FileNotFoundException {
+    public void changeProfilePicture(View v)  {
         Intent intent = new Intent();
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
@@ -132,9 +129,10 @@ public class ProfileActivity extends AppCompatActivity implements Constants {
 
     public void initiateImage() {
         final FirebaseStorage storageInstance = FirebaseStorage.getInstance();
-        //FixMe: typo - IMAGES
+
         final StorageReference storageRef = storageInstance.getReference(IMEGES).child(USER).child(emailOfCurrentUser);
         try {
+            imageView = findViewById(R.id.profile_image);
             final File localFile = File.createTempFile(IMEGES, "bmp");
             storageRef.getFile(localFile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
                 @Override
@@ -149,7 +147,7 @@ public class ProfileActivity extends AppCompatActivity implements Constants {
 
     }
 
-    // FixMe Niv: type with the word Fire in the method name
+
     public void saveImageToDataBase(Uri imageUri) {
         if (imageUri != null) {
             final FirebaseStorage storageInstance = FirebaseStorage.getInstance();
