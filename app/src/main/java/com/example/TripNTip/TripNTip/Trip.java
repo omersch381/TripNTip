@@ -1,6 +1,7 @@
 package com.example.TripNTip.TripNTip;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 public class Trip implements Serializable {
 
@@ -10,6 +11,7 @@ public class Trip implements Serializable {
     private boolean dayTrip;
     private int id;
     private String location;
+    private ArrayList<Comment> comments;
 
     public Trip(String name, String description, boolean summerTrip, boolean dayTrip, String location) {
         this.name = name;
@@ -17,6 +19,7 @@ public class Trip implements Serializable {
         this.summerTrip = summerTrip;
         this.dayTrip = dayTrip;
         this.location = location;
+        this.comments = new ArrayList<>();
     }
 
     public Trip() {
@@ -49,5 +52,9 @@ public class Trip implements Serializable {
 
     public String getLocation() {
         return location;
+    }
+
+    public ArrayList<Comment> getComments() {
+        return comments;
     }
 }
