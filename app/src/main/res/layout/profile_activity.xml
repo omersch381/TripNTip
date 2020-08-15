@@ -4,17 +4,22 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/profile_image"
+    android:background="@color/stratblue"
     tools:context=".TripNTip.SignInActivity">
 
-
-    <ImageView
-        android:id="@+id/profile_image"
-        android:layout_width="500dp"
-        android:layout_height="230dp"
-        android:layout_marginTop="90dp"
-        android:src="@drawable/no_image"/>
-
+    <RelativeLayout
+        android:id="@+id/image"
+        android:layout_width="match_parent"
+        android:layout_height="370dp"
+        android:layout_weight="0.5"
+        android:background="@drawable/profile_image"
+        >
+        <ImageView
+            android:id="@+id/profile_image"
+            android:layout_width="3500dp"
+            android:layout_height="200dp"
+            android:layout_marginTop="100dp"
+            android:src="@drawable/no_image"/>
     <TextView
         android:id="@+id/change_profile_picture"
         android:layout_width="match_parent"
@@ -25,24 +30,26 @@
         android:focusable="true"
         android:text="@string/change_profile_picture"
         android:textAlignment="center"
-        android:textColor="@color/endblue"
-        android:textSize="20sp"
-        android:onClick="changeProfilePicture"
-        android:gravity="center_horizontal" />
-
-    <TextView
-        android:id="@+id/profile_name"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/change_profile_picture"
-        android:layout_centerHorizontal="true"
-        android:layout_marginLeft="30dp"
-        android:layout_marginTop="48dp"
-        android:layout_marginRight="30dp"
-        android:textAlignment="center"
         android:textColor="@color/black"
-        android:textStyle="bold"
-        android:textSize="22sp" />
+        android:textSize="15sp"
+        android:onClick="changeProfilePicture"
+        android:gravity="center_horizontal"
+        android:textStyle="bold"/>
+    </RelativeLayout>
+        <TextView
+
+            android:id="@+id/profile_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/image"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="30dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="22sp"
+            android:textStyle="bold" />
 
     <TextView
         android:id="@+id/profile_eamail"

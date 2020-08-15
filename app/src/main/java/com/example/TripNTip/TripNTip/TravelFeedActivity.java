@@ -154,12 +154,6 @@ public class TravelFeedActivity extends AppCompatActivity implements SearchFragm
                             Intent intentProfile = new Intent(TravelFeedActivity.this, ProfileActivity.class);
                             TravelFeedActivity.this.startActivity(intentProfile);
                             break;
-
-                        //TODO Niv - nav bar fix
-//                        case R.id.navSearch:
-//                            Intent intentSearch = new Intent(TravelFeedActivity.this, SearchActivity.class);
-//                            TravelFeedActivity.this.startActivity(intentSearch);
-//                            break;
                     }
                     return true;
                 }

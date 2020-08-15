@@ -61,7 +61,8 @@ public class ProfileActivity extends AppCompatActivity implements Constants {
                 setContentView(R.layout.profile_activity);
                 for (DataSnapshot ds : dataSnapshot.getChildren()) {
                     String emailOnDataBase = Objects.requireNonNull(ds.child(EMAIL).getValue()).toString();
-                    if (emailOnDataBase.equals(emailOfCurrentUser)) {
+                    System.out.println(emailOfCurrentUser);
+                    if (emailOnDataBase.toLowerCase().equals(emailOfCurrentUser)) {
                         String userName = Objects.requireNonNull(ds.child(USERNAME).getValue()).toString();
                         showDetails(emailOfCurrentUser, userName);
                     }
@@ -89,8 +90,8 @@ public class ProfileActivity extends AppCompatActivity implements Constants {
 
 
         initiateImage();
-        userName.setText(currentUserName);
-        email.setText(currentEmail);
+        userName.setText("UserName:\n"+currentUserName);
+        email.setText("Email\n"+currentEmail);
 
     }
 
