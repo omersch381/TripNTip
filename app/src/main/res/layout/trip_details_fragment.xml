@@ -9,23 +9,22 @@
         android:id="@+id/trip_image"
         android:layout_width="@dimen/ShowTripImageViewWidth"
         android:layout_height="@dimen/ShowTripImageViewHeight"
-        android:layout_gravity="center"
-        />
+        android:layout_gravity="center" />
 
     <TextView
         android:id="@+id/trip_details_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:gravity="center"
         android:textSize="15dp"
-        android:textStyle="bold"
-        android:gravity="center"/>
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/trip_details_description"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="15dp"
-        android:gravity="center"/>
+        android:gravity="center"
+        android:textSize="15dp" />
 
     <TextView
         android:id="@+id/trip_details_isSummerTrip"
@@ -33,7 +32,7 @@
         android:layout_height="3dp"
         android:gravity="center"
         android:textSize="15sp"
-        android:textStyle="bold"/>
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/trip_details_isDayTrip"
@@ -41,8 +40,7 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:textSize="15sp"
-        android:textStyle="bold"
-       />
+        android:textStyle="bold" />
 
     <Button
         android:id="@+id/trip_current_recommendation_button"
@@ -66,5 +64,28 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:visibility="gone" />
+
+    <FrameLayout
+        android:id="@+id/list_view_fragment_container"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        />
+
+    <Button
+        android:id="@+id/reply_button"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="@color/Login"
+        android:fontFamily="#ans-serif"
+        android:text="@string/shouldIDoTheTrip"
+        android:textColor="@color/textColor"
+        android:textSize="15sp"
+        android:textStyle="normal|bold" />
+
+    <EditText
+        android:id="@+id/reply_text"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:visibility="gone"/>
 
 </LinearLayout>

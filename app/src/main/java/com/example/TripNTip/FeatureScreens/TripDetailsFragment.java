@@ -18,6 +18,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.example.TripNTip.R;
 import com.example.TripNTip.TripNTip.TravelFeedActivity;
@@ -32,6 +34,7 @@ public class TripDetailsFragment extends DialogFragment {
     private Trip trip;
     private TravelGuide travelGuide;
     private Bitmap tripBitmap;
+    private Fragment commentsListFragment;
 
     public TripDetailsFragment(Trip trip, String apiKey, Context context, Bitmap tripBitmap) {
         this.trip = trip;
@@ -58,7 +61,7 @@ public class TripDetailsFragment extends DialogFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.trip_details_fragment, container, false);
+        final View v = inflater.inflate(R.layout.trip_details_fragment, container, false);
         TextView tripName = v.findViewById(R.id.trip_details_name);
         TextView tripDescription = v.findViewById(R.id.trip_details_description);
         TextView isSummerTrip = v.findViewById(R.id.trip_details_isSummerTrip);
@@ -66,6 +69,8 @@ public class TripDetailsFragment extends DialogFragment {
         final Button recommendationButton = v.findViewById(R.id.trip_current_recommendation_button);
         final TextView recommendationTextView = v.findViewById(R.id.trip_current_recommendation_text_view);
         final ImageView tripImage = v.findViewById(R.id.trip_image);
+        Button replyButton = v.findViewById(R.id.reply_button);
+
 
         tripImage.setImageBitmap(tripBitmap);
 
@@ -90,6 +95,28 @@ public class TripDetailsFragment extends DialogFragment {
             }
         });
 
+        //TODO Omer: use string file
+        replyButton.setText("reply");
+        replyButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onReply(v);
+            }
+        });
+
+//        commentsListFragment.setArguments(bundle);
+
+        FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
+        commentsListFragment = new CommentsListFragment();
+        transaction.add(R.id.list_view_fragment_container, commentsListFragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
+
         return v;
+    }
+
+    private void onReply(View v) {
+        EditText replyMessage = v.findViewById(R.id.reply_text);
+        replyMessage.setVisibility(View.VISIBLE);
     }
 }

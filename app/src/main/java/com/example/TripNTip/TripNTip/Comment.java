@@ -51,9 +51,12 @@ public class Comment implements Serializable {
         return formatter.format(date);
     }
 
-    public void writeComment(Trip trip) {
+    public boolean writeComment(Trip trip) {
         trip.getComments().add(this);
-        writeCommentToFirebase(trip);
+        boolean wasWritten = writeCommentToFirebase(trip);
+        if (!wasWritten)
+            trip.getComments().remove(this);
+        return wasWritten;
     }
 
     public boolean writeCommentToFirebase(Trip trip) {
