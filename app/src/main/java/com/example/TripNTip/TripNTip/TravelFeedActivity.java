@@ -56,6 +56,7 @@ public class TravelFeedActivity extends AppCompatActivity implements SearchFragm
         rootRef = FirebaseDatabase.getInstance().getReference();
     }
 
+
     @Override
     protected void onStart() {
         super.onStart();

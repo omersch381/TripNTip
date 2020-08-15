@@ -108,6 +108,7 @@ public class ProfileActivity extends AppCompatActivity implements Constants {
     @Override
     protected void onActivityResult(int reqCode, int resultCode, Intent data) {
         super.onActivityResult(reqCode, resultCode, data);
+        imageView = findViewById(R.id.profile_image);
         if (resultCode == RESULT_OK) {
             final Uri imageUri = data.getData();
             imageView = findViewById(R.id.profile_image);
@@ -128,6 +129,7 @@ public class ProfileActivity extends AppCompatActivity implements Constants {
     }
 
     public void initiateImage() {
+        imageView = findViewById(R.id.profile_image);
         final FirebaseStorage storageInstance = FirebaseStorage.getInstance();
 
         final StorageReference storageRef = storageInstance.getReference(IMEGES).child(USER).child(emailOfCurrentUser);
