@@ -14,6 +14,7 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.TripNTip.R;
+import com.example.TripNTip.TripNTip.TravelFeedActivity;
 import com.example.TripNTip.Utils.Constants;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -157,5 +158,14 @@ public class ProfileActivity extends AppCompatActivity implements Constants {
         } else {
             Toast.makeText(this, R.string.Eror_database, Toast.LENGTH_LONG).show();
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent intent = new Intent(ProfileActivity.this, TravelFeedActivity.class);
+        intent.putExtra(SHOULD_WE_LOAD_THE_API_KEY, true);
+        intent.putExtra(SHOULD_WE_LOAD_THE_TRIPS, true);
+        ProfileActivity.this.startActivity(intent);
     }
 }

@@ -217,4 +217,13 @@ public class AddTripActivity extends AppCompatActivity implements Constants {
         } else
             Toast.makeText(this, R.string.Eror_database, Toast.LENGTH_LONG).show();
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent intent = new Intent(AddTripActivity.this, TravelFeedActivity.class);
+        intent.putExtra(SHOULD_WE_LOAD_THE_API_KEY, true);
+        intent.putExtra(SHOULD_WE_LOAD_THE_TRIPS, true);
+        AddTripActivity.this.startActivity(intent);
+    }
 }
