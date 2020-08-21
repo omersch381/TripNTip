@@ -16,6 +16,7 @@
     <string name="shouldIDoTheTrip">Should I Go And Do The Trip Now?</string>
     <string name="trip_current_recommendation_edit_text">Click The Button To Get Our Recommendation</string>
     <string name="UploadTripPicture">Click Here To Upload A Picture</string>
+    <string name="ReplyButtonText">Reply</string>
 
     <!--    Messages-->
     <string name="signUpSucceededMsg">"User Creation Succeeded."</string>
@@ -48,6 +49,7 @@
     <string name="AddTripChooseLocation">"Choose Trip's Location (start typing)"</string>
     <string name="AddTripImageUploadFailed">"Couldn't Upload An Image. Please Try To Upload Another Image"</string>
     <string name="AddTripImageUploadTitle">"Please Select An Image"</string>
+    <string name="UserNameFromFirebaseError">"Could not get the firebase username."</string>
 
     <!--    Trip properties-->
     <string name="tripTitle">Trip information</string>
@@ -61,6 +63,8 @@
 
     <string name="Eror_database">data base eror</string>
     <string name="not_choose_photo"> No image selected</string>
+    <string name="select_image"> select image</string>
+    <string name="wait"> "Please wait..."</string>
 
 
 </resources>

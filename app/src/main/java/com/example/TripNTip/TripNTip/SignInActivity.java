@@ -36,13 +36,17 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.ListResult;
 import com.google.firebase.storage.StorageReference;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class SignInActivity extends AppCompatActivity implements Constants {
     private FirebaseAuth mAuth;
     private String apiKey;
     private HashMap<String, Trip> trips;
     private ImageView[] tripsImages;
+     List<Trip> listRes;
+
 
 
     @Override
@@ -83,15 +87,19 @@ public class SignInActivity extends AppCompatActivity implements Constants {
     private void loadTrips() {
         DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
         final DatabaseReference tripsRef = rootRef.child("trips");
+
+
         ValueEventListener eventListener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot ds : dataSnapshot.getChildren()) {
                     Trip currentTrip = ds.getValue(Trip.class);
+                    //System.out.println(ds.getValue(Trip.class));
                     assert currentTrip != null;
                     trips.put(currentTrip.getName(), currentTrip);
+                 }
                 }
-            }
+
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
@@ -99,7 +107,7 @@ public class SignInActivity extends AppCompatActivity implements Constants {
             }
         };
         tripsRef.addListenerForSingleValueEvent(eventListener);
-    }
+    };
 
     private void loadAPIKey() {
         DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
