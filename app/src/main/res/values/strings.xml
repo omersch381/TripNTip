@@ -72,6 +72,8 @@
     <!--    FixMe Niv: typo-->
     <string name="Eror_database">data base eror</string>
     <string name="not_choose_photo"> No image selected</string>
+    <string name="select_image"> select image</string>
+    <string name="wait"> "Please wait..."</string>
 
     <!--    Extended Recommendation Properties-->
     <string name="As">As \ </string>
