@@ -50,9 +50,9 @@ public class ProfileActivity extends AppCompatActivity implements Constants {
         mAuth = FirebaseAuth.getInstance();
         final FirebaseDatabase mDataBase = FirebaseDatabase.getInstance();
         final DatabaseReference reference = mDataBase.getReference(USER);
+        imageView = findViewById(R.id.profile_image);
 
-
-        final ProgressDialog progressDialog = ProgressDialog.show(this, "", WAIT);
+        final ProgressDialog progressDialog = ProgressDialog.show(this, "", getResources().getString(R.string.wait));
         reference.addValueEventListener(new ValueEventListener() {
 
             @RequiresApi(api = Build.VERSION_CODES.KITKAT)
@@ -62,7 +62,6 @@ public class ProfileActivity extends AppCompatActivity implements Constants {
                 setContentView(R.layout.profile_activity);
                 for (DataSnapshot ds : dataSnapshot.getChildren()) {
                     String emailOnDataBase = Objects.requireNonNull(ds.child(EMAIL).getValue()).toString();
-                    System.out.println(emailOfCurrentUser);
                     if (emailOnDataBase.toLowerCase().equals(emailOfCurrentUser)) {
                         String userName = Objects.requireNonNull(ds.child(USERNAME).getValue()).toString();
                         showDetails(emailOfCurrentUser, userName);
@@ -74,8 +73,7 @@ public class ProfileActivity extends AppCompatActivity implements Constants {
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                // FixMe Niv: Please use a Toast or something similar. Users can't read the console
-
+                Toast.makeText(getApplicationContext(), R.string.not_choose_photo, Toast.LENGTH_LONG).show();
 
             }
         });
@@ -100,8 +98,8 @@ public class ProfileActivity extends AppCompatActivity implements Constants {
         Intent intent = new Intent();
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
-        // FixMe Niv: Please use a string from the string file
-        startActivityForResult(Intent.createChooser(intent, "select picture"), 1);
+
+        startActivityForResult(Intent.createChooser(intent,getResources().getString(R.string.select_image)) ,1);
 
     }
 
@@ -111,7 +109,6 @@ public class ProfileActivity extends AppCompatActivity implements Constants {
         imageView = findViewById(R.id.profile_image);
         if (resultCode == RESULT_OK) {
             final Uri imageUri = data.getData();
-            imageView = findViewById(R.id.profile_image);
             try {
                 final InputStream imageStream = getContentResolver().openInputStream(imageUri);
                 final Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
@@ -131,10 +128,8 @@ public class ProfileActivity extends AppCompatActivity implements Constants {
     public void initiateImage() {
         imageView = findViewById(R.id.profile_image);
         final FirebaseStorage storageInstance = FirebaseStorage.getInstance();
-
         final StorageReference storageRef = storageInstance.getReference(IMEGES).child(USER).child(emailOfCurrentUser);
         try {
-            imageView = findViewById(R.id.profile_image);
             final File localFile = File.createTempFile(IMEGES, "bmp");
             storageRef.getFile(localFile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
                 @Override

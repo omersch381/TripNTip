@@ -8,6 +8,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import com.example.TripNTip.FeatureScreens.TripDetailsFragment;
 import com.example.TripNTip.R;
 import com.example.TripNTip.Utils.Constants;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -23,6 +25,7 @@ public class SignUPActivity extends AppCompatActivity implements Constants {
     private FirebaseAuth mAuth;
     private DatabaseReference mDataBase;
     private TNTUser newUser;
+    //todo niv change this to string
     private  final String USERS= "users";
     private final String  USER="user";
 
@@ -30,7 +33,7 @@ public class SignUPActivity extends AppCompatActivity implements Constants {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.sign_up_activity);
-
+       //get referance to users on data base
         mDataBase = FirebaseDatabase.getInstance().getReference(USERS);
 
 
@@ -69,7 +72,6 @@ public class SignUPActivity extends AppCompatActivity implements Constants {
     }
 
     public void handleNewUser(String email,String password) {
-        //TODO: we need to check how to store a TNTUSer record in the Firebase DB
         handleFirebaseNewUserCreation(email,password);
 
 
@@ -119,11 +121,12 @@ public class SignUPActivity extends AppCompatActivity implements Constants {
         return statusMessage;
     }
 
-
+    //todo- niv or omer : when create user name care that the username not contain unsupported Characters
     private void launchSignIn(TNTUser user) {
-        String key = mDataBase.push().getKey();
+
         mDataBase.child(user.getUsername()).setValue(user);
         Intent intent = new Intent(SignUPActivity.this, SignInActivity.class);
         SignUPActivity.this.startActivity(intent);
+
     }
 }

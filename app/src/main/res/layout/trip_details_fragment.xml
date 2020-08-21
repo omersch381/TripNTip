@@ -1,9 +1,12 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context="com.example.TripNTip.FeatureScreens.TripDetailsFragment">
+
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/dialog_shape"
+        android:minWidth="260dp"
+        android:orientation="vertical"
+        android:padding="24dp">
 
     <ImageView
         android:id="@+id/trip_image"
@@ -51,10 +54,11 @@
         android:layout_marginTop="50dp"
         android:layout_marginEnd="20dp"
         android:layout_marginRight="20dp"
-        android:background="@color/Login"
+        android:background="@drawable/button_style"
         android:fontFamily="#ans-serif"
         android:text="@string/shouldIDoTheTrip"
         android:textColor="@color/textColor"
+        android:textAlignment="center"
         android:textSize="15sp"
         android:textStyle="normal|bold" />
 
@@ -64,6 +68,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:visibility="gone" />
+
 
     <FrameLayout
         android:id="@+id/list_view_fragment_container"

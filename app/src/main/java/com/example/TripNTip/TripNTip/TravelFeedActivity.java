@@ -93,6 +93,7 @@ public class TravelFeedActivity extends AppCompatActivity implements SearchFragm
     private void loadBitmaps() {
         tripsAlbum = new HashMap<>();
         FirebaseStorage storage = FirebaseStorage.getInstance();
+        //fix me omer- use constent insted  "images and "trip"
         Task<ListResult> listRef = storage.getReference().child("images").child("trips").listAll();
         listRef.addOnSuccessListener(new OnSuccessListener<ListResult>() {
             @Override
@@ -109,6 +110,7 @@ public class TravelFeedActivity extends AppCompatActivity implements SearchFragm
                             bitmapProgressDialog.dismiss();
                             if (numOfPictures == trips.size()) {
                                 handleViews();
+                                //fix me omer - user EMPTY STRING insted ""
                                 onDataPass("");
                             }
                         }
@@ -159,7 +161,6 @@ public class TravelFeedActivity extends AppCompatActivity implements SearchFragm
                     return true;
                 }
             };
-
     @Override
     public void onDataPass(String data) {
         Bundle bundle = new Bundle();
@@ -247,6 +248,7 @@ public class TravelFeedActivity extends AppCompatActivity implements SearchFragm
             }
         });
     }
+
 }
 
 

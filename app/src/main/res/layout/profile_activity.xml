@@ -12,8 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="370dp"
         android:layout_weight="0.5"
-        android:background="@drawable/profile_image"
-        >
+        android:background="@drawable/profile_image">
         <ImageView
             android:id="@+id/profile_image"
             android:layout_width="3500dp"
