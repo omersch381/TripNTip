@@ -8,6 +8,10 @@ import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.InputType;
+import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.os.Build;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,6 +42,11 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.Objects;
 
+import com.example.TripNTip.TripNTip.TravelGuide;
+import com.example.TripNTip.TripNTip.Trip;
+import com.example.TripNTip.WeatherAPI.TravelGuideRecommendation;
+
+
 
 public class TripDetailsFragment extends DialogFragment implements Constants {
 
@@ -47,6 +56,7 @@ public class TripDetailsFragment extends DialogFragment implements Constants {
     private Fragment commentsListFragment;
     private FirebaseAuth mAuth;
     private String userName;
+    private Resources res;
 
     public TripDetailsFragment() {
     }
@@ -77,37 +87,38 @@ public class TripDetailsFragment extends DialogFragment implements Constants {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        res = getResources();
         final View v = inflater.inflate(R.layout.trip_details_fragment, container, false);
-        TextView tripName = v.findViewById(R.id.trip_details_name);
-        TextView tripDescription = v.findViewById(R.id.trip_details_description);
+        ImageView tripImage = v.findViewById(R.id.trip_image);
+        TextView tripNameTextView = v.findViewById(R.id.trip_details_name);
+        TextView tripDescriptionTextView = v.findViewById(R.id.trip_details_description);
         TextView isSummerTrip = v.findViewById(R.id.trip_details_isSummerTrip);
         TextView isDayTrip = v.findViewById(R.id.trip_details_isDayTrip);
         final Button recommendationButton = v.findViewById(R.id.trip_current_recommendation_button);
-        final TextView recommendationTextView = v.findViewById(R.id.trip_current_recommendation_text_view);
-        final ImageView tripImage = v.findViewById(R.id.trip_image);
+//        final TextView recommendationTextView = v.findViewById(R.id.trip_current_recommendation_text_view);
         Button replyButton = v.findViewById(R.id.reply_button);
-
+        boolean isSummerTripBool = trip.getSummerTrip();
+        boolean isDayTripBool = trip.getDayTrip();
 
         tripImage.setImageBitmap(tripBitmap);
 
-        tripName.setText("Trip's Name: " + trip.getName());
-        tripDescription.setText("Trip's Description: " + trip.getDescription());
+        String tripName = res.getString(R.string.TripDetailsName) + trip.getName();
+        tripNameTextView.setText(tripName);
 
-        boolean isSummerTripBool = trip.getSummerTrip();
+        String tripDescription = res.getString(R.string.TripDetailsName) + trip.getDescription();
+        tripDescriptionTextView.setText(tripDescription);
 
-        //TODO Omer: use a string which is from the stings file
-        String summerTrip = isSummerTripBool ? " Is a summer trip" : " Is not a summer trip";
+        String summerTrip = isSummerTripBool ? res.getString(R.string.TripDetailsIsSummerTrip) : res.getString(R.string.TripDetailsIsNotSummerTrip);
         isSummerTrip.setText(trip.getName() + summerTrip);
 
-        boolean isDayTripBool = trip.getDayTrip();
-        String dayTrip = isDayTripBool ? " Is a day trip" : " Is not a day trip";
+        String dayTrip = isDayTripBool ? res.getString(R.string.TripDetailsIsDayTrip) : res.getString(R.string.TripDetailsIsNotSummerTrip);
         isDayTrip.setText(trip.getName() + dayTrip);
 
         recommendationButton.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
             @Override
             public void onClick(View view) {
-                recommendationTextView.setText("Our Recommendation For Doing The Trip Right Now: " + travelGuide.howMuchShouldITravelNowIn(trip) + "/10");
-                recommendationTextView.setVisibility(View.VISIBLE);
+                handleRecommendationButtonClicked(v);
             }
         });
 
@@ -196,5 +207,41 @@ public class TripDetailsFragment extends DialogFragment implements Constants {
         DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
         final DatabaseReference tripsRef = rootRef.child("trips");
         tripsRef.child(trip.getName()).child("comments").setValue(trip.getComments());
+    }
+
+
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    private void handleRecommendationButtonClicked(final View v) {
+        final TravelGuideRecommendation recommendation = travelGuide.howMuchShouldITravelNowIn(trip);
+        final TextView showExtendedRecommendationTextViewSuggestion = v.findViewById(R.id.show_extended_recommendation_text_view);
+
+        TextView briefRecommendationTextView = v.findViewById(R.id.trip_current_recommendation_grade_text_view);
+        briefRecommendationTextView.setText(res.getString(R.string.OurRecommendationLabel) + recommendation.getRecommendationGrade() + "/10.");
+        briefRecommendationTextView.setVisibility(View.VISIBLE);
+
+        showExtendedRecommendationTextViewSuggestion.setText(res.getString(R.string.RecommendationProofLabel));
+        showExtendedRecommendationTextViewSuggestion.setVisibility(View.VISIBLE);
+        showExtendedRecommendationTextViewSuggestion.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                final TextView extendedRecommendationTextView = v.findViewById(R.id.extended_recommendation_text_view);
+                final Button collapseExtendedRecommendationButton = v.findViewById(R.id.collapse_extended_recommendation_button);
+
+                extendedRecommendationTextView.setText(recommendation.getExtendedRecommendation());
+                extendedRecommendationTextView.setVisibility(View.VISIBLE);
+
+                collapseExtendedRecommendationButton.setText(res.getString(R.string.CollapseExtendedRecommendation));
+                collapseExtendedRecommendationButton.setVisibility(View.VISIBLE);
+                collapseExtendedRecommendationButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                        collapseExtendedRecommendationButton.setVisibility(View.GONE);
+                        extendedRecommendationTextView.setVisibility(View.GONE);
+                    }
+                });
+            }
+        });
     }
 }
