@@ -2,6 +2,7 @@ package com.example.TripNTip.FeatureScreens;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Bitmap;
@@ -12,6 +13,11 @@ import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Bundle;
+import android.graphics.Bitmap;
+import android.os.Build;
+import android.os.Bundle;
+import android.text.InputType;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,6 +39,11 @@ import com.example.TripNTip.TripNTip.Comment;
 import com.example.TripNTip.TripNTip.TravelGuide;
 import com.example.TripNTip.TripNTip.Trip;
 import com.example.TripNTip.Utils.Constants;
+import com.example.TripNTip.TripNTip.TravelFeedActivity;
+import com.example.TripNTip.TripNTip.TravelGuide;
+import com.example.TripNTip.TripNTip.Trip;
+import com.example.TripNTip.Utils.Constants;
+import com.google.api.SystemParameterOrBuilder;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -57,6 +68,9 @@ public class TripDetailsFragment extends DialogFragment implements Constants {
     private FirebaseAuth mAuth;
     private String userName;
     private Resources res;
+    private DatabaseReference rootRef;
+    private boolean wasWritten;
+
 
     public TripDetailsFragment() {
     }
@@ -95,7 +109,6 @@ public class TripDetailsFragment extends DialogFragment implements Constants {
         TextView isSummerTrip = v.findViewById(R.id.trip_details_isSummerTrip);
         TextView isDayTrip = v.findViewById(R.id.trip_details_isDayTrip);
         final Button recommendationButton = v.findViewById(R.id.trip_current_recommendation_button);
-//        final TextView recommendationTextView = v.findViewById(R.id.trip_current_recommendation_text_view);
         Button replyButton = v.findViewById(R.id.reply_button);
         boolean isSummerTripBool = trip.getSummerTrip();
         boolean isDayTripBool = trip.getDayTrip();
@@ -141,6 +154,7 @@ public class TripDetailsFragment extends DialogFragment implements Constants {
 
     private void onReply() {
         getUserName();// get specific user name of current user
+        rootRef = FirebaseDatabase.getInstance().getReference().child("trips");
         mAuth = FirebaseAuth.getInstance();
         //need to check if its the first comment if not we initiate new child
         AlertDialog.Builder builder = new AlertDialog.Builder(this.getContext());
@@ -151,7 +165,6 @@ public class TripDetailsFragment extends DialogFragment implements Constants {
 // Specify the type of input expected; this, for example, sets the input as a password, and will mask the text
         input.setInputType(InputType.TYPE_CLASS_TEXT);
         builder.setView(input);
-
         // FixMe Niv: change to a string from the string file
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.KITKAT)
@@ -188,7 +201,6 @@ public class TripDetailsFragment extends DialogFragment implements Constants {
                 Toast.makeText(getContext(), R.string.UserNameFromFirebaseError, Toast.LENGTH_LONG).show();
             }
         });
-
     }
 
 
