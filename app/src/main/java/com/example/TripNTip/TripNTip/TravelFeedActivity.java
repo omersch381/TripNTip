@@ -56,6 +56,7 @@ public class TravelFeedActivity extends AppCompatActivity implements SearchFragm
         rootRef = FirebaseDatabase.getInstance().getReference();
     }
 
+
     @Override
     protected void onStart() {
         super.onStart();
@@ -160,7 +161,6 @@ public class TravelFeedActivity extends AppCompatActivity implements SearchFragm
                     return true;
                 }
             };
-
     @Override
     public void onDataPass(String data) {
         Bundle bundle = new Bundle();
@@ -248,6 +248,7 @@ public class TravelFeedActivity extends AppCompatActivity implements SearchFragm
             }
         });
     }
+
 }
 
 
