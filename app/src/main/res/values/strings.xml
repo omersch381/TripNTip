@@ -16,6 +16,16 @@
     <string name="shouldIDoTheTrip">Should I Go And Do The Trip Now?</string>
     <string name="trip_current_recommendation_edit_text">Click The Button To Get Our Recommendation</string>
     <string name="UploadTripPicture">Click Here To Upload A Picture</string>
+    <string name="TripDetailsName">Trip\'s Name: </string>
+    <string name="TripDetailsDescription">Trip\'s Description: </string>
+    <string name="TripDetailsIsSummerTrip"> Is a Summer Trip</string>
+    <string name="TripDetailsIsNotSummerTrip"> Is Not a Summer Trip</string>
+    <string name="TripDetailsIsDayTrip">Is a Day Trip</string>
+    <string name="TripDetailsIsNotDayTrip">Is Not a Day Trip</string>
+    <string name="OurRecommendationLabel">Our Recommendation For Doing The Trip Right Now: </string>
+    <string name="RecommendationProofLabel">Would You Like To Know How We Got There? Click Here.</string>
+    <string name="CollapseExtendedRecommendation">Collapse</string>
+
 
     <!--    Messages-->
     <string name="signUpSucceededMsg">"User Creation Succeeded."</string>
@@ -59,8 +69,24 @@
     <string name="next">Next</string>
     <string name="previous">Previous</string>
 
+    <!--    FixMe Niv: typo-->
     <string name="Eror_database">data base eror</string>
     <string name="not_choose_photo"> No image selected</string>
+    <string name="select_image"> select image</string>
+    <string name="wait"> "Please wait..."</string>
 
+    <!--    Extended Recommendation Properties-->
+    <string name="As">As \ </string>
+    <string name="is">\ is \ </string>
+    <string name="not">not \ </string>
+    <string name="summer_trip_and">a summer trip, and the temperature is \ </string>
+    <string name="comfortable">comfortable</string>
+    <string name="we_decided_to_add"> we decided to add \ </string>
+    <string name="to_the_grade">\ to the grade.</string>
+    <string name="as_the_humidity">As the humidity is very high, we decided to decrease \ </string>
+    <string name="from_the_grade"> from the grade.</string>
+    <string name="a_day_trip">a day trip, so there is \ </string>
+    <string name="enough_time">enough time to do the trip right now, and we decided to add \ </string>
+    <string name="dis_recommendation">We don\'t recommend traveling there</string>
 
 </resources>
