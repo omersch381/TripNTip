@@ -31,79 +31,21 @@ public class Comment implements Serializable {
     private String author;
     private String timestamp;
     private String message;
-    private FirebaseAuth mAuth;
-    private boolean wasWritten;
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public Comment(String message) {
         this.timestamp = generateTimestamp();
         this.message = message;
-        this.wasWritten = false;
+
     }
 
     public Comment() {
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-    private void setauthor() {
-        mAuth = FirebaseAuth.getInstance();
-        final FirebaseDatabase mDataBase = FirebaseDatabase.getInstance();
-        final DatabaseReference reference = mDataBase.getReference("users");
-
-        reference.addValueEventListener(new ValueEventListener() {
-            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                String emailOfCurrentUsre = Objects.requireNonNull(mAuth.getCurrentUser()).getEmail();
-                for (DataSnapshot ds : dataSnapshot.getChildren()) {
-                    String emailOnDataBase = Objects.requireNonNull(ds.child("email").getValue()).toString();
-                    if (emailOnDataBase.toLowerCase().equals(emailOfCurrentUsre)) {
-                        author = Objects.requireNonNull(ds.child("username").getValue()).toString();
-                    }
-
-                }
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-
-        });
-    }
     private String generateTimestamp() {
         Date date = Calendar.getInstance().getTime();
         DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm");
         return formatter.format(date);
-    }
-
-    public boolean handleWriteComment(Trip trip) {
-        trip.getComments().add(this);
-        boolean wasWritten = writeCommentToFirebase(trip);
-        if (!wasWritten)
-            trip.getComments().remove(this);
-        return wasWritten;
-    }
-
-    public boolean writeCommentToFirebase(Trip trip) {
-        DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
-        final DatabaseReference tripsRef = rootRef.child("trips");
-
-        tripsRef.child(trip.getName()).child("comments").setValue(trip.getComments(), new DatabaseReference.CompletionListener() {
-            @Override
-            public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
-//                String result;
-//                if (error == null)
-//                    result = getResources().getString(R.string.tripWritingSuccessMsg);
-//                else
-//                    result = getResources().getString(R.string.tripWritingFailureMsg);
-//
-//                Toast.makeText(getApplicationContext(), result, Toast.LENGTH_SHORT).show();
-                wasWritten = error == null;
-            }
-        });
-        return wasWritten;
     }
 
     public String getAuthor() {

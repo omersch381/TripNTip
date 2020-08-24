@@ -130,13 +130,13 @@ public class TravelGuide implements Constants {
         boolean isThereEnoughTimeToTravelNightTrip = currentHour > sunsetHour || currentHour <= sunriseHour - TRIP_AVERAGE_DURATION;
         boolean isThereEnoughTimeNow = (isDayTrip && isThereEnoughTimeToTravelDayTrip) || (!isDayTrip && isThereEnoughTimeToTravelNightTrip);
 
-        int timeOfDayGrade = generateTimeOfDayGrade(isDayTrip, isThereEnoughTimeToTravelDayTrip, isThereEnoughTimeToTravelNightTrip, isThereEnoughTimeNow);
+        int timeOfDayGrade = generateTimeOfDayGrade(isDayTrip, isThereEnoughTimeToTravelDayTrip, isThereEnoughTimeToTravelNightTrip);
         generateTimeOfDayExtendedRecommendation(trip, isDayTrip, isThereEnoughTimeNow);
 
         return timeOfDayGrade;
     }
 
-    private int generateTimeOfDayGrade(boolean isDayTrip, boolean isThereEnoughTimeToTravelDayTrip, boolean isThereEnoughTimeToTravelNightTrip, boolean isThereEnoughTimeNow) {
+        private int generateTimeOfDayGrade(boolean isDayTrip, boolean isThereEnoughTimeToTravelDayTrip, boolean isThereEnoughTimeToTravelNightTrip) {
         int timeOfDayGrade = 0;
 
         if (isDayTrip) {

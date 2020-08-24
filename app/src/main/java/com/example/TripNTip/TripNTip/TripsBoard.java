@@ -33,8 +33,4 @@ public class TripsBoard implements Constants {
     public int getNumOfColumns() {
         return TRIPS_BOARD_NUM_OF_COLUMNS;
     }
-
-    public Trip[] getGrid() {
-        return grid;
-    }
 }

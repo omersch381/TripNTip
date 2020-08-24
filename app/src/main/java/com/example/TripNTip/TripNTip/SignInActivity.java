@@ -44,11 +44,6 @@ public class SignInActivity extends AppCompatActivity implements Constants {
     private FirebaseAuth mAuth;
     private String apiKey;
     private HashMap<String, Trip> trips;
-    private ImageView[] tripsImages;
-     List<Trip> listRes;
-
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -13,7 +13,7 @@ public class Trip implements Serializable {
     private boolean dayTrip;
     private int id;
     private String location;
-    private ArrayList<Comment> comments=new ArrayList<Comment>() ;
+    private ArrayList<Comment> comments=new ArrayList() ;
 
     public Trip(String name, String description, boolean summerTrip, boolean dayTrip, String location) {
         this.name = name;
