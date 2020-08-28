@@ -89,7 +89,7 @@ import java.net.URL;
         });
     }
 
-    public void handleSuccessfulResponse(HttpURLConnection urlConnection, Context context) throws IOException {
+    private void handleSuccessfulResponse(HttpURLConnection urlConnection, Context context) throws IOException {
         InputStreamReader inputStreamReader = new InputStreamReader(urlConnection.getInputStream());
         BufferedReader reader = new BufferedReader(inputStreamReader);
         StringBuilder stringBuilder = new StringBuilder();
@@ -106,7 +106,7 @@ import java.net.URL;
         urlConnection.disconnect();
     }
 
-    private static void close(Closeable x, Context context) {
+    private void close(Closeable x, Context context) {
         try {
             if (x != null) {
                 x.close();

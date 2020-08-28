@@ -4,16 +4,21 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.InputType;
-import android.content.res.Resources;
+import android.util.DisplayMetrics;
+import android.util.Log;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -29,6 +34,7 @@ import com.example.TripNTip.TripNTip.Comment;
 import com.example.TripNTip.TripNTip.TravelGuide;
 import com.example.TripNTip.TripNTip.Trip;
 import com.example.TripNTip.Utils.Constants;
+import com.example.TripNTip.WeatherAPI.TravelGuideRecommendation;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -50,9 +56,6 @@ public class TripDetailsFragment extends DialogFragment implements Constants {
     private FirebaseAuth mAuth;
     private String userName;
     private Resources res;
-    private DatabaseReference rootRef;
-    private boolean wasWritten;
-
 
     public TripDetailsFragment() {
     }
@@ -93,7 +96,6 @@ public class TripDetailsFragment extends DialogFragment implements Constants {
 
         final Button recommendationButton = v.findViewById(R.id.trip_current_recommendation_button);
         Button replyButton = v.findViewById(R.id.reply_button);
-
         boolean isSummerTripBool = trip.getSummerTrip();
         boolean isDayTripBool = trip.getDayTrip();
 
@@ -127,9 +129,15 @@ public class TripDetailsFragment extends DialogFragment implements Constants {
             }
         });
 
-
         FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
         commentsListFragment = new CommentsListFragment(trip.getComments());
+
+//        FrameLayout frameLayout = v.findViewById(R.id.list_view_fragment_container);
+//        getResources().getInteger(R.attr.listPreferredItemHeightSmall);
+//        frameLayout.setMinimumHeight(frameLayout.ge);
+//
+//        Log.d("NOTEEEEEEEE", getItemHeight());
+
         transaction.add(R.id.list_view_fragment_container, commentsListFragment);
         transaction.addToBackStack(null);
         transaction.commit();
@@ -139,7 +147,7 @@ public class TripDetailsFragment extends DialogFragment implements Constants {
 
     private void onReply() {
         getUserName();// get specific user name of current user
-        rootRef = FirebaseDatabase.getInstance().getReference().child("trips");
+        DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference().child("trips");
         mAuth = FirebaseAuth.getInstance();
         //need to check if its the first comment if not we initiate new child
         AlertDialog.Builder builder = new AlertDialog.Builder(this.getContext());
@@ -206,7 +214,6 @@ public class TripDetailsFragment extends DialogFragment implements Constants {
     }
 
 
-    //>>>>>>> comments
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     private void handleRecommendationButtonClicked(final View v) {
         final TravelGuideRecommendation recommendation = travelGuide.howMuchShouldITravelNowIn(trip);

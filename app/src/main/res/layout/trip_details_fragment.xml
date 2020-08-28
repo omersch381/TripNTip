@@ -1,110 +1,116 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:background="@drawable/dialog_shape"
-    android:minWidth="260dp"
-    android:orientation="vertical"
-    android:padding="24dp">
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
-    <ImageView
-        android:id="@+id/trip_image"
-        android:layout_width="@dimen/ShowTripImageViewWidth"
-        android:layout_height="@dimen/ShowTripImageViewHeight"
-        android:layout_gravity="center" />
-
-    <TextView
-        android:id="@+id/trip_details_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:textSize="15sp"
-        android:textStyle="bold" />
-
-    <TextView
-        android:id="@+id/trip_details_description"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:textSize="15sp" />
-
-    <TextView
-        android:id="@+id/trip_details_isSummerTrip"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:textSize="15sp"
-        android:textStyle="bold" />
-
-    <TextView
-        android:id="@+id/trip_details_isDayTrip"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:textSize="15sp"
-        android:textStyle="bold" />
-
-    <Button
-        android:id="@+id/trip_current_recommendation_button"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_marginStart="30dp"
-        android:layout_marginLeft="30dp"
-        android:layout_marginTop="50dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginRight="20dp"
-        android:background="@drawable/button_style"
-        android:fontFamily="#ans-serif"
-        android:text="@string/shouldIDoTheTrip"
-        android:textAlignment="center"
-        android:textColor="@color/textColor"
-        android:textSize="15sp"
-        android:textStyle="normal|bold" />
-
-
-    <TextView
-        android:id="@+id/trip_current_recommendation_grade_text_view"
-        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:visibility="gone" />
+        android:background="@drawable/dialog_shape"
+        android:minWidth="260dp"
+        android:orientation="vertical"
+        android:padding="24dp">
 
-    <TextView
-        android:id="@+id/show_extended_recommendation_text_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:visibility="gone" />
+        <ImageView
+            android:id="@+id/trip_image"
+            android:layout_width="@dimen/ShowTripImageViewWidth"
+            android:layout_height="@dimen/ShowTripImageViewHeight"
+            android:layout_gravity="center" />
 
-    <TextView
-        android:id="@+id/extended_recommendation_text_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:visibility="gone" />
+        <TextView
+            android:id="@+id/trip_details_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textSize="15sp"
+            android:textStyle="bold" />
 
-    <Button
-        android:id="@+id/collapse_extended_recommendation_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:visibility="gone" />
+        <TextView
+            android:id="@+id/trip_details_description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textSize="15sp" />
 
-    <FrameLayout
-        android:id="@+id/list_view_fragment_container"
-        android:layout_width="match_parent"
-        android:layout_height="100dp" />
+        <TextView
+            android:id="@+id/trip_details_isSummerTrip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textSize="15sp"
+            android:textStyle="bold" />
 
-    <Button
-        android:id="@+id/reply_button"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:background="@color/Login"
-        android:fontFamily="#ans-serif"
-        android:text="@string/shouldIDoTheTrip"
-        android:textColor="@color/textColor"
-        android:textSize="15sp"
-        android:textStyle="normal|bold" />
+        <TextView
+            android:id="@+id/trip_details_isDayTrip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textSize="15sp"
+            android:textStyle="bold" />
 
-    <EditText
-        android:id="@+id/reply_text"
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:visibility="gone" />
+        <Button
+            android:id="@+id/trip_current_recommendation_button"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="50dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginRight="20dp"
+            android:background="@drawable/button_style"
+            android:fontFamily="#ans-serif"
+            android:text="@string/shouldIDoTheTrip"
+            android:textAlignment="center"
+            android:textColor="@color/textColor"
+            android:textSize="15sp"
+            android:textStyle="normal|bold"
+            android:gravity="center_horizontal" />
 
-</LinearLayout>
+
+        <TextView
+            android:id="@+id/trip_current_recommendation_grade_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/show_extended_recommendation_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/extended_recommendation_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone" />
+
+        <Button
+            android:id="@+id/collapse_extended_recommendation_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone" />
+
+        <FrameLayout
+            android:id="@+id/list_view_fragment_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <Button
+            android:id="@+id/reply_button"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="@color/Login"
+            android:fontFamily="#ans-serif"
+            android:text="@string/shouldIDoTheTrip"
+            android:textColor="@color/textColor"
+            android:textSize="15sp"
+            android:textStyle="normal|bold" />
+
+        <EditText
+            android:id="@+id/reply_text"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:visibility="gone" />
+
+    </LinearLayout>
+</ScrollView>
