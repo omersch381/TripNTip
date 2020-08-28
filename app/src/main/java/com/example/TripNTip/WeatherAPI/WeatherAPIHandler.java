@@ -3,7 +3,6 @@ package com.example.TripNTip.WeatherAPI;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Build;
-import android.util.Log;
 import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
@@ -89,7 +88,7 @@ public class WeatherAPIHandler implements Constants {
         });
     }
 
-    public void handleSuccessfulResponse(HttpURLConnection urlConnection, Context context) throws IOException {
+    private void handleSuccessfulResponse(HttpURLConnection urlConnection, Context context) throws IOException {
         InputStreamReader inputStreamReader = new InputStreamReader(urlConnection.getInputStream());
         BufferedReader reader = new BufferedReader(inputStreamReader);
         StringBuilder stringBuilder = new StringBuilder();
@@ -106,7 +105,7 @@ public class WeatherAPIHandler implements Constants {
         urlConnection.disconnect();
     }
 
-    private static void close(Closeable x, Context context) {
+    private void close(Closeable x, Context context) {
         try {
             if (x != null) {
                 x.close();
