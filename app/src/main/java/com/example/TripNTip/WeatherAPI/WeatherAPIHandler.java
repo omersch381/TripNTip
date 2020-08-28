@@ -3,7 +3,6 @@ package com.example.TripNTip.WeatherAPI;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Build;
-import android.util.Log;
 import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
@@ -20,7 +19,7 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-public class WeatherAPIHandler implements Constants {
+    public class WeatherAPIHandler implements Constants {
 
     private String apiKey;
     private WeatherAPIResponse myResponse;
@@ -42,7 +41,7 @@ public class WeatherAPIHandler implements Constants {
     public WeatherAPIResponse handleWeatherAPIRequest(final Trip trip) {
         myResponse = new WeatherAPIResponse();
 
-        final URL url = generateRequestURL(trip);
+        final URL url = generateUrlRequest(trip);
 
         sendAPIRequest(url);
 
@@ -50,11 +49,12 @@ public class WeatherAPIHandler implements Constants {
     }
 
 
-    private URL generateRequestURL(final Trip trip) {
+    private URL generateUrlRequest(final Trip trip) {
         int tripId = apiHandler.getID(trip.getLocation());
         URL url = null;
 
         try {
+            //todo omer!use constant
             url = new URL("https://api.openweathermap.org/data/2.5/weather?id=" + tripId + "&appid=" + apiKey);
         } catch (MalformedURLException e) {
             e.printStackTrace();
@@ -99,7 +99,7 @@ public class WeatherAPIHandler implements Constants {
             stringBuilder.append(line);
             stringBuilder.append("\n");
         }
-
+        //todo omer check the static method
         response = stringBuilder.toString();
         myResponse.parseWeather(response);
         close(reader, context);

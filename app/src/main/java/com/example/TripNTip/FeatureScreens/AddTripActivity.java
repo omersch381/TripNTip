@@ -2,20 +2,16 @@ package com.example.TripNTip.FeatureScreens;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -28,26 +24,19 @@ import com.example.TripNTip.TripNTip.TravelFeedActivity;
 import com.example.TripNTip.TripNTip.Trip;
 import com.example.TripNTip.Utils.Constants;
 import com.example.TripNTip.WeatherAPI.IsraeliWeatherAPIHandler;
-import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.storage.FileDownloadTask;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
-
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
 
 public class AddTripActivity extends AppCompatActivity implements Constants {
 
     private boolean summerTrip;
     private boolean dayTrip;
-    private AutoCompleteTextView countryChooser;
+    private AutoCompleteTextView locationChooser;
     private IsraeliWeatherAPIHandler handler;
     private boolean imageUploadSucceeded;
     private String[] listOfCities;
@@ -63,7 +52,7 @@ public class AddTripActivity extends AppCompatActivity implements Constants {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_trip_activity);
-
+        //todo omer check about the base and protected
         handler = new IsraeliWeatherAPIHandler(getApplicationContext());
 
         listOfCities = handler.getCities();
@@ -76,10 +65,10 @@ public class AddTripActivity extends AppCompatActivity implements Constants {
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     private void handleCountryChooser() {
         ArrayAdapter<String> countryArrayAdapter = new ArrayAdapter<>(this, android.R.layout.select_dialog_item, listOfCities);
-        countryChooser = findViewById(R.id.autoCompleteTextView);
-        countryChooser.setThreshold(1);
-        countryChooser.setAdapter(countryArrayAdapter);
-        countryChooser.setTextColor(Color.BLACK);
+        locationChooser = findViewById(R.id.autoCompleteTextView);
+        locationChooser.setThreshold(1);
+        locationChooser.setAdapter(countryArrayAdapter);
+        locationChooser.setTextColor(Color.BLACK);
     }
 
     private void setOnClicks() {
@@ -92,7 +81,7 @@ public class AddTripActivity extends AppCompatActivity implements Constants {
 
             @RequiresApi(api = Build.VERSION_CODES.O)
             public void onClick(View v) {
-                uploadTripPicture();
+                uploadTripPictureFromGallery();
             }
         });
         addTripButton.setOnClickListener(new View.OnClickListener() {
@@ -121,7 +110,7 @@ public class AddTripActivity extends AppCompatActivity implements Constants {
     private void addTrip() {
         String status;
         if ((status = allConditionApply()).equals(TRIP_CREATION_SUCCEED))
-            writeTripToFirebase(createTripFromUserData());
+            writeTripToDatabase(createTripFromUserData());
         else
             Toast.makeText(getApplicationContext(), status, Toast.LENGTH_LONG).show();
     }
@@ -130,12 +119,11 @@ public class AddTripActivity extends AppCompatActivity implements Constants {
     private String allConditionApply() {
         EditText tripNameET = findViewById(R.id.add_trip_name);
         EditText descriptionNameET = findViewById(R.id.add_trip_description);
-
         if (tripNameET.getText().toString().isEmpty())
             return getResources().getString(R.string.AddTripNameIsEmptyMsg);
         else if (descriptionNameET.getText().toString().isEmpty())
             return getResources().getString(R.string.AddTripDescriptionIsEmptyMsg);
-        else if (!isLocationInTheLocationsList(countryChooser.getText().toString()))
+        else if (!isLocationInTheLocationsList(locationChooser.getText().toString()))
             return getResources().getString(R.string.AddTripLocationNotInList);
         else if (!imageUploadSucceeded)
             return getResources().getString(R.string.AddTripImageUploadFailed);
@@ -153,7 +141,7 @@ public class AddTripActivity extends AppCompatActivity implements Constants {
         return false;
     }
 
-    private void writeTripToFirebase(Trip trip) {
+    private void writeTripToDatabase(Trip trip) {
         DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
         final DatabaseReference tripsRef = rootRef.child("trips");
         int id = handler.getID(trip.getLocation());
@@ -181,10 +169,10 @@ public class AddTripActivity extends AppCompatActivity implements Constants {
         EditText tripNameET = findViewById(R.id.add_trip_name);
         EditText descriptionNameET = findViewById(R.id.add_trip_description);
 
-        return new Trip(tripNameET.getText().toString(), descriptionNameET.getText().toString(), summerTrip, dayTrip, countryChooser.getText().toString());
+        return new Trip(tripNameET.getText().toString(), descriptionNameET.getText().toString(), summerTrip, dayTrip, locationChooser.getText().toString());
     }
 
-    private void uploadTripPicture() {
+    private void uploadTripPictureFromGallery() {
         Intent intent = new Intent();
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
@@ -204,7 +192,7 @@ public class AddTripActivity extends AppCompatActivity implements Constants {
         if (imageUri != null) {
             final ProgressDialog progressDialog = ProgressDialog.show(AddTripActivity.this, "", getResources().getString(R.string.waitMessage));
             final StorageReference storageRef = FirebaseStorage.getInstance().getReference();
-            String tripId = String.valueOf(handler.getID(countryChooser.getText().toString()));
+            String tripId = String.valueOf(handler.getID(locationChooser.getText().toString()));
 
             storageRef.child("images").child("trips").child(tripId + ".png").putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @RequiresApi(api = Build.VERSION_CODES.O)

@@ -181,7 +181,6 @@ public class SignInActivity extends AppCompatActivity implements Constants {
 
     private String getInvalidStatusMessage(int checkerStatus) {
         // This method is required because we don't allow the CredentialsChecker access the R file
-
         String statusMessage = "";
         switch (checkerStatus) {
             case EMPTY_EMAIL_MESSAGE:

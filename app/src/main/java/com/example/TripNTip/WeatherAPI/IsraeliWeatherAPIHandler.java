@@ -64,7 +64,8 @@ public class IsraeliWeatherAPIHandler extends BaseWeatherAPI implements Constant
         return super.getID(tripName);
     }
 
+    @Override
     public String[] getCities() {
-        return super.getCities();
+        return cities;
     }
 }

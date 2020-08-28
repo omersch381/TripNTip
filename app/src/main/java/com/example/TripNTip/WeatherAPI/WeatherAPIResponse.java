@@ -63,26 +63,6 @@ public class WeatherAPIResponse implements Constants {
         return name;
     }
 
-    public double getLongitude() {
-        return longitude;
-    }
-
-    public double getLatitude() {
-        return latitude;
-    }
-
-    public String getMainWeather() {
-        return mainWeather;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public double getTemperature() {
-        return temperature;
-    }
-
     public double getTemperatureFeelsLike() {
         return temperatureFeelsLike;
     }

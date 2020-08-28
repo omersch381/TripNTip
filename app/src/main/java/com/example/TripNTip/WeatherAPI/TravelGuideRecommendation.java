@@ -14,7 +14,7 @@ public class TravelGuideRecommendation {
         return recommendationGrade;
     }
 
-    public String getExtendedRecommendation() {
+        public String getExtendedRecommendation() {
         return extendedRecommendation;
     }
 }
