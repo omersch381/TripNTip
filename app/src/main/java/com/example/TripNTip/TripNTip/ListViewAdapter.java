@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.TripNTip.R;
@@ -66,7 +67,7 @@ public class ListViewAdapter extends BaseAdapter {
         if (convertView == null) {
             LayoutInflater layoutInflater = LayoutInflater.from(context);
             convertView = layoutInflater.inflate(R.layout.comment_view, null);
-            TextView textView = (TextView) convertView;
+            RelativeLayout relativeLayout = (RelativeLayout) convertView;
 
             Comment currentComment = arrayList.get(position);
 
@@ -75,7 +76,11 @@ public class ListViewAdapter extends BaseAdapter {
             String message = currentComment.getMessage();
 
             String commentContent = author + "\t\t\t" + timestamp + "\n\t\t" + message;
-            textView.setText(commentContent);
+
+            TextView test = new TextView(context);
+            test.setText(commentContent);
+            relativeLayout.addView(test);
+//            textView.setText(commentContent);
         }
         return convertView;
     }
