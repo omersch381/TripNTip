@@ -58,7 +58,7 @@ public class TripAdapter extends BaseAdapter implements Constants {
 
     private void setTripViewBackground(TripView tripView, Trip trip) {
         //TODO Niv: make sure we add the pictures in the same way the set them in this method.
-        BitmapDrawable background = new BitmapDrawable(myContext.getResources(), tripsAlbum.get(trip.getId() + ".png"));
+        BitmapDrawable background = new BitmapDrawable(myContext.getResources(), tripsAlbum.get(trip.getId() + TRIP_IMAGE_FORMAT));
         ViewCompat.setBackground(tripView, background);
     }
 

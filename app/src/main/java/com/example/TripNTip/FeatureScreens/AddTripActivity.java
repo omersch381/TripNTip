@@ -34,6 +34,15 @@ import com.google.firebase.storage.UploadTask;
 
 public class AddTripActivity extends AppCompatActivity implements Constants {
 
+    /**
+     * AddTripActivity displays a view which receives data from the user
+     * (the potential trip's details/attributes) and checks them.
+     * If the data is valid, AddTripActivity will write the Trip to
+     * database, otherwise, it will notice the user what is wrong.
+     * AddTripActivity allows the user to upload its own picture, and
+     * will upload the picture as well.
+     */
+
     private boolean summerTrip;
     private boolean dayTrip;
     private AutoCompleteTextView locationChooser;
@@ -57,17 +66,17 @@ public class AddTripActivity extends AppCompatActivity implements Constants {
 
         listOfCities = handler.getCities();
 
-        handleCountryChooser();
+        handleLocationChooser();
 
         setOnClicks();
     }
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-    private void handleCountryChooser() {
-        ArrayAdapter<String> countryArrayAdapter = new ArrayAdapter<>(this, android.R.layout.select_dialog_item, listOfCities);
+    private void handleLocationChooser() {
+        ArrayAdapter<String> locationArrayAdapter = new ArrayAdapter<>(this, android.R.layout.select_dialog_item, listOfCities);
         locationChooser = findViewById(R.id.autoCompleteTextView);
         locationChooser.setThreshold(1);
-        locationChooser.setAdapter(countryArrayAdapter);
+        locationChooser.setAdapter(locationArrayAdapter);
         locationChooser.setTextColor(Color.BLACK);
     }
 
@@ -141,6 +150,15 @@ public class AddTripActivity extends AppCompatActivity implements Constants {
         return false;
     }
 
+
+    private Trip createTripFromUserData() {
+        EditText tripNameET = findViewById(R.id.add_trip_name);
+        EditText descriptionNameET = findViewById(R.id.add_trip_description);
+
+        return new Trip(tripNameET.getText().toString(), descriptionNameET.getText().toString(), summerTrip, dayTrip, locationChooser.getText().toString());
+    }
+
+
     private void writeTripToDatabase(Trip trip) {
         DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
         final DatabaseReference tripsRef = rootRef.child("trips");
@@ -159,17 +177,15 @@ public class AddTripActivity extends AppCompatActivity implements Constants {
                 Toast.makeText(getApplicationContext(), result, Toast.LENGTH_SHORT).show();
             }
         });
+
+        startTravelFeedActivity();
+    }
+
+    private void startTravelFeedActivity() {
         Intent intent = new Intent(AddTripActivity.this, TravelFeedActivity.class);
         intent.putExtra(SHOULD_WE_LOAD_THE_API_KEY, true);
         intent.putExtra(SHOULD_WE_LOAD_THE_TRIPS, true);
         AddTripActivity.this.startActivity(intent);
-    }
-
-    private Trip createTripFromUserData() {
-        EditText tripNameET = findViewById(R.id.add_trip_name);
-        EditText descriptionNameET = findViewById(R.id.add_trip_description);
-
-        return new Trip(tripNameET.getText().toString(), descriptionNameET.getText().toString(), summerTrip, dayTrip, locationChooser.getText().toString());
     }
 
     private void uploadTripPictureFromGallery() {
@@ -194,7 +210,7 @@ public class AddTripActivity extends AppCompatActivity implements Constants {
             final StorageReference storageRef = FirebaseStorage.getInstance().getReference();
             String tripId = String.valueOf(handler.getID(locationChooser.getText().toString()));
 
-            storageRef.child("images").child("trips").child(tripId + ".png").putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            storageRef.child("images").child("trips").child(tripId + TRIP_IMAGE_FORMAT).putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @RequiresApi(api = Build.VERSION_CODES.O)
                 @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {

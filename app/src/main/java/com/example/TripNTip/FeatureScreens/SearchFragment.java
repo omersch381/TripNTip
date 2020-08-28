@@ -15,8 +15,14 @@ import com.example.TripNTip.R;
 
 public class SearchFragment extends Fragment {
 
-    SearchView searchView;
-    OnDataPass dataPasser;
+    /**
+     * SearchFragment receives data with the dataPasser interface
+     * and sends it back to TravelFeedActivity.
+     * It does not parse it or filters it.
+     */
+
+
+    private OnDataPass dataPasser;
 
     public SearchFragment() {
     }
@@ -35,7 +41,7 @@ public class SearchFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        searchView = requireActivity().findViewById(R.id.searchView);
+        SearchView searchView = requireActivity().findViewById(R.id.searchView);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {

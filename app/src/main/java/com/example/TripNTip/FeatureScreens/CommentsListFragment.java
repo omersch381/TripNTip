@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.ListView;
 
 import androidx.fragment.app.Fragment;
@@ -16,6 +15,11 @@ import com.example.TripNTip.TripNTip.ListViewAdapter;
 import java.util.ArrayList;
 
 public class CommentsListFragment extends Fragment {
+    /**
+     * CommentsListFragment displays the comments
+     * which arrive from TripDetailsFragment.
+     */
+
 
     private ArrayList<Comment> comments;
 
@@ -35,7 +39,7 @@ public class CommentsListFragment extends Fragment {
 
         ListView listView = v.findViewById(R.id.listView);
 
-        ListViewAdapter adapter = new ListViewAdapter(getContext(),comments);
+        ListViewAdapter adapter = new ListViewAdapter(getContext(), comments);
 
         listView.setAdapter(adapter);
 
