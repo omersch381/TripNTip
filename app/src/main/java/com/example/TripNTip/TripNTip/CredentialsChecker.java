@@ -5,6 +5,14 @@ import com.example.TripNTip.Utils.Constants;
 import java.util.regex.Pattern;
 
 public class CredentialsChecker implements Constants {
+
+    /**
+     * CredentialsChecker checks the validity of the user credentials.
+     *
+     * It checks and updates checkerStatus accordingly.
+     * The check is going "top down" (from the first TextField to last).
+     */
+
     private String email = "";
     private String password = "";
     private int checkerStatus = -1;
@@ -15,14 +23,11 @@ public class CredentialsChecker implements Constants {
     }
 
 
-
-    public  boolean areTheCredentialsValid() {
-        // The returnMessage will be assigned inside the checker methods.
+    public boolean areTheCredentialsValid() {
 
         boolean isEmailValid = checkEmail(this.email);
         if (isEmailValid)
             return checkPassword(this.password);
-        // Country will be valid, because we let the user choose one from our list.
 
         return false;
     }
@@ -35,6 +40,7 @@ public class CredentialsChecker implements Constants {
             this.checkerStatus = EMPTY_EMAIL_MESSAGE;
             return false;
         }
+
         boolean isEmailValid = pattern.matcher(email).matches();
         if (!isEmailValid) {
             this.checkerStatus = INVALID_EMAIL_MESSAGE;

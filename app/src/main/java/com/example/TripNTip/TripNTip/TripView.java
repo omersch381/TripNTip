@@ -6,21 +6,14 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.example.TripNTip.R;
-
 import androidx.annotation.RequiresApi;
 
-import com.google.firebase.storage.StorageReference;
+import com.example.TripNTip.R;
 
 public class TripView extends LinearLayout {
-    //    private Drawable d;
+
     private TextView textView;
 
-    //    public TripView(Context context, StorageReference listRef) {
-//        super(context);
-//        this.listRef = listRef;
-//        generateTextViews(context);
-//    }
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
     public TripView(Context context) {
         super(context);

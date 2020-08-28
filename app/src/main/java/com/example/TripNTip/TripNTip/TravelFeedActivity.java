@@ -1,19 +1,14 @@
 package com.example.TripNTip.TripNTip;
 
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.util.AttributeSet;
-import android.util.Log;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
@@ -42,6 +37,14 @@ import java.util.HashMap;
 
 public class TravelFeedActivity extends AppCompatActivity implements SearchFragment.OnDataPass, Constants {
 
+    /**
+     * TravelFeedActivity manages the travel feed.
+     * <p>
+     * It handle the app's data loading process, and passes relevant data to GridFragment.
+     * In some methods we use 'onDataPass("")', we do that because we use onDataPass as an updater,
+     * after each data which is passed the GridFragment updates it trips and views.
+     */
+
     private String apiKey;
     private HashMap<String, Trip> trips;
     private DatabaseReference rootRef;
@@ -55,7 +58,6 @@ public class TravelFeedActivity extends AppCompatActivity implements SearchFragm
 
         rootRef = FirebaseDatabase.getInstance().getReference();
     }
-
 
     @Override
     protected void onStart() {
@@ -93,8 +95,7 @@ public class TravelFeedActivity extends AppCompatActivity implements SearchFragm
     private void loadBitmaps() {
         tripsAlbum = new HashMap<>();
         FirebaseStorage storage = FirebaseStorage.getInstance();
-        //fix me omer- use constent insted  "images and "trip"
-        Task<ListResult> listRef = storage.getReference().child("images").child("trips").listAll();
+        Task<ListResult> listRef = storage.getReference().child(IMAGES_REF).child(TRIPS_REF).listAll();
         listRef.addOnSuccessListener(new OnSuccessListener<ListResult>() {
             @Override
             public void onSuccess(ListResult listResult) {
@@ -110,7 +111,6 @@ public class TravelFeedActivity extends AppCompatActivity implements SearchFragm
                             bitmapProgressDialog.dismiss();
                             if (numOfPictures == trips.size()) {
                                 handleViews();
-                                //fix me omer - user EMPTY STRING insted ""
                                 onDataPass("");
                             }
                         }
@@ -150,17 +150,18 @@ public class TravelFeedActivity extends AppCompatActivity implements SearchFragm
                 public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                     switch (menuItem.getItemId()) {
                         case R.id.navAdd:
-                            Intent intentAdd = new Intent(TravelFeedActivity.this, AddTripActivity.class);
-                            TravelFeedActivity.this.startActivity(intentAdd);
+                            Intent addActivityIntent = new Intent(TravelFeedActivity.this, AddTripActivity.class);
+                            TravelFeedActivity.this.startActivity(addActivityIntent);
                             break;
                         case R.id.navProfile:
-                            Intent intentProfile = new Intent(TravelFeedActivity.this, ProfileActivity.class);
-                            TravelFeedActivity.this.startActivity(intentProfile);
+                            Intent ProfileActivityIntent = new Intent(TravelFeedActivity.this, ProfileActivity.class);
+                            TravelFeedActivity.this.startActivity(ProfileActivityIntent);
                             break;
                     }
                     return true;
                 }
             };
+
     @Override
     public void onDataPass(String data) {
         Bundle bundle = new Bundle();
@@ -188,7 +189,7 @@ public class TravelFeedActivity extends AppCompatActivity implements SearchFragm
     private void loadTripsAgain() {
         final ProgressDialog tripsProgressDialog = ProgressDialog.show(TravelFeedActivity.this, "", getResources().getString(R.string.waitMessage));
         trips = new HashMap<>();
-        loadData(rootRef.child("trips"), new OnGetDataListener() {
+        loadData(rootRef.child(TRIPS_REF), new OnGetDataListener() {
             @Override
             public void onSuccess(DataSnapshot dataSnapshot) {
                 for (DataSnapshot ds : dataSnapshot.getChildren()) {
@@ -197,7 +198,8 @@ public class TravelFeedActivity extends AppCompatActivity implements SearchFragm
                     trips.put(currentTrip.getName(), currentTrip);
                 }
                 tripsProgressDialog.dismiss();
-                //update gridView
+
+                //updates gridView
                 onDataPass("");
             }
 
@@ -211,13 +213,14 @@ public class TravelFeedActivity extends AppCompatActivity implements SearchFragm
 
     private void loadAPIKeyAgain() {
         final ProgressDialog APIProgressDialog = ProgressDialog.show(TravelFeedActivity.this, "", getResources().getString(R.string.waitMessage));
-        loadData(rootRef.child("apiKeys"), new OnGetDataListener() {
+        loadData(rootRef.child(API_KEY_REF), new OnGetDataListener() {
             @Override
             public void onSuccess(DataSnapshot dataSnapshot) {
                 for (DataSnapshot ds : dataSnapshot.getChildren())
                     apiKey = (String) ds.getValue();
                 APIProgressDialog.dismiss();
-                //update gridView
+
+                //updates gridView
                 onDataPass("");
             }
 

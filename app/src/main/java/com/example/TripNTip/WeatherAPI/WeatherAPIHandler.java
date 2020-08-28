@@ -19,7 +19,12 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-    public class WeatherAPIHandler implements Constants {
+public class WeatherAPIHandler implements Constants {
+
+    /**
+     * The API handler which manages the weather API requests.
+     * The handler sends the API requests, and uses WeatherAPIResponse to parse the response.
+     */
 
     private String apiKey;
     private WeatherAPIResponse myResponse;
@@ -54,7 +59,6 @@ import java.net.URL;
         URL url = null;
 
         try {
-            //todo omer!use constant
             url = new URL("https://api.openweathermap.org/data/2.5/weather?id=" + tripId + "&appid=" + apiKey);
         } catch (MalformedURLException e) {
             e.printStackTrace();
@@ -99,7 +103,6 @@ import java.net.URL;
             stringBuilder.append(line);
             stringBuilder.append("\n");
         }
-        //todo omer check the static method
         response = stringBuilder.toString();
         myResponse.parseWeather(response);
         close(reader, context);

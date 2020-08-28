@@ -40,7 +40,6 @@ public class IsraeliWeatherAPIHandler extends BaseWeatherAPI implements Constant
             cities_translator.put(json_data.getString("name"), json_data.getInt("id"));
             cities[i] = json_data.getString("name");
         }
-
     }
 
     private String loadJSONFromAsset(Context context) {

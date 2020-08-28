@@ -9,64 +9,62 @@
     <EditText
         android:id="@+id/add_trip_name"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_marginStart="30dp"
-        android:layout_marginLeft="30dp"
-        android:layout_marginTop="30dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginRight="20dp"
+        android:layout_height="@dimen/AddTripLayoutHeight"
+        android:layout_marginStart="@dimen/AddTripMarginLeft"
+        android:layout_marginLeft="@dimen/AddTripMarginLeft"
+        android:layout_marginTop="@dimen/AddTripMarginTop"
+        android:layout_marginEnd="@dimen/AddTripMarginRight"
+        android:layout_marginRight="@dimen/AddTripMarginRight"
         android:background="@drawable/rounded"
         android:cursorVisible="true"
-        android:drawablePadding="25dp"
+        android:drawablePadding="@dimen/AddTripDrawablePadding"
         android:hint="@string/TripAddName"
-        android:paddingStart="20dp"
-        android:paddingLeft="20dp"
-        android:paddingTop="10dp"
-        android:paddingRight="20dp"
+        android:paddingStart="@dimen/AddTripPaddingSpace"
+        android:paddingLeft="@dimen/AddTripPaddingSpace"
+        android:paddingRight="@dimen/AddTripPaddingSpace"
         android:textColor="@color/textColor"
         android:textCursorDrawable="@null"
-        android:textSize="20sp" />
+        android:textSize="@dimen/TextSize" />
 
     <EditText
         android:id="@+id/add_trip_description"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_marginStart="30dp"
-        android:layout_marginLeft="30dp"
-        android:layout_marginTop="30dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginRight="20dp"
+        android:layout_height="@dimen/AddTripLayoutHeight"
+        android:layout_marginStart="@dimen/AddTripMarginLeft"
+        android:layout_marginLeft="@dimen/AddTripMarginLeft"
+        android:layout_marginTop="@dimen/AddTripMarginTop"
+        android:layout_marginEnd="@dimen/AddTripMarginRight"
+        android:layout_marginRight="@dimen/AddTripMarginRight"
         android:background="@drawable/rounded"
         android:cursorVisible="true"
-        android:drawablePadding="25dp"
+        android:drawablePadding="@dimen/AddTripDrawablePadding"
         android:hint="@string/TripAddDescription"
-        android:paddingStart="20dp"
-        android:paddingLeft="20dp"
-        android:paddingTop="10dp"
-        android:paddingRight="20dp"
+        android:paddingStart="@dimen/AddTripPaddingSpace"
+        android:paddingLeft="@dimen/AddTripPaddingSpace"
+        android:paddingRight="@dimen/AddTripPaddingSpace"
         android:textColor="@color/textColor"
         android:textCursorDrawable="@null"
-        android:textSize="20sp" />
+        android:textSize="@dimen/TextSize" />
 
     <CheckBox
         android:id="@+id/add_trip_isSummerTrip"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="30dp"
-        android:layout_marginLeft="30dp"
-        android:layout_marginTop="30dp"
+        android:layout_marginStart="@dimen/AddTripMarginLeft"
+        android:layout_marginLeft="@dimen/AddTripMarginLeft"
+        android:layout_marginTop="@dimen/AddTripMarginLeft"
         android:text="@string/TripAddIsSummerTrip"
-        android:textSize="20sp" />
+        android:textSize="@dimen/TextSize" />
 
     <CheckBox
         android:id="@+id/add_trip_isDayTrip"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="30dp"
-        android:layout_marginLeft="30dp"
-        android:layout_marginTop="30dp"
+        android:layout_marginStart="@dimen/AddTripMarginLeft"
+        android:layout_marginLeft="@dimen/AddTripMarginLeft"
+        android:layout_marginTop="@dimen/AddTripMarginLeft"
         android:text="@string/TripAddIsDayTrip"
-        android:textSize="20sp" />
+        android:textSize="@dimen/TextSize" />
 
     <AutoCompleteTextView
         android:id="@+id/autoCompleteTextView"
@@ -90,7 +88,7 @@
         android:fontFamily="#ans-serif"
         android:text="@string/UploadTripPicture"
         android:textColor="@color/textColor"
-        android:textSize="20sp"
+        android:textSize="@dimen/TextSize"
         android:textStyle="normal|bold" />
 
     <Button
@@ -107,7 +105,7 @@
         android:fontFamily="#ans-serif"
         android:text="@string/AddTrip"
         android:textColor="@color/textColor"
-        android:textSize="20sp"
+        android:textSize="@dimen/TextSize"
         android:textStyle="normal|bold" />
 
 </LinearLayout>

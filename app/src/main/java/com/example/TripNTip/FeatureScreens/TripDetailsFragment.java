@@ -9,16 +9,11 @@ import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.InputType;
-import android.util.DisplayMetrics;
-import android.util.Log;
-import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -44,16 +39,19 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.Objects;
 
-import com.example.TripNTip.WeatherAPI.TravelGuideRecommendation;
-
 public class TripDetailsFragment extends DialogFragment implements Constants {
 
     /**
      * TripDetailsFragment displays the trips details.
-     *
-     * It received the data from the GridFragment and shows it in an AlertDialog
+     * <p>
+     * It receives the data from the GridFragment and shows it in an AlertDialog.
+     * It allows the user to receive a recommendation from the TravelGuide - should
+     * the user travel now?
+     * There is also an option of extended recommendation which explains how the
+     * TravelGuide (or us) has reached to that conclusion/grade.
+     * Users can make comments about the trips, and see them instantly after the
+     * trips are being written to the database.
      */
-
 
     private Trip trip;
     private TravelGuide travelGuide;
@@ -94,18 +92,32 @@ public class TripDetailsFragment extends DialogFragment implements Constants {
                              Bundle savedInstanceState) {
         res = getResources();
         final View v = inflater.inflate(R.layout.trip_details_fragment, container, false);
+
+        handleTripImage(v);
+
+        handleTripAttributesViews(v);
+
+        handleRecommendation(v);
+
+        handleComments(v);
+
+        return v;
+    }
+
+
+    private void handleTripImage(View v) {
         ImageView tripImage = v.findViewById(R.id.trip_image);
+        tripImage.setImageBitmap(tripBitmap);
+    }
+
+    private void handleTripAttributesViews(View v) {
+        boolean isSummerTripBool = trip.getSummerTrip();
+        boolean isDayTripBool = trip.getDayTrip();
+
         TextView tripNameTextView = v.findViewById(R.id.trip_details_name);
         TextView tripDescriptionTextView = v.findViewById(R.id.trip_details_description);
         TextView isSummerTrip = v.findViewById(R.id.trip_details_isSummerTrip);
         TextView isDayTrip = v.findViewById(R.id.trip_details_isDayTrip);
-
-        final Button recommendationButton = v.findViewById(R.id.trip_current_recommendation_button);
-        Button replyButton = v.findViewById(R.id.reply_button);
-        boolean isSummerTripBool = trip.getSummerTrip();
-        boolean isDayTripBool = trip.getDayTrip();
-
-        tripImage.setImageBitmap(tripBitmap);
 
         String tripName = res.getString(R.string.TripDetailsName) + trip.getName();
         tripNameTextView.setText(tripName);
@@ -118,6 +130,10 @@ public class TripDetailsFragment extends DialogFragment implements Constants {
 
         String dayTrip = isDayTripBool ? res.getString(R.string.TripDetailsIsDayTrip) : res.getString(R.string.TripDetailsIsNotSummerTrip);
         isDayTrip.setText(trip.getName() + dayTrip);
+    }
+
+    private void handleRecommendation(final View v) {
+        final Button recommendationButton = v.findViewById(R.id.trip_current_recommendation_button);
 
         recommendationButton.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.KITKAT)
@@ -126,6 +142,10 @@ public class TripDetailsFragment extends DialogFragment implements Constants {
                 handleRecommendationButtonClicked(v);
             }
         });
+    }
+
+    private void handleComments(View v) {
+        Button replyButton = v.findViewById(R.id.reply_button);
 
         replyButton.setText(getResources().getString(R.string.ReplyButtonText));
         replyButton.setOnClickListener(new View.OnClickListener() {
@@ -138,31 +158,23 @@ public class TripDetailsFragment extends DialogFragment implements Constants {
         FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
         commentsListFragment = new CommentsListFragment(trip.getComments());
 
-//        FrameLayout frameLayout = v.findViewById(R.id.list_view_fragment_container);
-//        getResources().getInteger(R.attr.listPreferredItemHeightSmall);
-//        frameLayout.setMinimumHeight(frameLayout.ge);
-//
-//        Log.d("NOTEEEEEEEE", getItemHeight());
-
         transaction.add(R.id.list_view_fragment_container, commentsListFragment);
         transaction.addToBackStack(null);
         transaction.commit();
-
-        return v;
     }
 
     private void onReply() {
-        getUserName();// get specific user name of current user
-        DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference().child("trips");
+        getUserName(); // Getting the user name of current user
         mAuth = FirebaseAuth.getInstance();
-        //need to check if its the first comment if not we initiate new child
+
         AlertDialog.Builder builder = new AlertDialog.Builder(this.getContext());
+
         // FixMe Niv: change to a string from the string file
         builder.setTitle("new comment ");
         final EditText input = new EditText(this.getContext());
-         // Specify the type of input expected; this, for example, sets the input as a password, and will mask the text
         input.setInputType(InputType.TYPE_CLASS_TEXT);
         builder.setView(input);
+
         // FixMe Niv: change to a string from the string file
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.KITKAT)
@@ -172,7 +184,7 @@ public class TripDetailsFragment extends DialogFragment implements Constants {
                 Comment comment = new Comment(message);
                 comment.setAuthor(userName);
 
-                handleWriteComment(comment); // write to firebase
+                handleWriteComment(comment); // write to database
             }
         });
 
@@ -187,7 +199,7 @@ public class TripDetailsFragment extends DialogFragment implements Constants {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 String emailOfCurrentUser = Objects.requireNonNull(mAuth.getCurrentUser()).getEmail();
                 for (DataSnapshot ds : dataSnapshot.getChildren()) {
-                    String emailOnDataBase = Objects.requireNonNull(ds.child("email").getValue()).toString();
+                    String emailOnDataBase = Objects.requireNonNull(ds.child(EMAILS_REF).getValue()).toString();
                     assert emailOfCurrentUser != null;
                     if (emailOnDataBase.toLowerCase().equals(emailOfCurrentUser.toLowerCase()))
                         userName = Objects.requireNonNull(ds.child(USERNAME).getValue()).toString();
@@ -215,8 +227,8 @@ public class TripDetailsFragment extends DialogFragment implements Constants {
 
     public void writeCommentToDatabase() {
         DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
-        final DatabaseReference tripsRef = rootRef.child("trips");
-        tripsRef.child(trip.getName()).child("comments").setValue(trip.getComments());
+        final DatabaseReference tripsRef = rootRef.child(TRIPS_REF);
+        tripsRef.child(trip.getName()).child(COMMENTS_REF).setValue(trip.getComments());
     }
 
 

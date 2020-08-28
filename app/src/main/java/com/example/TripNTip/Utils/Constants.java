@@ -1,6 +1,7 @@
 package com.example.TripNTip.Utils;
 
 public interface Constants {
+
     // Sign up error messages
     int EMPTY_EMAIL_MESSAGE = 1;
     int INVALID_EMAIL_MESSAGE = 2;
@@ -46,7 +47,7 @@ public interface Constants {
     int UNAUTHORIZED = 401;
     int TOO_MANY_REQUESTS = 429;
 
-    // API properties
+    // Weather API properties
     String SHOULD_WE_LOAD_THE_TRIPS = "shouldLoadTrips";
     String SHOULD_WE_LOAD_THE_API_KEY = "shouldLoadApiKey";
     String API_KEY_LABEL = "apiKey";
@@ -58,14 +59,20 @@ public interface Constants {
 
     // AddTrip constants
     String TRIP_CREATION_SUCCEED = "success";
+    String TRIP_IMAGE_FORMAT = ".png";
 
-    // Profile Activity Contants
+    // Profile Activity
     String USER = "users";
     String USERNAME = "username";
     String EMAIL = "email";
-    String IMAGES = "images";
 
-    // Add Trip Images suffix/format
-    String TRIP_IMAGE_FORMAT = ".png";
+    // Database References
+    String IMAGES_REF = "images";
+    String TRIPS_REF = "trips";
+    String COMMENTS_REF = "comments";
+    String EMAILS_REF = "email";
+    String API_KEY_REF = "apiKeys";
 
+    // Comment
+    String COMMENT_FORMAT = "dd/MM/yyyy HH:mm";
 }

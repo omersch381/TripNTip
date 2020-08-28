@@ -80,7 +80,6 @@ public class ListViewAdapter extends BaseAdapter {
             TextView test = new TextView(context);
             test.setText(commentContent);
             relativeLayout.addView(test);
-//            textView.setText(commentContent);
         }
         return convertView;
     }

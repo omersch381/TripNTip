@@ -16,9 +16,9 @@ public class TripsBoard implements Constants {
 
     public Trip[] initiateBoard() {
         Trip[] board = new Trip[trips.size()];
-        Iterator<Trip> iter = trips.values().iterator();
+        Iterator<Trip> tripsIter = trips.values().iterator();
         for (int i = 0; i < trips.size(); i++)
-            board[i] = iter.next();
+            board[i] = tripsIter.next();
         return board;
     }
 

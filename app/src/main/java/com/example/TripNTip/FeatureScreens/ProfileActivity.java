@@ -126,9 +126,9 @@ public class ProfileActivity extends AppCompatActivity implements Constants {
     public void initiateImage() {
         imageView = findViewById(R.id.profile_image);
         final FirebaseStorage storageInstance = FirebaseStorage.getInstance();
-        final StorageReference storageRef = storageInstance.getReference(IMAGES).child(USER).child(emailOfCurrentUser);
+        final StorageReference storageRef = storageInstance.getReference(IMAGES_REF).child(USER).child(emailOfCurrentUser);
         try {
-            final File localFile = File.createTempFile(IMAGES, "bmp");
+            final File localFile = File.createTempFile(IMAGES_REF, "bmp");
             storageRef.getFile(localFile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
                 @Override
                 public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
@@ -146,7 +146,7 @@ public class ProfileActivity extends AppCompatActivity implements Constants {
     public void saveImageToDataBase(Uri imageUri) {
         if (imageUri != null) {
             final FirebaseStorage storageInstance = FirebaseStorage.getInstance();
-            final StorageReference storageRef = storageInstance.getReference(IMAGES).child(USER).child(emailOfCurrentUser);
+            final StorageReference storageRef = storageInstance.getReference(IMAGES_REF).child(USER).child(emailOfCurrentUser);
             storageRef.putFile(imageUri);
         } else {
             Toast.makeText(this, R.string.Eror_database, Toast.LENGTH_LONG).show();

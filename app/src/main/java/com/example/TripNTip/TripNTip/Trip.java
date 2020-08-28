@@ -2,10 +2,12 @@ package com.example.TripNTip.TripNTip;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 
 public class Trip implements Serializable {
+
+    /**
+     * The basic entity which keeps data in our app.
+     */
 
     private String name;
     private String description;
@@ -13,7 +15,7 @@ public class Trip implements Serializable {
     private boolean dayTrip;
     private int id;
     private String location;
-    private ArrayList<Comment> comments=new ArrayList() ;
+    private ArrayList<Comment> comments = new ArrayList<>();
 
     public Trip(String name, String description, boolean summerTrip, boolean dayTrip, String location) {
         this.name = name;
@@ -21,7 +23,6 @@ public class Trip implements Serializable {
         this.summerTrip = summerTrip;
         this.dayTrip = dayTrip;
         this.location = location;
-        //this.comments=new ArrayList<Comment>() ;
     }
 
     public Trip() {
@@ -59,9 +60,8 @@ public class Trip implements Serializable {
     public ArrayList<Comment> getComments() {
         return comments;
     }
-    public void addComment(Comment comment){
+
+    public void addComment(Comment comment) {
         this.comments.add(comment);
     }
-
-
 }

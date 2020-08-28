@@ -1,30 +1,19 @@
 package com.example.TripNTip.TripNTip;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.example.TripNTip.TripNTip.CredentialsChecker;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.TripNTip.R;
-import com.example.TripNTip.TripNTip.SignUPActivity;
-import com.example.TripNTip.TripNTip.TravelFeedActivity;
-import com.example.TripNTip.TripNTip.Trip;
 import com.example.TripNTip.Utils.Constants;
-import com.firebase.client.Firebase;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -32,18 +21,15 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.ListResult;
-import com.google.firebase.storage.StorageReference;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 public class SignInActivity extends AppCompatActivity implements Constants {
+
     private FirebaseAuth mAuth;
     private String apiKey;
     private HashMap<String, Trip> trips;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,7 +39,6 @@ public class SignInActivity extends AppCompatActivity implements Constants {
         Button login = findViewById(R.id.login);
 
         trips = new HashMap<>();
-
 
 
 //        // For Testing Purposes only!!
@@ -81,20 +66,17 @@ public class SignInActivity extends AppCompatActivity implements Constants {
 
     private void loadTrips() {
         DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
-        final DatabaseReference tripsRef = rootRef.child("trips");
-
+        final DatabaseReference tripsRef = rootRef.child(TRIPS_REF);
 
         ValueEventListener eventListener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot ds : dataSnapshot.getChildren()) {
                     Trip currentTrip = ds.getValue(Trip.class);
-                    //System.out.println(ds.getValue(Trip.class));
                     assert currentTrip != null;
                     trips.put(currentTrip.getName(), currentTrip);
-                 }
                 }
-
+            }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
@@ -102,11 +84,11 @@ public class SignInActivity extends AppCompatActivity implements Constants {
             }
         };
         tripsRef.addListenerForSingleValueEvent(eventListener);
-    };
+    }
 
     private void loadAPIKey() {
         DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
-        DatabaseReference apiKeysRef = rootRef.child("apiKeys");
+        DatabaseReference apiKeysRef = rootRef.child(API_KEY_REF);
         ValueEventListener eventListener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -138,14 +120,12 @@ public class SignInActivity extends AppCompatActivity implements Constants {
             handleInvalidSignInRequest(checker);
     }
 
-    // launch to sign up activity
+    // Launch sign up activity
     public void SignUp(View v) {
         Intent intent = new Intent(SignInActivity.this, SignUPActivity.class);
         SignInActivity.this.startActivity(intent);
     }
 
-    //TODO Niv FixMe below comment:
-    // try to change this in way that laucnh will get user insted of email,password
     private void launchTravelFeed(String email, String password) {
         mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -158,7 +138,6 @@ public class SignInActivity extends AppCompatActivity implements Constants {
                             Toast.makeText(SignInActivity.this, "Authentication Succeeded!", Toast.LENGTH_SHORT).show();
                             Intent intent = new Intent(SignInActivity.this, TravelFeedActivity.class);
 
-                            //TODO Omer: remove the booleans, they are redundent
                             intent.putExtra(SHOULD_WE_LOAD_THE_API_KEY, false);
                             intent.putExtra(API_KEY_LABEL, apiKey);
                             intent.putExtra(SHOULD_WE_LOAD_THE_TRIPS, false);

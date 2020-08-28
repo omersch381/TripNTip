@@ -1,32 +1,18 @@
 package com.example.TripNTip.TripNTip;
 
-import android.app.ProgressDialog;
-import android.content.Intent;
 import android.os.Build;
-import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 
-import com.example.TripNTip.FeatureScreens.AddTripActivity;
-import com.example.TripNTip.R;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
+import com.example.TripNTip.Utils.Constants;
 
 import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Objects;
-import java.util.concurrent.CountDownLatch;
 
-public class Comment implements Serializable {
+public class Comment implements Serializable, Constants {
 
     private String author;
     private String timestamp;
@@ -36,7 +22,6 @@ public class Comment implements Serializable {
     public Comment(String message) {
         this.timestamp = generateTimestamp();
         this.message = message;
-
     }
 
     public Comment() {
@@ -44,15 +29,16 @@ public class Comment implements Serializable {
 
     private String generateTimestamp() {
         Date date = Calendar.getInstance().getTime();
-        DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+        DateFormat formatter = new SimpleDateFormat(COMMENT_FORMAT);
         return formatter.format(date);
     }
 
     public String getAuthor() {
         return author;
     }
-    public void  setAuthor(String author){
-        this.author=author;
+
+    public void setAuthor(String author) {
+        this.author = author;
     }
 
     public String getMessage() {

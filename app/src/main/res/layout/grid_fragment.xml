@@ -8,11 +8,10 @@
         android:id="@+id/TripsGrid"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:columnWidth="100dp"
+        android:background="@color/cardview_dark_background"
+        android:columnWidth="@dimen/GridViewColumnWidth"
         android:gravity="center"
         android:horizontalSpacing="1dp"
-        android:verticalSpacing="10dp"
-        android:background="@color/cardview_dark_background"
-        />
+        android:verticalSpacing="10dp" />
 
 </FrameLayout>

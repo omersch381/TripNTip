@@ -161,7 +161,7 @@ public class AddTripActivity extends AppCompatActivity implements Constants {
 
     private void writeTripToDatabase(Trip trip) {
         DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
-        final DatabaseReference tripsRef = rootRef.child("trips");
+        final DatabaseReference tripsRef = rootRef.child(TRIPS_REF);
         int id = handler.getID(trip.getLocation());
         trip.setId(id);
 
@@ -210,7 +210,7 @@ public class AddTripActivity extends AppCompatActivity implements Constants {
             final StorageReference storageRef = FirebaseStorage.getInstance().getReference();
             String tripId = String.valueOf(handler.getID(locationChooser.getText().toString()));
 
-            storageRef.child("images").child("trips").child(tripId + TRIP_IMAGE_FORMAT).putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            storageRef.child(IMAGES_REF).child(TRIPS_REF).child(tripId + TRIP_IMAGE_FORMAT).putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @RequiresApi(api = Build.VERSION_CODES.O)
                 @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {

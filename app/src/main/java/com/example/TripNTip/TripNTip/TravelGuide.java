@@ -15,12 +15,13 @@ import com.example.TripNTip.WeatherAPI.WeatherAPIResponse;
 import java.util.Calendar;
 
 public class TravelGuide implements Constants {
-    /* An entity which provides information about trips.
-     *
+    /**
+     * An entity which provides information about trips.
+     * <p>
      * The Travel Guide provides the users information about the potential trips they might do.
      * In this assignment we implemented only the howMuchShouldITravelNowIn function, but the travel
      * guide class be easily extended and provide much more information and functionality.
-     * */
+     */
 
     private String apiKey;
     private Context context;
@@ -61,6 +62,12 @@ public class TravelGuide implements Constants {
     }
 
     private void waitForTimesToArrive(WeatherAPIResponse currentWeather) {
+
+        /*
+         * Busy waiting lock. we could have implemented it in other ways, we know, but because the
+         * loading is really quick, we think that is also ok.
+         * */
+
         int counter = 0;
         int currentSunriseResult = 0;
         int currentSunsetResult = 0;
@@ -136,7 +143,7 @@ public class TravelGuide implements Constants {
         return timeOfDayGrade;
     }
 
-        private int generateTimeOfDayGrade(boolean isDayTrip, boolean isThereEnoughTimeToTravelDayTrip, boolean isThereEnoughTimeToTravelNightTrip) {
+    private int generateTimeOfDayGrade(boolean isDayTrip, boolean isThereEnoughTimeToTravelDayTrip, boolean isThereEnoughTimeToTravelNightTrip) {
         int timeOfDayGrade = 0;
 
         if (isDayTrip) {

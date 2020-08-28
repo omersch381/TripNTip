@@ -3,4 +3,17 @@
     <dimen name="text_margin">16dp</dimen>
     <dimen name="ShowTripImageViewHeight">250dp</dimen>
     <dimen name="ShowTripImageViewWidth">250dp</dimen>
+
+    <!--    AddTrip-->
+    <dimen name="AddTripLayoutHeight">50dp</dimen>
+    <dimen name="AddTripMarginLeft">30dp</dimen>
+    <dimen name="AddTripMarginTop">30dp</dimen>
+    <dimen name="AddTripMarginRight">20dp</dimen>
+    <dimen name="AddTripDrawablePadding">25dp</dimen>
+    <dimen name="AddTripPaddingSpace">20sp</dimen>
+
+    <!--    GridView-->
+    <dimen name="GridViewColumnWidth">100dp</dimen>
+
+    <dimen name="TextSize">20sp</dimen>
 </resources>

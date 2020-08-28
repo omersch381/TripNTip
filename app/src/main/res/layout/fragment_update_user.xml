@@ -4,22 +4,21 @@
     android:layout_height="320dp"
     tools:context="com.example.TripNTip.FeatureScreens.ProfileActivity">
 
-    <!-- TODO: Update blank fragment layout -->
     <EditText
         android:id="@+id/change_username"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:hint="@string/change_userName"
-        android:textSize="20dp"
-        android:textStyle="italic"/>
+        android:textSize="@dimen/TextSize"
+        android:textStyle="italic" />
 
     <EditText
         android:id="@+id/change_country"
-        android:layout_marginTop="100dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="100dp"
         android:hint="@string/change_country"
-        android:textSize="20dp"
-        android:textStyle="italic"/>
+        android:textSize="@dimen/TextSize"
+        android:textStyle="italic" />
 
 </FrameLayout>

@@ -2,16 +2,14 @@ package com.example.TripNTip.TripNTip;
 
 import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.TripNTip.FeatureScreens.TripDetailsFragment;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.TripNTip.R;
 import com.example.TripNTip.Utils.Constants;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -27,7 +25,7 @@ public class SignUPActivity extends AppCompatActivity implements Constants {
     private FirebaseAuth mAuth;
     private DatabaseReference mDataBase;
 
-    //todo niv change this to string
+    // TODO niv change this to string
     private final String USERS = "users";
     private final String USER = "user";
 
@@ -35,6 +33,7 @@ public class SignUPActivity extends AppCompatActivity implements Constants {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.sign_up_activity);
+        //TODO Niv: typo
         //get referance to users on data base
         mDataBase = FirebaseDatabase.getInstance().getReference(USERS);
 
@@ -50,14 +49,11 @@ public class SignUPActivity extends AppCompatActivity implements Constants {
         });
     }
 
-
     private void createAccount() {
-        //TODO: Niv - does the method signs you up every run?
-
         EditText emailText = findViewById(R.id.email);
         EditText passwordText = findViewById(R.id.Password);
         EditText usernameText = findViewById(R.id.userName);
-//        EditText countryText = (EditText) findViewById(R.id.country);
+
         final String email = emailText.getText().toString();
         final String password = passwordText.getText().toString();
         final String username = usernameText.getText().toString();
@@ -66,17 +62,14 @@ public class SignUPActivity extends AppCompatActivity implements Constants {
         boolean isValid = checker.areTheCredentialsValid();
         TNTUser user = new TNTUser(email, username, password);
         if (isValid) {
-
             handleNewUser(user);
-            launchSignIn(user);
+            launchSignIn();
         } else
             handleInvalidSignUpRequest(checker);
     }
 
     public void handleNewUser(TNTUser user) {
         handleFirebaseNewUserCreation(user);
-
-
     }
 
     private void handleFirebaseNewUserCreation(TNTUser user) {
@@ -98,7 +91,7 @@ public class SignUPActivity extends AppCompatActivity implements Constants {
     }
 
     private String getInvalidStatusMessage(int checkerStatus) {
-        // This method is required because we don't allow the CredentialsChecker access the R file
+        // This method is required because we don't allow the CredentialsChecker access the R file/receive activity context
 
         String statusMessage = "";
         switch (checkerStatus) {
@@ -124,11 +117,8 @@ public class SignUPActivity extends AppCompatActivity implements Constants {
         return statusMessage;
     }
 
-    //todo- niv or omer : when create user name care that the username not contain unsupported Characters
-    private void launchSignIn(TNTUser user) {
-        //mDataBase.child(user.getUsername()).setValue(user);
+    private void launchSignIn() {
         Intent intent = new Intent(SignUPActivity.this, SignInActivity.class);
         SignUPActivity.this.startActivity(intent);
-
     }
 }

@@ -2,7 +2,6 @@ package com.example.TripNTip.WeatherAPI;
 
 import com.example.TripNTip.Utils.Constants;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -10,13 +9,12 @@ import java.util.Calendar;
 
 public class WeatherAPIResponse implements Constants {
 
+    /**
+     * An entity that parses and gathers all the required data for the trips' weather.
+     */
+
     private int id;
     private String name;
-    private double longitude;
-    private double latitude;
-    private String mainWeather;
-    private String description;
-    private double temperature;
     private double temperatureFeelsLike;
     private double humidity;
     private int sunriseHour;
@@ -31,13 +29,7 @@ public class WeatherAPIResponse implements Constants {
             obj = new JSONObject(response);
             this.id = obj.getInt("id");
             this.name = obj.getString("name");
-            this.longitude = obj.getJSONObject("coord").getDouble("lon");
-            this.latitude = obj.getJSONObject("coord").getDouble("lat");
 
-            JSONArray weatherArr = obj.getJSONArray("weather");
-            this.mainWeather = weatherArr.getJSONObject(0).getString("main");
-            this.description = weatherArr.getJSONObject(0).getString("description");
-            this.temperature = obj.getJSONObject("main").getDouble("temp") - TEMPERATURE_ABSOLUTE_ZERO;
             this.temperatureFeelsLike = obj.getJSONObject("main").getDouble("feels_like") - TEMPERATURE_ABSOLUTE_ZERO;
             this.humidity = obj.getJSONObject("main").getDouble("humidity");
 
