@@ -26,6 +26,19 @@ import java.util.Objects;
 
 
 public class GridFragment extends Fragment implements Constants {
+    /**
+     * GridFragment manages the TripBoard's view.
+     * <p>
+     * GridFragment receives the data (tripsAlbum, trips) from
+     * TravelFeedActivity and displays it to the user.
+     * When the user presses one of the trips, GridFragment sends
+     * the required data (such as apiKey) and the required Trip
+     * and creates an AlertDialog, to show a TripDetailsFragment.
+     * <p>
+     * GridFragment also parses the query the user typed on the
+     * SearchBar, and filters the trips accordingly.
+     */
+
 
     public final static String QUERY_RECEIVED = "";
     private TripAdapter tripAdapter;
@@ -84,8 +97,7 @@ public class GridFragment extends Fragment implements Constants {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int index, long l) {
                 Trip selectedTrip = filteredTrips.get(index);
-                //TODO Omer: use a constant instead of .png in all the project locations
-                Bitmap bitmap = tripsAlbum.get(selectedTrip.getId() + ".png");
+                Bitmap bitmap = tripsAlbum.get(selectedTrip.getId() + TRIP_IMAGE_FORMAT);
                 showTrip(selectedTrip, bitmap);
             }
         });

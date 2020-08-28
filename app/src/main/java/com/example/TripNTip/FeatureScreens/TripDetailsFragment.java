@@ -47,6 +47,13 @@ import java.util.Objects;
 
 public class TripDetailsFragment extends DialogFragment implements Constants {
 
+    /**
+     * TripDetailsFragment displays the trips details.
+     *
+     * It received the data from the GridFragment and shows it in an AlertDialog
+     */
+
+
     private Trip trip;
     private TravelGuide travelGuide;
     private Bitmap tripBitmap;
@@ -101,7 +108,7 @@ public class TripDetailsFragment extends DialogFragment implements Constants {
         String tripName = res.getString(R.string.TripDetailsName) + trip.getName();
         tripNameTextView.setText(tripName);
 
-        String tripDescription = res.getString(R.string.TripDetailsName) + trip.getDescription();
+        String tripDescription = res.getString(R.string.TripDetailsDescription) + trip.getDescription();
         tripDescriptionTextView.setText(tripDescription);
 
         String summerTrip = isSummerTripBool ? res.getString(R.string.TripDetailsIsSummerTrip) : res.getString(R.string.TripDetailsIsNotSummerTrip);

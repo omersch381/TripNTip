@@ -59,11 +59,13 @@ public interface Constants {
     // AddTrip constants
     String TRIP_CREATION_SUCCEED = "success";
 
-   //for profile activity
-    final String WAIT = "Please wait...";
-    final String USER = "users";
-    final String USERNAME = "username";
-    final String EMAIL = "email";
-    final String IMEGES = "images";
+    // Profile Activity Contants
+    String USER = "users";
+    String USERNAME = "username";
+    String EMAIL = "email";
+    String IMAGES = "images";
+
+    // Add Trip Images suffix/format
+    String TRIP_IMAGE_FORMAT = ".png";
 
 }
