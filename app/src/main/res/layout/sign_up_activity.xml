@@ -1,94 +1,97 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".TripNTip.SignUPActivity"
     android:background="@drawable/signup_photo"
-    >
-
+    tools:context=".TripNTip.SignUPActivity">
 
 
     <ImageView
+        android:id="@+id/icon"
         android:layout_width="match_parent"
         android:layout_height="90dp"
         android:layout_marginTop="120dp"
-        android:id="@+id/icon"
-        android:src="@drawable/icon"
-        />
+        android:src="@drawable/icon" />
+
     <EditText
+        android:id="@+id/email"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:id="@+id/email"
+        android:layout_below="@id/icon"
+        android:layout_marginStart="30dp"
+        android:layout_marginLeft="@dimen/AddTripMarginLeft"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginRight="@dimen/AddTripMarginRight"
         android:background="@drawable/rounded"
         android:cursorVisible="true"
-        android:textCursorDrawable="@null"
-        android:textSize="20sp"
         android:drawablePadding="25dp"
-        android:textColor="@color/textColor"
-        android:paddingTop="10dp"
-        android:layout_marginTop="30dp"
-        android:layout_marginStart="30dp"
-        android:paddingStart="20dp"
-        android:layout_marginEnd="20dp"
-        android:layout_below="@id/icon"
         android:hint="@string/EmailExample"
-        />
-
+        android:paddingStart="20dp"
+        android:paddingLeft="@dimen/AddTripMarginLeft"
+        android:paddingTop="10dp"
+        android:textColor="@color/textColor"
+        android:textCursorDrawable="@null"
+        android:textSize="20sp" />
 
 
     <EditText
+        android:id="@+id/Password"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:id="@+id/Password"
-        android:inputType="textPassword"
-        android:background="@drawable/rounded"
         android:layout_below="@id/email"
-        android:textSize="20sp"
-        android:textColor="@color/textColor"
+        android:layout_marginStart="30dp"
+        android:layout_marginLeft="@dimen/AddTripMarginLeft"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginRight="@dimen/AddTripMarginRight"
+        android:background="@drawable/rounded"
         android:cursorVisible="true"
         android:drawablePadding="25dp"
         android:hint="@string/PasswordExample"
-        android:layout_marginStart="30dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginTop="10dp"
+        android:inputType="textPassword"
         android:paddingStart="20dp"
-        />
+        android:paddingLeft="@dimen/AddTripDrawablePadding"
+        android:textColor="@color/textColor"
+        android:textSize="@dimen/TextSize" />
 
 
     <EditText
+        android:id="@+id/userName"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:id="@+id/userName"
-        android:background="@drawable/rounded"
         android:layout_below="@id/Password"
-        android:textSize="20sp"
-        android:textColor="@color/textColor"
+        android:layout_marginStart="30dp"
+        android:layout_marginLeft="@dimen/AddTripMarginLeft"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginRight="@dimen/AddTripMarginRight"
+        android:background="@drawable/rounded"
         android:cursorVisible="true"
         android:drawablePadding="25dp"
         android:hint="@string/Username"
-        android:layout_marginStart="30dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginTop="10dp"
-        android:paddingStart="20dp"
-        />
-
+        android:paddingStart="@dimen/AddTripDrawablePadding"
+        android:paddingLeft="20dp"
+        android:textColor="@color/textColor"
+        android:textSize="@dimen/TextSize" />
 
 
     <Button
+        android:id="@+id/signUp"
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:id="@+id/signUp"
-        android:background="@color/Login"
-        android:layout_marginTop="50dp"
-        android:layout_marginStart="30dp"
-        android:layout_marginEnd="20dp"
-        android:textSize="20sp"
-        android:textColor="@color/textColor"
-        android:fontFamily="#ans-serif"
-        android:textStyle="normal|bold"
         android:layout_below="@id/userName"
-        android:text="@string/SignUp"/>
+        android:layout_marginStart="@dimen/AddTripMarginLeft"
+        android:layout_marginLeft="@dimen/AddTripMarginLeft"
+        android:layout_marginTop="50dp"
+        android:layout_marginEnd="@dimen/AddTripMarginRight"
+        android:layout_marginRight="@dimen/AddTripMarginRight"
+        android:background="@color/Login"
+        android:fontFamily="#ans-serif"
+        android:text="@string/SignUp"
+        android:textColor="@color/textColor"
+        android:textSize="@dimen/TextSize"
+        android:textStyle="normal|bold" />
 
 </RelativeLayout>

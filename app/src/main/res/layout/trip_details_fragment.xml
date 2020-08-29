@@ -21,7 +21,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:textSize="15sp"
+            android:textSize="@dimen/TextSizeSmall"
             android:textStyle="bold" />
 
         <TextView
@@ -29,14 +29,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:textSize="15sp" />
+            android:textSize="@dimen/TextSizeSmall"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/trip_details_isSummerTrip"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:textSize="15sp"
+            android:textSize="@dimen/TextSizeSmall"
             android:textStyle="bold" />
 
         <TextView
@@ -44,26 +45,26 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:textSize="15sp"
+            android:textSize="@dimen/TextSizeSmall"
             android:textStyle="bold" />
 
         <Button
             android:id="@+id/trip_current_recommendation_button"
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:layout_marginStart="30dp"
-            android:layout_marginLeft="30dp"
+            android:layout_marginStart="@dimen/AddTripMarginLeft"
+            android:layout_marginLeft="@dimen/AddTripMarginLeft"
             android:layout_marginTop="50dp"
-            android:layout_marginEnd="20dp"
-            android:layout_marginRight="20dp"
+            android:layout_marginEnd="@dimen/AddTripMarginRight"
+            android:layout_marginRight="@dimen/AddTripMarginRight"
             android:background="@drawable/button_style"
             android:fontFamily="#ans-serif"
+            android:gravity="center_horizontal"
             android:text="@string/shouldIDoTheTrip"
             android:textAlignment="center"
             android:textColor="@color/textColor"
-            android:textSize="15sp"
-            android:textStyle="normal|bold"
-            android:gravity="center_horizontal" />
+            android:textSize="@dimen/TextSizeSmall"
+            android:textStyle="normal|bold" />
 
 
         <TextView
@@ -93,7 +94,7 @@
         <FrameLayout
             android:id="@+id/list_view_fragment_container"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="match_parent" />
 
         <Button
             android:id="@+id/reply_button"
@@ -103,7 +104,7 @@
             android:fontFamily="#ans-serif"
             android:text="@string/shouldIDoTheTrip"
             android:textColor="@color/textColor"
-            android:textSize="15sp"
+            android:textSize="@dimen/TextSizeSmall"
             android:textStyle="normal|bold" />
 
         <EditText

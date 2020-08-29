@@ -47,11 +47,14 @@
         android:layout_marginLeft="30dp"
         android:layout_marginTop="30dp"
         android:layout_marginRight="30dp"
+        android:gravity="center_horizontal"
         android:textAlignment="center"
         android:textColor="@color/black"
         android:textSize="22sp"
         android:textStyle="bold" />
 
+
+    <!--        TODO Niv: typo below-->
     <TextView
         android:id="@+id/profile_eamail"
         android:layout_width="match_parent"
@@ -61,6 +64,7 @@
         android:layout_marginLeft="30dp"
         android:layout_marginTop="48dp"
         android:layout_marginRight="30dp"
+        android:gravity="center_horizontal"
         android:textAlignment="center"
         android:textColor="@color/black"
         android:textSize="22sp"

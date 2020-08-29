@@ -11,5 +11,4 @@
         android:background="@color/colorAccent"
         android:iconifiedByDefault="false"
         android:queryHint="Search Here" />
-
 </FrameLayout>

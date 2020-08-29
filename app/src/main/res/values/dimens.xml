@@ -16,4 +16,5 @@
     <dimen name="GridViewColumnWidth">100dp</dimen>
 
     <dimen name="TextSize">20sp</dimen>
+    <dimen name="TextSizeSmall">15sp</dimen>
 </resources>
