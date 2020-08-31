@@ -47,7 +47,7 @@ public class ProfileActivity extends AppCompatActivity implements Constants {
         super.onCreate(savedInstanceState);
         mAuth = FirebaseAuth.getInstance();
         final FirebaseDatabase mDataBase = FirebaseDatabase.getInstance();
-        final DatabaseReference reference = mDataBase.getReference(USER);
+        final DatabaseReference reference = mDataBase.getReference(USERS);
         imageView = findViewById(R.id.profile_image);
 
         final ProgressDialog progressDialog = ProgressDialog.show(this, "", getResources().getString(R.string.wait));
@@ -110,7 +110,6 @@ public class ProfileActivity extends AppCompatActivity implements Constants {
             try {
                 final InputStream imageStream = getContentResolver().openInputStream(imageUri);
                 final Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
-                //insert the selected image into imageView and represent him on the app
                 imageView.setImageBitmap(selectedImage);
                 saveImageToDataBase(imageUri);
             } catch (FileNotFoundException e) {
@@ -126,7 +125,7 @@ public class ProfileActivity extends AppCompatActivity implements Constants {
     public void initiateImage() {
         imageView = findViewById(R.id.profile_image);
         final FirebaseStorage storageInstance = FirebaseStorage.getInstance();
-        final StorageReference storageRef = storageInstance.getReference(IMAGES_REF).child(USER).child(emailOfCurrentUser);
+        final StorageReference storageRef = storageInstance.getReference(IMAGES_REF).child(USERS).child(emailOfCurrentUser);
         try {
             final File localFile = File.createTempFile(IMAGES_REF, "bmp");
             storageRef.getFile(localFile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
@@ -146,7 +145,7 @@ public class ProfileActivity extends AppCompatActivity implements Constants {
     public void saveImageToDataBase(Uri imageUri) {
         if (imageUri != null) {
             final FirebaseStorage storageInstance = FirebaseStorage.getInstance();
-            final StorageReference storageRef = storageInstance.getReference(IMAGES_REF).child(USER).child(emailOfCurrentUser);
+            final StorageReference storageRef = storageInstance.getReference(IMAGES_REF).child(USERS).child(emailOfCurrentUser);
             storageRef.putFile(imageUri);
         } else {
             Toast.makeText(this, R.string.Eror_database, Toast.LENGTH_LONG).show();

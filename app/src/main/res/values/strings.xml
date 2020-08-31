@@ -75,6 +75,10 @@
     <string name="not_choose_photo"> No image selected</string>
     <string name="select_image"> select image</string>
     <string name="wait"> "Please wait..."</string>
+    <string name="Authentication_Succeeded"> "Authentication Succeeded!"</string>
+    <string name="Authentication_Faild"> "Authentication Faild!"</string>
+    <string name="new_comment"> "new comment"</string>
+    <string name="Ok"> "Ok"</string>
 
     <!--    Extended Recommendation Properties-->
     <string name="As">As \ </string>

@@ -28,7 +28,7 @@ public interface Constants {
     int TRIPS_BOARD_NUM_OF_COLUMNS = 3;
 
     // Trip Pictures properties
-    long ONE_MEGABYTE = 1024 * 1024;
+    long EIGHT_MEGABYTE = 1024 * 1024*8;
 
     // General Utils
     double TEMPERATURE_ABSOLUTE_ZERO = 273.15;
@@ -62,7 +62,7 @@ public interface Constants {
     String TRIP_IMAGE_FORMAT = ".png";
 
     // Profile Activity
-    String USER = "users";
+    String USERS = "users";
     String USERNAME = "username";
     String EMAIL = "email";
 

@@ -30,7 +30,7 @@
         android:paddingStart="@dimen/AddTripDrawablePadding"
         android:paddingLeft="20dp"
         android:paddingTop="10dp"
-        android:text="omer@example.com"
+        android:hint="@string/EmailExample"
         android:textColor="@color/textColor"
         android:textCursorDrawable="@null"
         android:textSize="@dimen/TextSize" />
@@ -52,7 +52,7 @@
         android:inputType="textPassword"
         android:paddingStart="@dimen/AddTripDrawablePadding"
         android:paddingLeft="@dimen/AddTripDrawablePadding"
-        android:text="Omer1234"
+        android:hint="@string/PasswordExample"
         android:textColor="@color/textColor"
         android:textSize="@dimen/TextSize" />
 

@@ -126,10 +126,10 @@ public class TripDetailsFragment extends DialogFragment implements Constants {
         tripDescriptionTextView.setText(tripDescription);
 
         String summerTrip = isSummerTripBool ? res.getString(R.string.TripDetailsIsSummerTrip) : res.getString(R.string.TripDetailsIsNotSummerTrip);
-        isSummerTrip.setText(trip.getName() + summerTrip);
+        isSummerTrip.setText(trip.getName()+ " " + summerTrip);
 
         String dayTrip = isDayTripBool ? res.getString(R.string.TripDetailsIsDayTrip) : res.getString(R.string.TripDetailsIsNotSummerTrip);
-        isDayTrip.setText(trip.getName() + dayTrip);
+        isDayTrip.setText(trip.getName()+ " " + dayTrip);
     }
 
     private void handleRecommendation(final View v) {
@@ -169,14 +169,14 @@ public class TripDetailsFragment extends DialogFragment implements Constants {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this.getContext());
 
-        // FixMe Niv: change to a string from the string file
-        builder.setTitle("new comment ");
+
+        builder.setTitle(R.string.new_comment);
         final EditText input = new EditText(this.getContext());
         input.setInputType(InputType.TYPE_CLASS_TEXT);
         builder.setView(input);
 
-        // FixMe Niv: change to a string from the string file
-        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+
+        builder.setPositiveButton(R.string.Ok, new DialogInterface.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.KITKAT)
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -192,7 +192,7 @@ public class TripDetailsFragment extends DialogFragment implements Constants {
     }
 
     public void getUserName() {
-        final DatabaseReference reference = FirebaseDatabase.getInstance().getReference(USER);
+        final DatabaseReference reference = FirebaseDatabase.getInstance().getReference(USERS);
         reference.addValueEventListener(new ValueEventListener() {
             @RequiresApi(api = Build.VERSION_CODES.KITKAT)
             @Override

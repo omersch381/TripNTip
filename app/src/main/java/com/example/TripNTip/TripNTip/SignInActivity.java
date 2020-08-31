@@ -39,15 +39,6 @@ public class SignInActivity extends AppCompatActivity implements Constants {
         Button login = findViewById(R.id.login);
 
         trips = new HashMap<>();
-
-
-//        // For Testing Purposes only!!
-//        Intent intent = new Intent(SignInActivity.this, TravelFeedActivity.class);
-//        SignInActivity.this.startActivity(intent);
-
-        //For Testing Purposes only!!
-        //launchTravelFeed("nivniv@gmail.com", "NivNiv29");
-
         loadInitialData();
 
         login.setOnClickListener(new View.OnClickListener() {
@@ -133,9 +124,7 @@ public class SignInActivity extends AppCompatActivity implements Constants {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
-
-                            //TODO: Niv - please use Strings file instead of Strings
-                            Toast.makeText(SignInActivity.this, "Authentication Succeeded!", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(SignInActivity.this, R.string.Authentication_Succeeded, Toast.LENGTH_SHORT).show();
                             Intent intent = new Intent(SignInActivity.this, TravelFeedActivity.class);
 
                             intent.putExtra(SHOULD_WE_LOAD_THE_API_KEY, false);
@@ -145,8 +134,8 @@ public class SignInActivity extends AppCompatActivity implements Constants {
                             SignInActivity.this.startActivity(intent);
                         } else {
                             // If sign in fails, display a message to the user.
-                            //TODO: Niv - please use Strings file instead of Strings
-                            Toast.makeText(SignInActivity.this, "Authentication Failed!",
+
+                            Toast.makeText(SignInActivity.this, R.string.Authentication_Faild,
                                     Toast.LENGTH_SHORT).show();
                         }
                     }

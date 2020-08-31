@@ -70,6 +70,7 @@ public class TravelFeedActivity extends AppCompatActivity implements SearchFragm
         super.onStop();
         tripsAlbum.clear();
         numOfPictures = 0;
+        System.out.println("im here! on stop");
         trips.clear();
     }
 
@@ -93,6 +94,7 @@ public class TravelFeedActivity extends AppCompatActivity implements SearchFragm
 
 
     private void loadBitmaps() {
+        ;
         tripsAlbum = new HashMap<>();
         FirebaseStorage storage = FirebaseStorage.getInstance();
         Task<ListResult> listRef = storage.getReference().child(IMAGES_REF).child(TRIPS_REF).listAll();
@@ -102,10 +104,11 @@ public class TravelFeedActivity extends AppCompatActivity implements SearchFragm
                 for (final StorageReference item : listResult.getItems()) {
                     final ProgressDialog bitmapProgressDialog = ProgressDialog.show(TravelFeedActivity.this, "", getResources().getString(R.string.waitMessage));
 
-                    item.getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+                    item.getBytes(EIGHT_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
                         @Override
                         public void onSuccess(byte[] bytes) {
                             Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                            System.out.println("im here! on load bitmaps"+bitmap);
                             tripsAlbum.put(item.getName(), bitmap);
                             numOfPictures++;
                             bitmapProgressDialog.dismiss();
@@ -154,6 +157,7 @@ public class TravelFeedActivity extends AppCompatActivity implements SearchFragm
                             TravelFeedActivity.this.startActivity(addActivityIntent);
                             break;
                         case R.id.navProfile:
+
                             Intent ProfileActivityIntent = new Intent(TravelFeedActivity.this, ProfileActivity.class);
                             TravelFeedActivity.this.startActivity(ProfileActivityIntent);
                             break;
