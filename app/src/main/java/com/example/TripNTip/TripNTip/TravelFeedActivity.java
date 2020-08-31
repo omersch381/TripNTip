@@ -70,7 +70,6 @@ public class TravelFeedActivity extends AppCompatActivity implements SearchFragm
         super.onStop();
         tripsAlbum.clear();
         numOfPictures = 0;
-        System.out.println("im here! on stop");
         trips.clear();
     }
 
@@ -108,7 +107,6 @@ public class TravelFeedActivity extends AppCompatActivity implements SearchFragm
                         @Override
                         public void onSuccess(byte[] bytes) {
                             Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-                            System.out.println("im here! on load bitmaps"+bitmap);
                             tripsAlbum.put(item.getName(), bitmap);
                             numOfPictures++;
                             bitmapProgressDialog.dismiss();

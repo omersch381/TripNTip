@@ -61,7 +61,6 @@ public class AddTripActivity extends AppCompatActivity implements Constants {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_trip_activity);
-        //todo omer check about the base and protected
         handler = new IsraeliWeatherAPIHandler(getApplicationContext());
 
         listOfCities = handler.getCities();

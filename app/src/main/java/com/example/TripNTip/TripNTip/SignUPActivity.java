@@ -1,6 +1,5 @@
 package com.example.TripNTip.TripNTip;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -33,13 +32,10 @@ public class SignUPActivity extends AppCompatActivity implements Constants {
     private FirebaseAuth mAuth;
     private DatabaseReference mDataBase;
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.sign_up_activity);
-        //get referance to users on data base
         mDataBase = FirebaseDatabase.getInstance().getReference(USERS);
         mAuth = FirebaseAuth.getInstance();
         Button signUp = findViewById(R.id.signUp);
@@ -60,20 +56,14 @@ public class SignUPActivity extends AppCompatActivity implements Constants {
         final String email = emailText.getText().toString();
         final String password = passwordText.getText().toString();
         final String username = usernameText.getText().toString();
-        // final String username = usernameText.getText().toString();
-        //new check if user allready exsist in firebase
-
 
         CredentialsChecker checker = new CredentialsChecker(email, password);
         boolean areTheCredentialsValid = checker.areTheCredentialsValid();
         TNTUser user = new TNTUser(email, username, password);
 
-
-        if (areTheCredentialsValid) {
-            checkifUserNameAlreadyBeenTaken(user);
-        } else
-            //progressDialog.dismiss();
-
+        if (areTheCredentialsValid)
+            checkIfUserNameAlreadyBeenTaken(user);
+        else
             handleInvalidSignUpRequest(checker);
     }
 
@@ -133,35 +123,29 @@ public class SignUPActivity extends AppCompatActivity implements Constants {
         SignUPActivity.this.startActivity(intent);
     }
 
-    private void checkifUserNameAlreadyBeenTaken(final TNTUser user) {
+    private void checkIfUserNameAlreadyBeenTaken(final TNTUser user) {
         mDataBase.addValueEventListener(new ValueEventListener() {
             @RequiresApi(api = Build.VERSION_CODES.KITKAT)
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                boolean uniqe = true;
+                boolean unique = true;
                 for (DataSnapshot ds : snapshot.getChildren()) {
                     String userName = Objects.requireNonNull(ds.child(USERNAME).getValue()).toString();
                     String email = Objects.requireNonNull(ds.child(EMAIL).getValue()).toString();
                     if (userName.equals(user.getUsername()) || email.equals(user.getEmail())) {
-                        uniqe = false;
+                        unique = false;
                         break;
                     }
-
                 }
-
-                if (uniqe) {
+                if (unique) {
                     handleNewUser(user);
                     launchSignIn();
-                    return;
                 }
-
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
             }
         });
-
     }
-
 }
