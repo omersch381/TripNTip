@@ -32,7 +32,7 @@ public class SignUPActivity extends AppCompatActivity implements Constants {
     private boolean wasCreated = false;
     private FirebaseAuth mAuth;
     private DatabaseReference mDataBase;
-    private boolean areTheCredentialsUnique;
+
 
 
     @Override
@@ -134,8 +134,6 @@ public class SignUPActivity extends AppCompatActivity implements Constants {
     }
 
     private void checkifUserNameAlreadyBeenTaken(final TNTUser user) {
-        areTheCredentialsUnique = true;
-
         mDataBase.addValueEventListener(new ValueEventListener() {
             @RequiresApi(api = Build.VERSION_CODES.KITKAT)
             @Override
