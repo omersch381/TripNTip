@@ -31,9 +31,9 @@ public class SignUPActivity extends AppCompatActivity implements Constants {
 
     private boolean wasCreated = false;
     private FirebaseAuth mAuth;
-    private   DatabaseReference mDataBase;
+    private DatabaseReference mDataBase;
     private boolean areTheCredentialsUnique;
-    private ProgressDialog progressDialog;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,20 +60,20 @@ public class SignUPActivity extends AppCompatActivity implements Constants {
         final String email = emailText.getText().toString();
         final String password = passwordText.getText().toString();
         final String username = usernameText.getText().toString();
-       // final String username = usernameText.getText().toString();
-       //new check if user allready exsist in firebase
-
+        // final String username = usernameText.getText().toString();
+        //new check if user allready exsist in firebase
 
 
         CredentialsChecker checker = new CredentialsChecker(email, password);
         boolean areTheCredentialsValid = checker.areTheCredentialsValid();
         TNTUser user = new TNTUser(email, username, password);
-        progressDialog = ProgressDialog.show(this, "", getResources().getString(R.string.wait));
-        checkifUserNameAlreadyBeenTaken(username,email);
-        if (areTheCredentialsValid &&areTheCredentialsUnique) {
-            handleNewUser(user);
-            launchSignIn();
+
+
+        if (areTheCredentialsValid) {
+            checkifUserNameAlreadyBeenTaken(user);
         } else
+            //progressDialog.dismiss();
+
             handleInvalidSignUpRequest(checker);
     }
 
@@ -83,7 +83,7 @@ public class SignUPActivity extends AppCompatActivity implements Constants {
 
     private void handleFirebaseNewUserCreation(TNTUser user) {
 
-        mAuth.createUserWithEmailAndPassword(user.getEmail(),user.getPassword())
+        mAuth.createUserWithEmailAndPassword(user.getEmail(), user.getPassword())
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
@@ -132,31 +132,35 @@ public class SignUPActivity extends AppCompatActivity implements Constants {
         Intent intent = new Intent(SignUPActivity.this, SignInActivity.class);
         SignUPActivity.this.startActivity(intent);
     }
-    private void  checkifUserNameAlreadyBeenTaken(final String newUsername,final String newEmail){
-        areTheCredentialsUnique=true;
+
+    private void checkifUserNameAlreadyBeenTaken(final TNTUser user) {
+        areTheCredentialsUnique = true;
 
         mDataBase.addValueEventListener(new ValueEventListener() {
             @RequiresApi(api = Build.VERSION_CODES.KITKAT)
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                boolean uniqe = true;
                 for (DataSnapshot ds : snapshot.getChildren()) {
-                        String userName = Objects.requireNonNull(ds.child(USERNAME).getValue()).toString();
-                        String email = Objects.requireNonNull(ds.child(EMAIL).getValue()).toString();
-                        if (userName.equals(newUsername)|| email.equals(newEmail)){
-                            //if we enter here the user tried to sign up with userName that already exsist
-                            System.out.println("im here the users have eqaul username"+userName +" "+newUsername );
-                            System.out.println("im here the users have eqaul email"+email +" "+newEmail );
-                            areTheCredentialsUnique=false;
-                        }
+                    String userName = Objects.requireNonNull(ds.child(USERNAME).getValue()).toString();
+                    String email = Objects.requireNonNull(ds.child(EMAIL).getValue()).toString();
+                    if (userName.equals(user.getUsername()) || email.equals(user.getEmail())) {
+                        uniqe = false;
+                        break;
+                    }
 
-                   }
-
-
-                progressDialog.dismiss();
                 }
+
+                if (uniqe) {
+                    handleNewUser(user);
+                    launchSignIn();
+                    return;
+                }
+
+            }
+
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
             }
         });
 
